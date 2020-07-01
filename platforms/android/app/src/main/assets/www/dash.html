@@ -509,6 +509,10 @@
           onclick="entrar_subasta_pujar();" id="pujar_subasta" class="btn btn-cyan" type="button"><span><i
               class="fa fa-sign-in" aria-hidden="true"></i>
             Pujar</span></button>
+        <button style="display: none; width: 95% !important; background-color: #80232b !important;"
+          onclick="pagar_subasta_directa();" id="pagar_subasta_directa" class="btn btn-cyan" type="button"><span><i
+              class="fa fa-sign-in" aria-hidden="true"></i>
+            Pagar subasta</span></button>
       </ons-card>
     </ons-page>
   </template>
@@ -2287,6 +2291,7 @@
         precio_inicial_subasta = parseFloat(response.detalle.intervalo[0].valor).toFixed(2);
         var tipo_subasta_name =
           "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Inversa</span>";
+        $('#pagar_subasta_directa').show();
       }
       subasta_id = response.detalle.subasta_id;
       $('#titulo_detalle').html(response.detalle.nombre_espa + tipo_subasta_name);
@@ -2353,12 +2358,13 @@
         }
       }, 1000);
       $('#card_detalle_subasta').show();
-
-      if (response.subasta_user == null) {
-        $('#entrar_subasta').show();
-      } else {
-        $('#subasta_user_id').val(response.subasta_user.subasta_user_id);
-        // $('#pujar_subasta').show();
+      if (response.detalle.tipo_subasta == 1) {
+        if (response.subasta_user == null) {
+          $('#entrar_subasta').show();
+        } else {
+          $('#subasta_user_id').val(response.subasta_user.subasta_user_id);
+          // $('#pujar_subasta').show();
+        }
       }
       if (response.puja) {
         monto = response.puja.valor;
