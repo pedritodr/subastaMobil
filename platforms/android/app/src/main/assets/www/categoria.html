@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+        Personalice la directiva de seguridad de contenido en la etiqueta meta como sea necesario. Agregue "unsafe-inline" a default-src para permitir JavaScript insertado.
+        Para obtener más detalles, consulte http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+  <title>Subasta</title>
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="material_bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="material_bootstrap/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="material_bootstrap/css/style.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="material/css/onsenui.css">
+  <link rel="stylesheet" href="material/css/onsen-css-components.min.css">
+  <script src="material/js/onsenui.min.js"></script>
+  <style>
+    .timer {
+      margin: 0 0 4px;
+      font-family: Lato;
+      color: #fff;
+      display: inline-block;
+      font-weight: 100;
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .timer .conte {
+      padding: 1px;
+      border-radius: 3px;
+      background: #8c1822;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      width: auto;
+      opacity: 0.9;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+
+
+    .timer .smalltext {
+      border-radius: 3px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      display: block;
+      padding: 1px;
+      background: #2a3681;
+      width: auto;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    .carousel .carousel-indicators li {
+      width: 120px;
+      height: auto;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .carousel-inner {
+      width: 100%;
+
+      overflow: hidden;
+    }
+
+    .espacio {
+      margin-bottom: 70px !important;
+    }
+
+    .back-button--material {
+      font-size: 22px;
+      color: #80232b;
+      display: inline-block;
+      padding: 0 12px;
+      height: 100%;
+      margin: 0 0 0 4px;
+      border: none;
+      border-radius: 0;
+      vertical-align: baseline;
+      vertical-align: initial;
+      line-height: 56px;
+    }
+
+    .progress-circular__primary {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+      stroke: #80232b;
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .page__background {
+      background-color: #ebebeb;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body style="background-color: #ebebeb;">
+  <ons-navigator>
+    <ons-splitter>
+      <ons-splitter-side id="menu" side="left" width="250px" collapse swipeable>
+        <ons-page>
+          <ons-toolbar>
+            <div class="center">
+              <img style="height:55px; margin-left:28%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+                src="images/logo_subasta.png" alt="">
+            </div>
+
+          </ons-toolbar>
+          <ons-list style="background-color: #ebebeb !important">
+            <ons-list-item modifier="nodivider" style="margin-bottom: 0px !important; padding-bottom: 0px !important;">
+
+              <div class="left" style="padding-bottom: 0px !important; margin-bottom: 0px !important;">
+                <img style="height: 60px !important; width: 60px !important;" id="img_perfil"
+                  class="list-item__thumbnail" src="">
+              </div>
+
+              <div class="center" style="padding-bottom: 0px !important; margin-bottom: 0px !important;">
+                <span id="user_menu" class="list-item__title text-center"></span><span id="email_menu"
+                  class="list-item__subtitle text-center"></span>
+                <span id="user-role" class="list-item__subtitle text-center"></span>
+              </div>
+
+            </ons-list-item>
+            <ons-list-item style="margin-top: 0px !important; padding-top: 0px !important;" modifier="nodivider">
+              <div class="center">
+                <span style="font-size: 12px !important;" class="text-center">
+                  <ons-icon style="color:green" icon="fa-circle"></ons-icon>En-linea
+                </span>
+              </div>
+            </ons-list-item>
+
+            <ons-list-header style="background-color: #ebebeb !important"><span>General</span></ons-list-header>
+
+            <ons-list-item expandable ripple>
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-user-o"></ons-icon> Perfil
+              </span>
+              <div class="expandable-content">
+                <ons-list-item onclick="cargar_perfil();" modifier="nodivider" ripple>
+
+                  <span class="list-item__title">
+                    <ons-icon style="color:#80232b" icon="fa-id-card-o"></ons-icon> Datos de generales
+                  </span>
+
+                </ons-list-item>
+                <ons-list-item onclick="cargar_password();" modifier="nodivider" ripple>
+
+                  <span class="list-item__title">
+                    <ons-icon style="color:#80232b" icon="fa-lock"></ons-icon> Contraseña
+                  </span>
+
+                </ons-list-item>
+
+              </div>
+            </ons-list-item>
+            <ons-list-item modifier="nodivider" ripple>
+
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-briefcase"></ons-icon> Mis anuncios
+              </span>
+
+            </ons-list-item>
+            <ons-list-item modifier="nodivider" ripple>
+
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-trophy"></ons-icon> Mis subastas
+              </span>
+
+            </ons-list-item>
+
+
+
+          </ons-list>
+          <ons-bottom-toolbar>
+
+            <ons-toolbar>
+              <div class="left"></div>
+              <div class="center"></div>
+              <div class="right">
+                <ons-toolbar-button onclick="cerrar_session();">
+                  <ons-icon style="color:#80232b;" icon="fa-sign-out"></ons-icon>
+                </ons-toolbar-button>
+              </div>
+            </ons-toolbar>
+
+
+          </ons-bottom-toolbar>
+        </ons-page>
+      </ons-splitter-side>
+      <ons-splitter-content id="content" page="tabbar.html"></ons-splitter-content>
+    </ons-splitter>
+
+
+  </ons-navigator>
+  <template id="tabbar.html">
+    <ons-page id="tabbar-page">
+      <ons-toolbar>
+        <div class="left">
+          <ons-button onclick="volver();" modifier="quiet">
+            <ons-icon style="color: #80232b !important" icon="fa-arrow-left"></ons-icon>
+          </ons-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo_subasta.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-card>
+        <div id="area_categoria" class="row">
+
+        </div>
+      </ons-card>
+
+    </ons-page>
+  </template>
+
+
+
+  <ons-modal direction="up">
+    <div style="text-align: center">
+      <p>
+        <ons-progress-circular indeterminate></ons-progress-circular>
+      </p>
+      <p id="body_modal"></p>
+    </div>
+  </ons-modal>
+
+</body>
+
+</html>
+
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="material_bootstrap/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="material_bootstrap/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/mdb.min.js"></script>
+
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/urls.js"></script>
+<script type="text/javascript" src="js/index_categoria.js"></script>
+<script type="text/javascript" src="js/popper.js"></script>
+
+
+<script type="text/javascript">
+  function volver() {
+    window.location.href = 'dash.html';
+  }
+  var item_auth = get_data_local();
+
+  function error(error) {
+
+    show_error(error);
+
+  }
+
+  function alertDismissed1() {
+    // do something
+  }
+
+  function alertDismissed() {
+    // do something
+  }
+
+  var modal = document.querySelector('ons-modal');
+
+
+  $(function ($) {
+    modal.show();
+    $('#body_modal').text("Cargando las categorias")
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/subasta_categoria';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+      };
+      send_data_server(url, data_to_server, success_subasta_categoria,
+        error);
+    }, 1000);
+
+  });
+
+
+
+  function success_subasta_categoria(response) {
+
+    modal.hide();
+    //  response = JSON.parse(response.data);
+    var status = response.status;
+    lista = response.lista;
+    if (status == 200) {
+
+      cargar_categorias(lista)
+
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay categorias', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+
+  }
+
+  function cargar_categorias(lista) {
+
+    cadena_cate = ""
+    if (lista.length > 0) {
+
+      for (let i = 0; i < lista.length; i++) {
+        var img = base_url + lista[i].photo;
+        cadena_cate +=
+          "<div id='cate_" + lista[i].categoria_id +
+          "' onclick='' style='padding: 5px !important;' class='col-4'><img style='width: 100% !important; background-color: cornflowerblue !important; padding:30px 20px 30px 20px !important;' class='rounded' src='" +
+          img + "' ></div>";
+      }
+      $('#area_categoria').append(cadena_cate);
+      for (let j = 0; j < lista.length; j++) {
+        $('#cate_' + lista[j].categoria_id).attr('onclick', 'buscar_subastas("' + lista[j].categoria_id + '")');
+      }
+    }
+
+
+  }
+
+  function buscar_subastas(params) {
+    window.location.href = 'subasta.html?id=' + params;
+
+  }
+</script>

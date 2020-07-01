@@ -1,0 +1,751 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+        Personalice la directiva de seguridad de contenido en la etiqueta meta como sea necesario. Agregue "unsafe-inline" a default-src para permitir JavaScript insertado.
+        Para obtener más detalles, consulte http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+  <title>Subasta</title>
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="material_bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="material_bootstrap/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="material_bootstrap/css/style.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="material/css/onsenui.css">
+  <link rel="stylesheet" href="material/css/onsen-css-components.min.css">
+  <script src="material/js/onsenui.min.js"></script>
+  <style>
+    .timer {
+      margin: 0 0 4px;
+      font-family: Lato;
+      color: #fff;
+      display: inline-block;
+      font-weight: 100;
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .timer .conte {
+      padding: 1px;
+      border-radius: 3px;
+      background: #8c1822;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      width: auto;
+      opacity: 0.9;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+
+
+    .timer .smalltext {
+      border-radius: 3px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      display: block;
+      padding: 1px;
+      background: #2a3681;
+      width: auto;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    .carousel .carousel-indicators li {
+      width: 120px;
+      height: auto;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .carousel-inner {
+      width: 100%;
+
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <ons-navigator>
+    <ons-splitter>
+      <ons-splitter-side id="menu" side="left" width="250px" collapse swipeable>
+        <ons-page>
+          <ons-toolbar>
+            <div class="center">
+              <img style="height:55px; margin-left:28%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+                src="images/logo_subasta.png" alt="">
+            </div>
+
+          </ons-toolbar>
+          <ons-list style="background-color: #ebebeb !important">
+            <ons-list-item modifier="nodivider" style="margin-bottom: 0px !important; padding-bottom: 0px !important;">
+
+              <div class="left" style="padding-bottom: 0px !important; margin-bottom: 0px !important;">
+                <img style="height: 60px !important; width: 60px !important;" id="img_perfil"
+                  class="list-item__thumbnail" src="">
+              </div>
+
+              <div class="center" style="padding-bottom: 0px !important; margin-bottom: 0px !important;">
+                <span id="user_menu" class="list-item__title text-center"></span><span id="email_menu"
+                  class="list-item__subtitle text-center"></span>
+                <span id="user-role" class="list-item__subtitle text-center"></span>
+              </div>
+
+            </ons-list-item>
+            <ons-list-item style="margin-top: 0px !important; padding-top: 0px !important;" modifier="nodivider">
+              <div class="center">
+                <span style="font-size: 12px !important;" class="text-center">
+                  <ons-icon style="color:green" icon="fa-circle"></ons-icon>En-linea
+                </span>
+              </div>
+            </ons-list-item>
+
+            <ons-list-header style="background-color: #ebebeb !important"><span>General</span></ons-list-header>
+
+            <ons-list-item expandable ripple>
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-user-o"></ons-icon> Perfil
+              </span>
+              <div class="expandable-content">
+                <ons-list-item onclick="cargar_perfil();" modifier="nodivider" ripple>
+
+                  <span class="list-item__title">
+                    <ons-icon style="color:#80232b" icon="fa-id-card-o"></ons-icon> Datos de generales
+                  </span>
+
+                </ons-list-item>
+                <ons-list-item onclick="cargar_password();" modifier="nodivider" ripple>
+
+                  <span class="list-item__title">
+                    <ons-icon style="color:#80232b" icon="fa-lock"></ons-icon> Contraseña
+                  </span>
+
+                </ons-list-item>
+
+              </div>
+            </ons-list-item>
+            <ons-list-item modifier="nodivider" ripple>
+
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-briefcase"></ons-icon> Mis anuncios
+              </span>
+
+            </ons-list-item>
+            <ons-list-item modifier="nodivider" ripple>
+
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-trophy"></ons-icon> Mis subastas
+              </span>
+
+            </ons-list-item>
+
+
+
+          </ons-list>
+          <ons-bottom-toolbar>
+
+            <ons-toolbar>
+              <div class="left"></div>
+              <div class="center"></div>
+              <div class="right">
+                <ons-toolbar-button onclick="cerrar_session();">
+                  <ons-icon style="color:#80232b;" icon="fa-sign-out"></ons-icon>
+                </ons-toolbar-button>
+              </div>
+            </ons-toolbar>
+
+
+          </ons-bottom-toolbar>
+        </ons-page>
+      </ons-splitter-side>
+      <ons-splitter-content id="content" page="tabbar.html"></ons-splitter-content>
+    </ons-splitter>
+
+
+  </ons-navigator>
+  <template id="tabbar.html">
+    <ons-page id="tabbar-page">
+      <ons-toolbar>
+        <div class="left">
+          <ons-button onclick="volver();" modifier="quiet">
+            <ons-icon style="color: #80232b !important" icon="fa-arrow-left"></ons-icon>
+          </ons-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo_subasta.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-card>
+        <ons-carousel class="insertar" halfscreen swipeable auto-scroll overscrollable id="carousel">
+
+        </ons-carousel>
+        <div class="card-body card-body-cascade text-center">
+
+          <!-- Title -->
+          <h5 id="titulo_detalle" class="card-title"><strong>Titulo</strong></h5>
+          <!-- Subtitle -->
+          <h6 style="color:#80232b !important" id="categoria_detalle" class="font-weight-bold indigo-text py-2">
+            categoria y city</h6>
+          <!-- Text -->
+
+
+          <p id="descripcion_detalle" class="card-text">Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit.
+            Exercitationem perspiciatis
+            voluptatum a, quo nobis, non commodi quia repellendus sequi nulla voluptatem dicta reprehenderit,
+            placeat laborum ut beatae ullam suscipit veniam.
+          </p>
+
+          <h1 style="background-color:#80232b !important; font-size: 20px !important;" id="inicial_detalle"
+            class="badge">
+          </h1>
+          <p id="cierre_detalle" class="text-black-50 py-2">fecha de cierre</p>
+
+
+
+        </div>
+        <input name="" id="subasta_id" type="hidden" value="">
+        <input name="" id="subasta_user_id" type="hidden" value="">
+        <button style="width: 95% !important; background-color: #80232b !important; display: none;"
+          onclick="modal_entrar();" id="entrar_subasta" class="btn btn-cyan" type="button"><span><i
+              class="fa fa-sign-in" aria-hidden="true"></i>
+            Entrar a la subasta</span></button>
+
+        <button style="display: none; width: 95% !important; background-color: #80232b !important;"
+          onclick="modal_pujar();" id="pujar_subasta" class="btn btn-cyan" type="button"><span><i class="fa fa-sign-in"
+              aria-hidden="true"></i>
+            Pujar</span></button>
+      </ons-card>
+
+    </ons-page>
+  </template>
+
+
+
+  <ons-modal direction="up">
+    <div style="text-align: center">
+      <p>
+        <ons-progress-circular indeterminate></ons-progress-circular>
+      </p>
+      <p id="body_modal"></p>
+    </div>
+  </ons-modal>
+
+</body>
+
+
+</html>
+
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="material_bootstrap/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="material_bootstrap/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/mdb.min.js"></script>
+
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/urls.js"></script>
+<script type="text/javascript" src="js/index_detalle_subasta.js"></script>
+<script type="text/javascript" src="js/popper.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+
+<script type="text/javascript">
+  var imageURL = '';
+  var item_auth = get_data_local();
+  var puja_user_id = null;
+  var valor_inicial = null;
+  var valor_pago = null;
+  var modal = document.querySelector('ons-modal');
+  window.fn = {};
+
+  window.fn.open = function () {
+    var menu = document.getElementById('menu');
+    menu.open();
+    // $(".page-wrapper").addClass("toggled");
+    // $('#body_nav').show();
+  };
+
+  window.fn.load = function (page) {
+    var content = document.getElementById('content');
+    var menu = document.getElementById('menu');
+    content.load(page)
+      .then(menu.close.bind(menu));
+  };
+
+  function pagar_entrada() {
+    $('#myModalloadsubasta').modal('show')
+    $('#modal_entrar').modal('hide');
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/entrar_subasta';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        subasta_id: subasta_id
+      };
+      send_data_server(url, data_to_server, success_pagar_entrada,
+        error);
+    }, 1000);
+
+  }
+
+  function pujar() {
+    if (monto) {
+      var valor = monto
+    } else {
+      var valor = valor_inicial
+    }
+    if (parseFloat($('#valor_puja').val()) > valor) {
+      $('#myModalloadsubasta').modal('show');
+      $('#modal_pujar').modal('hide');
+      $('#valor').val('');
+      setTimeout(function () {
+        var url = base_url + 'rest_subasta/pujar_user';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+
+        var valor_pujado = $('#valor_puja').val();
+        var subasta_user_id = $('#subasta_user_id').val();
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          subasta_id: subasta_id,
+          subasta_user_id: subasta_user_id,
+          valor: valor_pujado
+        };
+        send_data_server(url, data_to_server, success_pujar_user,
+          error);
+      }, 1000);
+    } else {
+      $('#valor').val('');
+      navigator.notification.alert(
+        'El valor a pujar es menor a la puja mayor', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+
+
+  }
+
+  function success_pujar_user(response) {
+
+    $('#myModalloadsubasta').modal('hide');
+    response = JSON.parse(response.data);
+    var status = response.status;
+
+    if (status == 200) {
+      navigator.notification.alert(
+        'Tu puja fue realizada con exito', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+
+      $('#entrar_subasta').hide();
+      $('#pujar_subasta').hide();
+      if (response.object) {
+        $('#inicial_detalle').text(parseFloat(response.object.valor).toFixed(2));
+        $('#inicial_detalle').css('font-size', '30px');
+        $('#inicial_detalle').css('background', '#28a745');
+      }
+
+    }
+    if (status == 300) {
+
+      navigator.notification.alert(
+        'Tu puja no se realizo exite un valor mas alto', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+      $('#entrar_subasta').hide();
+      $('#pujar_subasta').show();
+      if (response.object) {
+        puja_user_id = response;
+        $('#inicial_detalle').text("$" + parseFloat(response.object.valor).toFixed(2));
+        $('#inicial_detalle').css('font-size', '30px');
+        $('#inicial_detalle').css('background', '#28a745');
+      }
+    }
+
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No se realizo el pago', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+
+  }
+
+  function success_pagar_entrada(response) {
+    $('#myModalloadsubasta').modal('hide');
+
+    response = JSON.parse(response.data);
+    var status = response.status;
+
+    if (status == 200) {
+      $('#subasta_user_id').val(response.object.subasta_user_id);
+      navigator.notification.alert(
+        'Ya puedes comenzar a pujar en la subasta', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+      $('#entrar_subasta').hide();
+      $('#pujar_subasta').show();
+      if (response.puja) {
+        $('#inicial_detalle').text(response.puja.valor);
+        $('#inicial_detalle').css('font-size', '30px');
+        $('#inicial_detalle').css('background', '#28a745');
+      }
+
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No se realizo el pago', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+
+
+
+  function error(error) {
+
+    show_error(error);
+
+  }
+
+  function success_pujar(response) {
+
+    response = JSON.parse(response.data);
+
+    var status = response.status;
+    if (status == 200) {
+
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No se ha pujado', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+
+
+
+  function alertDismissed1() {
+    // do something
+  }
+
+  function alertDismissed() {
+    // do something
+  }
+
+
+  function volver() {
+    window.location.href = 'dash.html';
+  }
+
+
+
+
+  $(function ($) {
+
+    $(".page-wrapper").removeClass("toggled");
+    $(".sidebar-dropdown > a").click(function () {
+      $(".sidebar-submenu").slideUp(200);
+      if (
+        $(this)
+        .parent()
+        .hasClass("active")
+      ) {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .parent()
+          .removeClass("active");
+      } else {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .next(".sidebar-submenu")
+          .slideDown(200);
+        $(this)
+          .parent()
+          .addClass("active");
+      }
+    });
+
+    $("#close-sidebar").click(function () {
+      $(".page-wrapper").removeClass("toggled");
+      $(".navbar").addClass("fixed-top");
+
+    });
+    $("#show-sidebar").click(function () {
+      $(".page-wrapper").addClass("toggled");
+      $(".navbar").removeClass("fixed-top");
+    });
+
+
+    modal.show();
+    $('#body_modal').text("Cargando detalle de la subasta...");
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/detalle_subasta';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        id: id
+      };
+      send_data_server(url, data_to_server, success_detalle_subasta,
+        error);
+    }, 1000);
+
+
+
+  });
+
+
+
+
+
+
+
+  function success_detalle_subasta(response) {
+
+    modal.hide();
+    // response = JSON.parse(response.data);
+    var status = response.status;
+
+    if (status == 200) {
+      // $('#area_detalle_subasta').show();
+      subasta_id = response.detalle.subasta_id;
+      $('#titulo_detalle').text(response.detalle.nombre_espa);
+      $('#categoria_detalle').html("<span><i class='fa fa-tag' aria-hidden='true'></i> " + response.categoria
+        .name_espa +
+        "</span>&nbsp|&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " + response.ciudad.name_ciudad +
+        "</span> ");
+      $('#descripcion_detalle').html(response.detalle.descrip_espa);
+      $('#entrada_detalle').text("Valor de entrada: $" + parseFloat(response.detalle.valor_pago).toFixed(2));
+      $('#inicial_detalle').text(" $" + parseFloat(response.detalle.valor_inicial).toFixed(2));
+      $('#cierre_detalle').text("Fecha de cierre: " + response.detalle.fecha_cierre);
+      var cronometro = "<div class='col-12'><div class='timer'><div class='timer conte'><span class='days'  id='day_" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Dias</div></div><div class='timer'><div class='timer conte'><span class='hours' id='hour_" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Horas</div></div><div class='timer'><div class='timer conte'><span class='minutes' id='minute_" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Minutos</div></div><div class='timer'><div class='timer conte'><span class='seconds' id='second_" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Segundos</div></div></div>";
+
+      var imagen1 = base_url + response.detalle.photo;
+
+      valor_inicial = response.detalle.valor_inicial
+      valor_pago = response.detalle.valor_pago;
+      //slider
+      var slider =
+        "<ons-carousel-item><div style='text-align: center; font-size: 100px; margin-top: 20px; color: #fff;'><img src='" +
+        imagen1 + "' class='d-block w-100'></div></ons-carousel-item>";
+
+      if (response.foto_object.length > 0) {
+        for (let i = 0; i < response.foto_object.length; i++) {
+          var imagen2 = base_url + response.foto_object[i].url_photo;
+          slider = slider +
+            "<ons-carousel-item><div style='text-align: center; font-size: 100px; margin-top: 20px; color: #fff;'><img src='" +
+            imagen2 + "' class='d-block w-100'></div></ons-carousel-item>";
+        }
+
+      }
+
+      //$('.carousel-indicators').html(peq);
+      $('.insertar').append(slider);
+      $('#cierre_detalle').after(cronometro);
+      var x = setInterval(function () {
+        var fecha = response.detalle.fecha_cierre;
+        var deadline = new Date(fecha).getTime();
+        var currentTime = new Date().getTime();
+        var t = deadline - currentTime;
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((t % (1000 * 60)) / 1000);
+        $('#day_' + response.detalle.subasta_id).html(days);
+        $('#hour_' + response.detalle.subasta_id).html(hours);
+        $('#minute_' + response.detalle.subasta_id).html(minutes);
+        $('#second_' + response.detalle.subasta_id).html(seconds);
+
+        if (t < 0) {
+
+          clearInterval(x);
+
+          $('#day_' + response.detalle.subasta_id).html(0);
+          $('#hour_' + response.detalle.subasta_id).html(0);
+          $('#minute_' + response.detalle.subasta_id).html(0);
+          $('#second_' + response.detalle.subasta_id).html(0);
+
+        }
+
+      }, 1000);
+      if (response.subasta_user == null) {
+        $('#entrar_subasta').show();
+      } else {
+        $('#subasta_user_id').val(response.subasta_user.subasta_user_id);
+        // $('#pujar_subasta').show();
+
+      }
+      if (response.puja) {
+        monto = response.puja.valor;
+      }
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay detalle de la subasta', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+
+  }
+
+  function modal_entrar() {
+    $('#modal_entrar').modal('show');
+
+    $('#entrar').text("$" + parseFloat(valor_pago).toFixed(2));
+
+
+  }
+
+  function modal_pujar() {
+    $('#modal_pujar').modal('show');;
+    if (monto) {
+      $('#valor_alto').text("$" + parseFloat(monto).toFixed(2));
+    } else {
+      $('#valor_alto').text("$" + parseFloat(valor_inicial).toFixed(2));
+    }
+
+  }
+
+  function success_alta(response) {
+
+    // response = JSON.parse(response.data);
+    var status = response.status;
+
+    if (status == 200) {
+      if (response.object.valor != null) {
+
+        var valor_user = response.object_user.valor;
+        var valor_max = response.object.valor;
+
+        if ((valor_user >= valor_max)) {
+
+          $('#entrar_subasta').hide();
+          $('#pujar_subasta').hide();
+          if (response.object) {
+            $('#inicial_detalle').text("$" + parseFloat(valor_max).toFixed(2));
+            $('#inicial_detalle').css('font-size', '30px');
+            $('#inicial_detalle').css('background', '#28a745');
+          }
+        } else {
+
+          //$('#entrar_subasta').hide();
+          $('#pujar_subasta').show();
+          if (response.object) {
+            if (response.object.valor > 0) {
+              $('#inicial_detalle').text("$" + parseFloat(response.object.valor).toFixed(2));
+              $('#inicial_detalle').css('font-size', '30px');
+              $('#inicial_detalle').css('background', '#28a745');
+            }
+          }
+        }
+      } else {
+        $('#pujar_subasta').show();
+      }
+    }
+
+
+  }
+  setInterval(function () {
+    var url = base_url + 'rest_subasta/puja_alta';
+    var user_id = item_auth.user_id;
+    var security_token = item_auth.security_token;
+
+    if (subasta_id) {
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        subasta_id: subasta_id,
+      };
+      send_data_server(url, data_to_server, success_alta,
+        error);
+    }
+
+  }, 3000);
+</script>

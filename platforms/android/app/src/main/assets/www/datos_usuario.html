@@ -1,0 +1,739 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+        Personalice la directiva de seguridad de contenido en la etiqueta meta como sea necesario. Agregue "unsafe-inline" a default-src para permitir JavaScript insertado.
+        Para obtener más detalles, consulte http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <title>Págalo Ahora</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="material_bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="material_bootstrap/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="material_bootstrap/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <nav class="navbar fixed-top navbar-dark primary-color">
+        <a class="navbar-brand" href="#" onclick="pagina_principal();"><img style="height:60px;" src="images/logo3x1blanco.png" /></a>
+
+
+        <button style="padding:10px;background-color: #FFF !important;color: #09366e !important;"
+            class="btn btn-light waves-effect float-right btn-sm text-center" onclick="mostrar_menu();">
+            <i id="icon_btn" class="fa fa-align-justify fa-2x"></i>
+        </button>
+    </nav>
+
+    <div id="contenedor_1"
+        style="width: 70%;height: 100%;right: 0px;top: 85px;position: fixed;background: #FFF;opacity: 0.95;display: none;z-index: 1000;border-left: 1px solid #09366e;">
+        <div
+            style="background-color:#FFF;height: 220px;width: 100%;text-align: center;border-bottom:2px solid #09366e;">
+            <img id="img_perfil" style="width:80px;height:80px;margin-top:25px;" src="images/1.png" /> <br />
+            <label style="color:#09366e;" id="name_menu"></label> <br />
+            <label style="color:#2193D0;" id="email_menu"></label> <br />
+            <img src="" id="flag_country" style="width:45px;height:30px;" />
+
+        </div>
+        <div class="waves-effect" style="border-bottom: 1px solid #CCC;" onclick="go_metodos_pago();">
+            <label style="color:#09366e;margin-left: 10px;padding: 10px;"><img src="images/forma_pago.png"
+                    style="width:30px; height:22px;" /> Listar Métodos de Pagos</label>
+        </div>
+
+        <div class="waves-effect" style="border-bottom: 1px solid #CCC;" onclick="go_to_solicitudes_cobro();">
+            <label style="color:#09366e;margin-left: 10px;padding: 10px;"><img src="images/solicitudes.png"
+                    style="width:36px; height:36px;" /> Solicitudes de cobro</label>
+        </div>
+        <div class="waves-effect" class="waves-effect" style="border-bottom: 1px solid #CCC;"
+            onclick="cerrar_session();">
+            <label style="color:#09366e;margin-left: 10px;padding: 10px;"><img src="images/logout_icon.png"
+                    style="width:30px; height:30px;" /> Cerrar sesión</label>
+        </div>
+    </div>
+
+    <div style="position: fixed;top: 0;right: 0;bottom: 0;left: 0;overflow: hidden;" class="modal fade" id="myModalLoad"
+        tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="position: fixed;margin: 0;  width: 100%;  height: 100%;padding: 0;"
+            role="document">
+            <div class="modal-content"
+                style=" position: absolute;top: 0;right: 0;bottom: 0;left: 0;border-radius: 0;box-shadow: none;">
+
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="images/team.gif" style="height: 200px; width: 260px;margin-top: 50%;" />
+                        <label style="color: #2292b8;font-weight: bold;font-size: 16px;">Editando datos de
+                            usuario</label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div style="position: fixed;top: 0;right: 0;bottom: 0;left: 0;overflow: hidden;" class="modal fade"
+        id="myModalLoadChangePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="position: fixed;margin: 0;  width: 100%;  height: 100%;padding: 0;"
+            role="document">
+            <div class="modal-content"
+                style=" position: absolute;top: 0;right: 0;bottom: 0;left: 0;border-radius: 0;box-shadow: none;">
+
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="images/candado.gif" style="height: 200px; width: 260px;margin-top: 50%;" />
+                        <label style="color: #2292b8;font-weight: bold;font-size: 16px;">Cambiando contraseña</label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div style="background-color: #ffffff; height: 60px; border-bottom: 2px solid #dddcdb;margin-top:85px;">
+        <button style="margin-top:-10px;" onclick="back();" type="button"
+            class="btn btn-outline-primary waves-effect"><i class="fa fa-arrow-left"></i></button>
+        <img class="animated bounce" src="images/user_icon.png" style="height:40px;margin-top:-5px;margin-left: 5px;" />
+        <label
+            style="font-weight:bold; color:#2193D0; font-family:'Sitka Banner';font-size:24px; margin-top:15px;">Perfil
+            de usuario</label>
+
+    </div>
+
+
+    <div class="row" id="msg_error" style="display:none;">
+        <div class="col-xs-12">
+            <div
+                style="background-color:#000000; height:40px; opacity:0.9; margin-top:10px; margin-left:25px; margin-right:25px;text-align:center;">
+
+                <label style="color:white;margin-top:10px;" id="msg_error_text">Su autenticación es incorrecta</label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row" id="container_loading" style="margin-right:0px;">
+        <div class="text-center">
+            <img src="images/loading_clasic.gif" style="height: 200px; width: 260px;margin-top: 20%;" />
+            <label style="color: #2292b8;font-weight: bold;font-size: 16px;">Cargando datos de usuario</label>
+        </div>
+    </div>
+
+    <div class="container" id="tab_container" style="display:none;">
+
+        <!-- Grid row -->
+        <div class="row" style="margin-top:10px;">
+
+            <!-- Grid column -->
+            <div class="col">
+
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                            aria-controls="pills-home" aria-selected="true"><i class="fa fa-user"></i> Datos
+                            generales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                            aria-controls="pills-profile" aria-selected="false"><i class="fa fa-lock"></i>
+                            Contraseña</a>
+                    </li>
+
+                </ul>
+
+                <div class="card">
+
+                    <div class="tab-content pt-2 pl-1" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                            aria-labelledby="pills-home-tab">
+
+                            <div class="row">
+                                <div class="col-5">
+                                    <img id="foto_perfil_usuario" src="images/icon_profile_dash.png"
+                                        style="width: 120px;height: 120px;margin-top:10px;border-radius: 25px;margin-left: 10px;" />
+                                </div>
+                                <div class="col-7 text-center">
+                                    <a onclick="tomar_foto();" class="btn btn-primary"><i class="fa fa-camera"
+                                            style="padding: 5px !important;margin-top: 5px;"></i> Foto</a>
+                                    <label style="font-size:14px;color: #034C75;">Tómate una foto donde aparezca tu
+                                        rostro
+                                        de una manera nítida.</label>
+                                </div>
+                            </div>
+
+                            <div class="row" id="area_validacion_foto" style="display: none;">
+                                <div class="col-12" style="color:#2193D0;text-align: center;">Verificando validez de la
+                                    foto..</div>
+                            </div>
+
+                            <div class="md-form text-info" style="margin-left:10px;">
+                                <i class="fa fa-text-height prefix animated rotateIn"></i>
+                                <input name="email_recuperacion" type="text" id="name" class="form-control" />
+                            </div>
+
+                            <div class="md-form text-info" style="margin-left:10px;">
+                                <i class="fa fa-id-card prefix animated rotateIn"></i>
+                                <input type="text" id="cedula" class="form-control" />
+                            </div>
+
+                            <div class="md-form text-info" style="margin-left:10px;">
+                                <i class="fa fa-phone prefix animated rotateIn"></i>
+                                <input type="text" id="phone" class="form-control" />
+                            </div>
+
+                            <button onclick="change_user_data();" class="btn btn-primary waves-effect"
+                                style="margin-right: 10px;margin-bottom: 10px;width: 95%;"><i class="fa fa-edit"></i>
+                                Editar perfil</a>
+
+                        </div>
+
+
+
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                            aria-labelledby="pills-profile-tab">
+
+                            <div class="md-form text-info" style="margin-left:10px;">
+                                <i class="fa fa-unlock prefix animated rotateIn"></i>
+                                <input type="password" id="old_password" class="form-control" />
+                                <label for="old_password">Contraseña anterior</label>
+                            </div>
+
+                            <div class="md-form text-info" style="margin-left:10px;">
+                                <i class="fa fa-lock prefix animated rotateIn"></i>
+                                <input type="password" id="password" class="form-control" />
+                                <label for="password">Contraseña nueva</label>
+                            </div>
+
+                            <div class="md-form text-info" style="margin-left:10px;">
+                                <i class="fa fa-lock prefix animated rotateIn"></i>
+                                <input type="password" id="repeat_password" class="form-control" />
+                                <label for="repeat_password">Repetir Contraseña nueva</label>
+                            </div>
+
+                            <button onclick="change_password();" class="btn btn-primary waves-effect"
+                                style="margin-right: 10px;margin-bottom: 10px;width: 95%;"><i class="fa fa-lock"></i>
+                                Cambiar contraseña</a>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+
+
+    </div>
+
+
+
+
+
+</body>
+
+</html>
+
+
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="material_bootstrap/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="material_bootstrap/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/mdb.min.js"></script>
+
+
+
+<script type="text/javascript" src="scripts/urls.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="scripts/platformOverrides.js"></script>
+<script type="text/javascript" src="scripts/index_datos_usuario.js"></script>
+
+
+<script type="text/javascript">
+
+    var imageValidate = false;
+    var imageURL = '';
+
+    function dataURItoBlob(dataURI) {
+
+        // convert base64/URLEncoded data component to raw binary data held in a string
+        var byteString;
+        if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            byteString = atob(dataURI.split(',')[1]);
+        else
+            byteString = unescape(dataURI.split(',')[1]);
+        // separate out the mime component
+
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to a typed array
+        var ia = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        var param1 = new Array(ia);
+        return new Blob(param1, { type: mimeString });
+    }
+
+    function responseDetect() {
+
+    }
+
+    function verificar_rostro(imageUri) {
+        var subscriptionKey = "da97a158f57a4bc992c3529602959a3e";
+
+        var uriBase =
+            "https://pagahoy.cognitiveservices.azure.com/face/v1.0/";
+
+        // Request parameters.
+        var params = {
+            "returnFaceId": "true",
+            "returnFaceLandmarks": "false",
+            "returnFaceAttributes":
+                "age,gender,headPose,smile,facialHair,glasses,emotion," +
+                "hair,makeup,occlusion,accessories,blur,exposure,noise"
+        };
+
+
+        // Display the image.
+        var sourceImageUrl = "data:image/jpeg;base64," + imageUri
+
+        //document.querySelector("#foto_perfil_usuario").src = sourceImageUrl;
+        var blob = dataURItoBlob(sourceImageUrl);
+
+        //var binary_data = convertDataURIToBinary("data:image/jpeg;base64," + imageUri);
+
+        // Perform the REST API call.
+        $.ajax({
+            url: "https://pagahoy.cognitiveservices.azure.com/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise&recognitionModel=recognition_01&returnRecognitionModel=false&detectionModel=detection_01",
+
+            // Request headers.
+            beforeSend: function (xhrObj) {
+                xhrObj.setRequestHeader("Content-Type", "application/octet-stream");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            },
+
+            type: "POST",
+            processData: false,
+            contentType: 'application/octet-stream',
+            // Request body.
+            data: blob,
+        })
+
+            .done(function (data) {
+                // Show formatted JSON on webpage.
+                $("#area_validacion_foto").hide();
+                if (data.length == 1) {
+                    imageValidate = true;
+                    imageURL = sourceImageUrl;
+
+                } else {
+                    navigator.notification.alert(
+                        'Lo sentimos, la foto proporcionada no cumple con los requerimientos de la plataforma',  // message
+                        responseDetect,         // callback
+                        'Comprobación de Foto',            // title
+                        'Cerrar'                  // buttonName
+                    );
+                    imageValidate = false;
+                    imageURL = '';
+                }
+
+            })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                // Display error message.
+                var errorString = (errorThrown === "") ?
+                    "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+                errorString += (jqXHR.responseText === "") ?
+                    "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                        jQuery.parseJSON(jqXHR.responseText).message :
+                        jQuery.parseJSON(jqXHR.responseText).error.message;
+                //alert(errorString);
+            });
+    }
+
+    function tomar_foto() {
+        var srcType = Camera.PictureSourceType.CAMERA;
+        var options = setOptions(srcType);
+
+        options.targetHeight = 240;
+        options.targetWidth = 240;
+
+        navigator.camera.getPicture(function cameraSuccess(imageData) {
+
+            displayImage(imageData);
+            // You may choose to copy the picture, save it somewhere, or upload.
+            $("#area_validacion_foto").fadeIn(500);
+            verificar_rostro(imageData);
+
+
+        }, function cameraError(error) {
+            console.debug("No se puede obtener la foto: " + error, "app");
+
+        }, options);
+    }
+
+    function setOptions(srcType) {
+        var options = {
+            // Some common settings are 20, 50, and 100
+            quality: 100,
+            destinationType: Camera.DestinationType.DATA_URL,
+            // In this app, dynamically set the picture source, Camera or photo gallery
+            sourceType: srcType,
+            encodingType: Camera.EncodingType.JPEG,
+            mediaType: Camera.MediaType.PICTURE,
+            allowEdit: true,
+            cameraDirection: 1
+        }
+        return options;
+    }
+
+    function displayImage(imageData) {
+
+        var elem = document.getElementById('foto_perfil_usuario');
+        elem.src = "data:image/jpeg;base64," + imageData;
+    }
+
+
+
+    var token = "";
+
+    function go_metodos_pago() {
+        call_view('metodos_pago.html', 'datos_usuario.html');
+    }
+
+    function go_to_solicitudes_cobro() {
+        call_view('solicitudes_pago_externo.html', 'datos_usuario.html');
+    }
+
+    function almacenar_huella_app() {
+
+
+        var url = base_url + 'rest_user/update_huella';
+        var puser_id = get_data_local("id");
+        var security_token = get_data_local("security_token");
+        $("#container_loading").show();
+        var imei = device.uuid;
+
+        $.ajax
+            ({
+                type: "POST",
+                url: url,
+                dataType: 'json',
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(user_rest + ":" + pass_rest));
+                    xhr.setRequestHeader("SecurityToken", btoa(security_token));
+                },
+                data: { token_huella: btoa(token), user_id: btoa(puser_id), imei: btoa(imei) },
+                success: function (response) {
+                    $("#container_loading").hide();
+                    var status = response.status;
+                    if (status == 404) { // si existe error de autenticación
+
+                        cerrar_session();
+                        return;
+                    } else {
+
+                        $("#error-huella").hide();
+                        $("#success-huella").fadeIn(600);
+                        $("#success-huella").text(response.msg);
+
+                        setTimeout(function () {
+                            $("#success-huella").fadeOut(600);
+                        }, 4000);
+
+
+                    }
+                },
+                error: function (error) {
+
+                }
+            });
+
+    }
+
+    function isAvailableSuccessArriba(result) {
+        token = result.token;
+
+        almacenar_huella_app();
+
+    }
+
+    function isAvailableErrorArriba(message) {
+        $("#success-huella").hide();
+        $("#error-huellla").fadeIn(600);
+        $("#error-huella").text("No se puede realizar el registro de huella");
+
+        setTimeout(function () {
+            $("#error-huella").fadeOut(600);
+        }, 4000);
+    }
+
+    function registrar_huella_digital() {
+
+        var imei = device.uuid;
+        console.log(imei);
+        var password = Math.floor((Math.random() * 1000000) + 1);
+        console.log(password);
+        var encryptConfig = {
+            clientId: btoa("PagaHoy"),
+            username: imei,
+            password: btoa(password)
+        }; // See config object for required parameters
+
+        FingerprintAuth.encrypt(encryptConfig, isAvailableSuccessArriba, isAvailableErrorArriba);
+    }
+
+    function change_user_data() {
+
+        $("#success-datos-usuarios").hide();
+        $("#error-datos-usuarios").hide();
+
+        var nombre = $("#name").val();
+        var cedula = $("#cedula").val();
+        var phone = $("#phone").val();
+
+        if (imageValidate) {
+
+            if (nombre.trim().length > 0) {
+
+                if (cedula.trim().length > 0) {
+
+                    if (phone.trim().length > 0) {
+
+                        var item_auth = get_data_local();
+
+                        if (!item_auth) {
+                            cerrar_session();
+                        } else {
+                            if (item_auth.id == 0) {
+                                cerrar_session();
+                            }
+                        }
+                        //mandar a cambiar los datos de usuarios
+                        $("#myModalLoad").modal('show');
+
+
+
+                        setTimeout(function () {
+
+
+                            var url = base_url + 'rest_user/update_datos_perfil';
+                            var puser_id = item_auth.id;
+                            var security_token = item_auth.security_token;
+
+
+                            $.ajax
+                                ({
+                                    type: "POST",
+                                    url: url,
+                                    dataType: 'json',
+                                    async: true,
+                                    beforeSend: function (xhr) {
+                                        xhr.setRequestHeader("Authorization", "Basic " + btoa(user_rest + ":" + pass_rest));
+                                    },
+                                    data: { user_id: puser_id, security_token: security_token, name: nombre, phone: phone, cedula: cedula,photo: imageURL},
+                                    success: function (response) {
+
+
+
+                                        $("#myModalLoad").modal('hide');
+
+                                        var status = response.status;
+                                        if (status == 404) { // si existe error de autenticación
+
+                                            cerrar_session();
+                                        } else {
+                                            update_data_local(response.user_object.name, response.user_object.photo);
+                                            cargar_datos_perfil();
+                                            navigator.notification.alert(
+                                                'Los datos han sido actualizados correctamente',  // message
+                                                cerrar_push,         // callback
+                                                'Notificación',            // title
+                                                'Aceptar'                  // buttonName
+                                            );
+
+
+                                        }
+                                    },
+                                    error: function (error) {
+
+                                    }
+                                });
+
+                        }, 1000);
+
+                    } else {
+                        navigator.notification.alert(
+                            'El teléfono es requerido',  // message
+                            alertDismissed1,         // callback
+                            'Información',            // title
+                            'Aceptar'                  // buttonName
+                        );
+                    }
+
+                } else { //email requerido
+                    navigator.notification.alert(
+                        'La cédula/pasaporte es requerida',  // message
+                        alertDismissed1,         // callback
+                        'Información',            // title
+                        'Aceptar'                  // buttonName
+                    );
+                }
+
+            } else { //el campo nombre se ha quedado vacío
+
+                navigator.notification.alert(
+                    'El nombre y apellidos son requeridos',  // message
+                    alertDismissed1,         // callback
+                    'Información',            // title
+                    'Aceptar'                  // buttonName
+                );
+            }
+        } else {
+            navigator.notification.alert(
+                'La imagen de perfil no cumple con los requerimientos de la plataforma',  // message
+                alertDismissed1,         // callback
+                'Información',            // title
+                'Aceptar'                  // buttonName
+            );
+        }
+    }
+
+    function alertDismissed1() {
+
+    }
+
+    function change_password() {
+        $("#success-password").hide();
+        $("#error-password").hide();
+
+        var old_password = $("#old_password").val();
+        var password = $("#password").val();
+        var repeta_password = $("#repeat_password").val();
+
+        if (old_password.trim().length > 0) {
+
+            if (password.trim().length > 0) {
+
+                if (password.trim() == repeta_password.trim()) {
+
+
+                    var item_auth = get_data_local();
+
+                    if (!item_auth) {
+                        cerrar_session();
+                    } else {
+                        if (item_auth.id == 0) {
+                            cerrar_session();
+                        }
+                    }
+                    $("#myModalLoadChangePassword").modal('show');
+                    setTimeout(function () {
+
+                        var url = base_url + 'rest_user/change_password';
+                        var puser_id = item_auth.id;
+                        var security_token = item_auth.security_token;
+
+
+                        $.ajax
+                            ({
+                                type: "POST",
+                                url: url,
+                                dataType: 'json',
+                                async: true,
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("Authorization", "Basic " + btoa(user_rest + ":" + pass_rest));
+                                },
+                                data: { user_id: puser_id, security_token: security_token, old_password: old_password, new_password: password },
+                                success: function (response) {
+
+
+                                    $("#myModalLoadChangePassword").modal('hide');
+
+                                    var status = response.status;
+                                    if (status == 404) { // si existe error de autenticación
+                                        cerrar_session();
+                                    } else if (status == 500) { //no coincide la contraseña anterior
+                                        navigator.notification.alert(
+                                            'La contraseña anterior no coincide',  // message
+                                            alertDismissed1,         // callback
+                                            'Información',            // title
+                                            'Aceptar'                  // buttonName
+                                        );
+
+                                    } else {
+
+                                        var token = response.token;
+                                        var item_auth = get_data_local();
+                                        save_data_local(item_auth.id, item_auth.email, token, 4,item_auth.name,item_auth.photo);
+                                        cargar_datos_perfil();
+                                        $("#old_password").val("");
+                                        $("#password").val("");
+                                        $("#repeat_password").val("");
+                                        navigator.notification.alert(
+                                            'La contraseña ha sido cambiada correctamente',  // message
+                                            alertDismissed1,         // callback
+                                            'Información',            // title
+                                            'Aceptar'                  // buttonName
+                                        );
+
+                                    }
+                                },
+                                error: function (error) {
+                                   // show_error(error);
+                                }
+                            });
+
+                    }, 1000);
+
+                } else {
+
+                    navigator.notification.alert(
+                        'La contraseña nueva y su repetición no coinciden',  // message
+                        alertDismissed1,         // callback
+                        'Información',            // title
+                        'Aceptar'                  // buttonName
+                    );
+                }
+
+            } else { //email requerido
+                navigator.notification.alert(
+                    'La contraseña nueva no puede esta vacía',  // message
+                    alertDismissed1,         // callback
+                    'Información',            // title
+                    'Aceptar'                  // buttonName
+                );
+            }
+
+        } else { //el campo nombre se ha quedado vacío
+            navigator.notification.alert(
+                'La contraseña anterior no puede esta vacía',  // message
+                alertDismissed1,         // callback
+                'Información',            // title
+                'Aceptar'                  // buttonName
+            );
+        }
+    }
+</script>

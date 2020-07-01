@@ -1,0 +1,1025 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+        Personalice la directiva de seguridad de contenido en la etiqueta meta como sea necesario. Agregue "unsafe-inline" a default-src para permitir JavaScript insertado.
+        Para obtener más detalles, consulte http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+  <title>Subasta</title>
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="material_bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="material_bootstrap/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="material_bootstrap/css/style.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <style>
+    .timer {
+      margin: 0 0 4px;
+      font-family: Lato;
+      color: #fff;
+      display: inline-block;
+      font-weight: 100;
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .timer .conte {
+      padding: 1px;
+      border-radius: 3px;
+      background: #8c1822;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      width: auto;
+      opacity: 0.9;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+
+
+    .timer .smalltext {
+      border-radius: 3px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      display: block;
+      padding: 1px;
+      background: #2a3681;
+      width: auto;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    .carousel .carousel-indicators li {
+      width: 120px;
+      height: auto;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .carousel-inner {
+      width: 100%;
+
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper chiller-theme toggled">
+    <nav id="nav_1" style="padding: 0 !important; background-color: #80232b !important; margin-bottom: 60px !important;"
+      class="navbar fixed-top navbar-dark info-color">
+      <div class="row">
+        <a class="navbar-brand text-center" href="dash.html">
+          <img style="margin:2px 0px 2px 0; height:60px;" src="images/logo-subasta-hor.png" />
+        </a>
+        <a id="show-sidebar" style="background-color:white !important;" class="btn btn-sm btn-dark" href="#">
+          <i style="text-align: center; font-size: 27px !important; color:#80232b" class="fa fa-bars"
+            aria-hidden="true"></i>
+        </a>
+      </div>
+
+
+
+
+    </nav>
+
+    <nav id="sidebar" class="sidebar-wrapper">
+      <div class="sidebar-content">
+        <div class="sidebar-brand">
+          <a href="#">Subasta Anuncios</a>
+          <div id="close-sidebar">
+            <i class="fa fa-times-circle" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="sidebar-header">
+          <div class="user-pic user-info">
+            <img id="img_perfil" class="img-responsive img-rounded" src="images/icon_profile_dash.png"
+              alt="User picture">
+            <span class="user-status text-center">
+              <i class="fa fa-circle"></i>
+              <span>Online</span>
+            </span>
+          </div>
+          <div class="user-info">
+            <span class="user-name text-center" id="user_menu">
+            </span>
+            <span class="user-status text-center" id="email_menu">
+            </span>
+            <span class="user-role text-center">Administrator</span>
+
+          </div>
+        </div>
+        <!-- sidebar-header  -->
+
+        <div class="sidebar-menu">
+          <ul>
+            <li class="header-menu">
+              <span>General</span>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-user-o" aria-hidden="true"></i>
+                <span>Perfil</span>
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="#" onclick="cargar_perfil();"><i class="fa fa-info" aria-hidden="true"></i>Datos generales
+
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="cargar_password();"><i class="fa fa-lock" aria-hidden="true"></i>
+                      Contraseña</a>
+                  </li>
+
+                </ul>
+              </div>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-briefcase" aria-hidden="true"></i>
+                <span>Mis anuncios</span>
+                <span class="badge badge-pill badge-danger">3</span>
+              </a>
+
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fa fa-trophy" aria-hidden="true"></i>
+                <span>Mis subastas</span>
+                <span class="badge badge-pill badge-danger">3</span>
+              </a>
+
+            </li>
+
+
+
+          </ul>
+        </div>
+        <!-- sidebar-menu  -->
+      </div>
+      <!-- sidebar-content  -->
+      <div class="sidebar-footer">
+        <a href="#">
+          <i class="fa fa-bell"></i>
+          <span class="badge badge-pill badge-warning notification">3</span>
+        </a>
+        <a href="#">
+          <i class="fa fa-envelope"></i>
+          <span class="badge badge-pill badge-success notification">7</span>
+        </a>
+        <a onclick="cerrar_session();" href="#">
+          <i class="fa fa-power-off"></i>
+        </a>
+      </div>
+    </nav>
+    <!-- sidebar-wrapper  -->
+    <main class="page-content">
+
+      <div style="margin-top: 10px  !important; padding-left:5px !important; padding-right: 5px !important;"
+        id="area_subastas" class="row">
+
+
+
+      </div>
+
+
+      <div style="display: none;" class="row" id="area_datos_perfil">
+
+        <div class="col-12">
+
+
+          <!-- Material form register -->
+          <form>
+
+
+            <div class="row">
+              <div class="col-5">
+                <img id="foto_perfil_usuario" src="images/icon_profile_dash.png"
+                  style="width: 120px;height: 120px;margin-top:10px;border-radius: 25px;margin-left: 10px;" />
+              </div>
+              <div class="col-7 text-center">
+                <a onclick="tomar_foto();" class="btn btn-cyan"><i class="fa fa-camera"></i> Foto</a>
+                <label>Tómate una foto donde aparezca tu
+                  rostro
+                  de una manera nítida.</label>
+              </div>
+            </div>
+            <!-- Material input text -->
+            <div class="md-form">
+              <i class="fa fa-user prefix grey-text"></i>
+              <input type="text" id="cedula_perfil" class="form-control">
+              <label for="cedula" class="font-weight-light">Cédula/Identificación</label>
+            </div>
+
+            <!-- Material input text -->
+            <div class="md-form">
+              <i class="fa fa-user prefix grey-text"></i>
+              <input type="text" id="name_perfil" class="form-control">
+              <label for="name" class="font-weight-light">Nombre y apellido</label>
+            </div>
+
+
+            <!-- Material input email -->
+            <div class="md-form">
+              <i class="fa fa-envelope prefix grey-text"></i>
+              <input type="text" id="phone_perfil" class="form-control">
+              <label for="phone" class="font-weight-light">Teléfono</label>
+            </div>
+
+            <div class="text-center py-4 mt-3">
+              <button onclick="change_user_data();" id="btn-actualizar" class="btn btn-cyan" type="button">Actualizar
+                perfil</button>
+            </div>
+          </form>
+          <!-- Material form register -->
+
+
+
+        </div>
+      </div>
+      <div style="display: none;" class="row" id="area_datos_password">
+        <div class="col-12">
+          <form>
+            <div class="md-form">
+              <i class="fa fa-lock prefix grey-text"></i>
+              <input type="password" id="password_actual" class="form-control">
+              <label for="password_actual" class="font-weight-light">Contraseña actual</label>
+            </div>
+            <div class="md-form">
+              <i class="fa fa-lock prefix grey-text"></i>
+              <input type="password" id="password_perfil" class="form-control">
+              <label for="password" class="font-weight-light">Nueva contraseña</label>
+            </div>
+
+            <!-- Material input email -->
+            <div class="md-form">
+              <i class="fa fa-exclamation-triangle prefix grey-text"></i>
+              <input type="password" id="repeat_password_perfil" class="form-control">
+              <label for="repeat_password" class="font-weight-light">Repita la contraseña </label>
+            </div>
+            <div class="text-center py-4 mt-3">
+              <button onclick="change_password();" id="btn-registrar" class="btn btn-cyan" type="button">Actualizar
+                contraseña</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+
+
+  </main>
+
+  <!-- page-content" -->
+  </div>
+
+
+
+  <div style="position: fixed;top: 0;right: 0;bottom: 0;left: 0;overflow: hidden;" class="modal fade"
+    id="myModalLoadChangePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="position: fixed;margin: 0;  width: 100%;  height: 100%;padding: 0;"
+      role="document">
+      <div class="modal-content"
+        style=" position: absolute;top: 0;right: 0;bottom: 0;left: 0;border-radius: 0;box-shadow: none;">
+
+        <div class="modal-body">
+          <div class="text-center">
+            <img src="images/candado.gif" style="height: 200px; width: 260px;margin-top: 50%;" />
+            <label style="color: #2292b8;font-weight: bold;font-size: 16px;">Cambiando contraseña</label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div style="position: fixed;top: 0;right: 0;bottom: 0;left: 0;overflow: hidden;" class="modal fade" id="myModalLoad"
+    tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="position: fixed;margin: 0;  width: 100%;  height: 100%;padding: 0;"
+      role="document">
+      <div class="modal-content"
+        style=" position: absolute;top: 0;right: 0;bottom: 0;left: 0;border-radius: 0;box-shadow: none;">
+
+        <div class="modal-body">
+          <div class="text-center">
+            <img src="images/team.gif" style="height: 200px; width: 260px;margin-top: 50%;" />
+            <label style="color: #2292b8;font-weight: bold;font-size: 16px;">Editando datos de
+              usuario</label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div style="position: fixed;top: 0;right: 0;bottom: 0;left: 0;overflow: hidden;" class="modal fade"
+    id="myModalloadsubasta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="position: fixed;margin: 0;  width: 100%;  height: 100%;padding: 0;"
+      role="document">
+      <div class="modal-content"
+        style=" position: absolute;top: 0;right: 0;bottom: 0;left: 0;border-radius: 0;box-shadow: none;">
+
+        <div class="modal-body">
+          <div class="text-center">
+            <img src="images/team.gif" style="height: 200px; width: 260px;margin-top: 50%;" />
+            <label style="color: #2292b8;font-weight: bold;font-size: 16px;">Cargando subastas</label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
+
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="material_bootstrap/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="material_bootstrap/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/mdb.min.js"></script>
+
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/urls.js"></script>
+<script type="text/javascript" src="js/index_subasta.js"></script>
+<script type="text/javascript" src="js/popper.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+
+<script type="text/javascript">
+  var scroll = 800;
+  var final = 0;
+  var comienza = 0;
+  var limite = 11;
+  var lista;
+  var imageURL = '';
+  var item_auth = get_data_local();
+
+  function change_password() {
+    $("#success-password").hide();
+    $("#error-password").hide();
+
+    var old_password = $("#password_actual").val();
+    var password = $("#password_perfil").val();
+    var repeta_password = $("#repeat_password_perfil").val();
+
+    if (old_password.trim().length > 0) {
+
+      if (password.trim().length > 0) {
+
+        if (password.trim() == repeta_password.trim()) {
+
+
+          var item_auth = get_data_local();
+
+          if (!item_auth) {
+            cerrar_session();
+          } else {
+            if (item_auth.user_id == 0) {
+              cerrar_session();
+            }
+          }
+          $("#myModalLoadChangePassword").modal('show');
+          setTimeout(function () {
+
+            var url = base_url + 'rest_user/change_password';
+            var puser_id = item_auth.user_id;
+            var security_token = item_auth.security_token;
+            data_to_server = {
+              user_id: puser_id,
+              security_token: security_token,
+              old_password: old_password,
+              new_password: password
+            };
+            send_data_server(url, data_to_server, success_password,
+              error);
+
+
+          }, 1000);
+
+        } else {
+
+          navigator.notification.alert(
+            'La contraseña nueva y su repetición no coinciden', // message
+            alertDismissed1, // callback
+            'Información', // title
+            'Aceptar' // buttonName
+          );
+        }
+
+      } else { //email requerido
+        navigator.notification.alert(
+          'La contraseña nueva no puede esta vacía', // message
+          alertDismissed1, // callback
+          'Información', // title
+          'Aceptar' // buttonName
+        );
+      }
+
+    } else { //el campo nombre se ha quedado vacío
+      navigator.notification.alert(
+        'La contraseña anterior no puede esta vacía', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+
+  function change_user_data() {
+
+    $("#success-datos-usuarios").hide();
+    $("#error-datos-usuarios").hide();
+
+    var nombre = $("#name_perfil").val();
+    var cedula = $("#cedula_perfil").val();
+    var phone = $("#phone_perfil").val();
+
+
+
+    if (nombre.trim().length > 0) {
+
+      if (cedula.trim().length > 0) {
+
+        if (phone.trim().length > 0) {
+
+          var item_auth = get_data_local();
+
+          if (!item_auth) {
+            cerrar_session();
+          } else {
+            if (item_auth.user_id == 0) {
+              cerrar_session();
+            }
+          }
+          //mandar a cambiar los datos de usuarios
+          $("#myModalLoad").modal('show');
+
+
+
+          setTimeout(function () {
+
+
+            var url = base_url + 'rest_user/update_datos_perfil';
+            var puser_id = item_auth.user_id;
+            var security_token = item_auth.security_token;
+            data_to_server = {
+              user_id: puser_id,
+              security_token: security_token,
+              name: nombre,
+              phone: phone,
+              cedula: cedula,
+              photo: imageURL
+            };
+
+            send_data_server(url, data_to_server, success_update_user, error);
+
+
+          }, 1000);
+
+        } else {
+          navigator.notification.alert(
+            'El teléfono es requerido', // message
+            alertDismissed1, // callback
+            'Información', // title
+            'Aceptar' // buttonName
+          );
+        }
+
+      } else { //email requerido
+        navigator.notification.alert(
+          'La cédula/pasaporte es requerida', // message
+          alertDismissed1, // callback
+          'Información', // title
+          'Aceptar' // buttonName
+        );
+      }
+
+    } else { //el campo nombre se ha quedado vacío
+
+      navigator.notification.alert(
+        'El nombre y apellidos son requeridos', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+
+  function error(error) {
+
+    show_error(error);
+
+  }
+
+  function success_password(response) {
+
+    $("#myModalLoadChangePassword").modal('hide');
+
+    var status = response.status;
+    if (status == 404) { // si existe error de autenticación
+      cerrar_session();
+    } else if (status == 500) { //no coincide la contraseña anterior
+      navigator.notification.alert(
+        'La contraseña anterior no coincide', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+
+    } else {
+
+      var token = response.token;
+      var item_auth = get_data_local();
+      save_data_local(item_auth.user_id, item_auth.email, token, 2, item_auth.name, item_auth.photo, item_auth.phone,
+        item_auth.cedula);
+      cargar_datos_perfil();
+      $("#old_password").val("");
+      $("#password").val("");
+      $("#repeat_password").val("");
+      $('#area_datos_password').hide();
+      $('#area_datos_perfil').hide();
+      navigator.notification.alert(
+        'La contraseña ha sido cambiada correctamente', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+
+    }
+  }
+
+  function alertDismissed1() {
+    // do something
+  }
+
+  function alertDismissed() {
+    // do something
+  }
+
+  function success_update_user(response) {
+    $("#myModalLoad").modal('hide');
+
+    var status = response.status;
+    if (status == 404) { // si existe error de autenticación
+
+      cerrar_session();
+    } else {
+      update_data_local(response.user_object.name, response.user_object.photo, response.user_object.phone, response
+        .user_object.cedula);
+      cargar_datos_perfil();
+      navigator.notification.alert(
+        'Los datos han sido actualizados correctamente', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+      $('#area_datos_password').hide();
+      $('#area_datos_perfil').hide();
+
+    }
+  }
+
+  function regresar_home() {
+    show_error("falta");
+  }
+
+  function cargar_perfil() {
+    $('#area_datos_password').hide();
+    $("#name_perfil").val(item_auth.name);
+
+    $("#cedula_perfil").val(item_auth.cedula);
+
+    $("#phone_perfil").val(item_auth.phone);
+
+    $('#area_datos_perfil').show();
+    $(".page-wrapper").removeClass("toggled");
+    $(".navbar").addClass("fixed-top");
+    $(".font-weight-light").addClass('active')
+  }
+
+  function cargar_password() {
+    $('#area_datos_perfil').hide();
+    $('#area_datos_password').show();
+    $(".page-wrapper").removeClass("toggled");
+    $(".navbar").addClass("fixed-top");
+  }
+  var id = null;
+
+  function salir_busqueda() {
+
+    if ($('#ss').is(':visible') || $('#area_busqueda').is(':visible')) {
+      $('#categoria').show();
+      $('#area_autocomplete').hide();
+      $('#buscar').show();
+    }
+
+  }
+
+  function entrar_busqueda() {
+
+    if ($('#ss').is(':visible') || $('#area_busqueda').is(':visible')) {
+      $('#area_autocomplete').show();
+      $('#buscar').hide();
+      $('#categoria').hide();
+    }
+
+  }
+
+  function salir_busqueda2() {
+
+    if ($('#area_anuncios').is(':visible')) {
+      $('#categoria2').show();
+      $('#area_autocomplete2').hide();
+      $('#buscar2').show();
+      $('#publicar').show();
+    }
+
+  }
+
+  function entrar_busqueda2() {
+
+    if ($('#area_anuncios').is(':visible')) {
+      $('#area_autocomplete2').show();
+      $('#buscar2').hide();
+      $('#categoria2').hide();
+      $('#publicar').hide();
+    }
+
+  }
+  $(function () {
+
+    $(window).scroll(function () {
+
+      if ($(window).scrollTop() >= scroll) {
+        scroll += 800;
+        comienza = limite;
+        limite = comienza + 11;
+
+        setTimeout(function () {
+          var url = base_url + 'rest_subasta/cargar_subastas2';
+          var user_id = item_auth.user_id;
+          var security_token = item_auth.security_token;
+
+          data_to_server = {
+            user_id: user_id,
+            security_token: security_token,
+            comienza: comienza,
+            limite: limite
+          };
+          send_data_server(url, data_to_server, success_all_subastas,
+            error);
+        }, 1000);
+
+      }
+    });
+  });
+
+  jQuery(function ($) {
+
+
+    $(".page-wrapper").removeClass("toggled");
+    $(".sidebar-dropdown > a").click(function () {
+      $(".sidebar-submenu").slideUp(200);
+      if (
+        $(this)
+        .parent()
+        .hasClass("active")
+      ) {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .parent()
+          .removeClass("active");
+      } else {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .next(".sidebar-submenu")
+          .slideDown(200);
+        $(this)
+          .parent()
+          .addClass("active");
+      }
+    });
+
+    $("#close-sidebar").click(function () {
+      $(".page-wrapper").removeClass("toggled");
+      $(".navbar").addClass("fixed-top");
+
+    });
+    $("#show-sidebar").click(function () {
+      $(".page-wrapper").addClass("toggled");
+      $(".navbar").removeClass("fixed-top");
+    });
+
+
+    $('#myModalloadsubasta').modal('show')
+
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/cargar_subastas2';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        comienza: comienza,
+        limite: limite,
+        id: id
+      };
+      send_data_server(url, data_to_server, success_all_subastas,
+        error);
+    }, 1000);
+
+
+
+  });
+
+  function success_all_subastas(response) {
+
+    $('#myModalloadsubasta').modal('hide');
+
+    response = JSON.parse(response.data);
+    var status = response.status;
+
+    if (status == 200) {
+
+      $('#ss').show();
+      lista = response.lista;
+      if (final > 0) {
+        $('#ver_mas_' + final).removeClass('espacio');
+      }
+
+      cargar_subastas(lista);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay subastas en esta categoria', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+
+  }
+
+  function detalle_subasta(params) {
+    window.location.href = 'detalle_subasta.html?id=' + params;
+
+  }
+
+  function cargar_subastas(lista) {
+    var cadena = "";
+
+    if (lista.length > 0) {
+
+      for (var i = 0; i < lista.length; i++) {
+        var img = base_url + lista[i].photo;
+        cadena = cadena +
+          "<div id='ver_mas_" +
+          lista[i].subasta_id +
+          "' onclick=''  style='width:100% !important; margin: 4px 0 3px 0; padding:0 1px 0 1px ;' class='card'><div class='row'><div class='col-4'><img style='width:100%' class='rounded' src='" +
+          img +
+          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important; background: #80232b !important' class='badge badge-danger'>$" +
+          parseFloat(lista[i]
+            .valor_inicial).toFixed(2) +
+          "</span></p></div><div class='col-8' style='padding: 1px 1px 1px 1px !important;'> <h4 id='desc_" +
+          lista[
+            i]
+          .subasta_id +
+          "' style='font-size:16px !important; color:#80232b !important; line-height:1.5px !important; margin-top:15px !important;' class='card-title'><strong>" +
+          lista[i].nombre_espa +
+          "</strong></h4> <p style='font-size:10px !important; line-height:1.5px !important;' class='card-text'><span><i class='fa fa-tag' aria-hidden='true'></i> " +
+          lista[i].categoria.name_espa +
+          "</span>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
+          lista[i]
+          .ciudad.name_ciudad +
+          "</span></p> <div class='text-left'><div class='timer'><div class='timer conte'><span class='days'  id='day_" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Dias</div></div><div class='timer'><div class='timer conte'><span class='hours' id='hour_" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Horas</div></div><div class='timer'><div class='timer conte'><span class='minutes' id='minute_" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Minutos</div></div><div class='timer'><div class='timer conte'><span class='seconds' id='second_" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Segundos</div></div></div></div></div></div>";
+
+      }
+      $('#area_subastas').append(cadena);
+      if ($('#area_subastas').is(':visible') || $('#area_busqueda').is(':visible')) {
+        $('#area_autocomplete').hide();
+        $('#buscar').show();
+        $('#categoria').show();
+      }
+      for (let j = 0; j < lista.length; j++) {
+
+        var x = setInterval(function () {
+          var fecha = lista[j].fecha_cierre;
+          var deadline = new Date(fecha).getTime();
+          var currentTime = new Date().getTime();
+          var t = deadline - currentTime;
+          var days = Math.floor(t / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((t % (1000 * 60)) / 1000);
+          $('#day_' + lista[j].subasta_id).html(days);
+          $('#hour_' + lista[j].subasta_id).html(hours);
+          $('#minute_' + lista[j].subasta_id).html(minutes);
+          $('#second_' + lista[j].subasta_id).html(seconds);
+
+          if (t < 0) {
+
+            clearInterval(x);
+
+            $('#day_' + lista[j].subasta_id).html(0);
+            $('#hour_' + lista[j].subasta_id).html(0);
+            $('#minute_' + lista[j].subasta_id).html(0);
+            $('#second_' + lista[j].subasta_id).html(0);
+
+          }
+
+        }, 1000);
+
+
+      }
+      for (let k = 0; k < lista.length; k++) {
+        $('#ver_mas_' + lista[k].subasta_id).attr('onclick', 'detalle_subasta("' + lista[k].subasta_id + '")');
+        if (k == lista.length - 1) {
+          final = lista[k].subasta_id;
+          $('#ver_mas_' + lista[k].subasta_id).addClass('espacio');
+        }
+        var myP = $('#desc_' + lista[k].subasta_id);
+        if (myP.length > 27) {
+          myP.text(myP.text().substring(0, 24));
+          $('#desc_' + lista[k].subasta_id).html("...");
+        }
+
+      }
+
+    }
+  }
+
+  function tomar_foto() {
+    var srcType = Camera.PictureSourceType.CAMERA;
+    var options = setOptions(srcType);
+
+    options.targetHeight = 240;
+    options.targetWidth = 240;
+
+    navigator.camera.getPicture(function cameraSuccess(imageData) {
+
+      displayImage(imageData);
+      // You may choose to copy the picture, save it somewhere, or upload.
+
+
+    }, function cameraError(error) {
+      console.debug("No se puede obtener la foto: " + error, "app");
+
+    }, options);
+  }
+
+  function setOptions(srcType) {
+    var options = {
+      // Some common settings are 20, 50, and 100
+      quality: 100,
+      destinationType: Camera.DestinationType.DATA_URL,
+      // In this app, dynamically set the picture source, Camera or photo gallery
+      sourceType: srcType,
+      encodingType: Camera.EncodingType.JPEG,
+      mediaType: Camera.MediaType.PICTURE,
+      allowEdit: true,
+      cameraDirection: 1
+    }
+    return options;
+  }
+
+  function displayImage(imageData) {
+
+    var elem = document.getElementById('foto_perfil_usuario');
+    elem.src = "data:image/jpeg;base64," + imageData;
+    imageURL = "data:image/jpeg;base64," + imageData;
+  }
+
+  function success_detalle_subasta(response) {
+
+    $('#myModalloadsubasta').modal('hide');
+    response = JSON.parse(response.data);
+    var status = response.status;
+
+    if (status == 200) {
+      $('#area_detalle_subasta').show();
+      $('#titulo_detalle').text(response.detalle.nombre_espa);
+      $('#categoria_detalle').html("<span><i class='fa fa-tag' aria-hidden='true'></i> " + response.categoria
+        .name_espa +
+        "</span>&nbsp|&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " + response.ciudad.name_ciudad +
+        "</span> ");
+      $('#descripcion_detalle').html(response.detalle.descrip_espa);
+      $('#entrada_detalle').text("Valor de entrada: $" + parseFloat(response.detalle.valor_pago).toFixed(2));
+      $('#inicial_detalle').text(" $" + parseFloat(response.detalle.valor_inicial).toFixed(2));
+      $('#cierre_detalle').text("Fecha de cierre: " + response.detalle.fecha_cierre);
+      var cronometro = "<div class='col-12'><div class='timer'><div class='timer conte'><span class='days'  id='day_" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Dias</div></div><div class='timer'><div class='timer conte'><span class='hours' id='hour_" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Horas</div></div><div class='timer'><div class='timer conte'><span class='minutes' id='minute_" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Minutos</div></div><div class='timer'><div class='timer conte'><span class='seconds' id='second_" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Segundos</div></div></div>";
+
+      var imagen1 = base_url + response.detalle.photo;
+      //slider
+      var peq =
+        "<li data-target='#carouselExampleCaptions' data-slide-to='0' class='active'></li>";
+      var slider = "<div class='carousel-item active'><img src='" + imagen1 + "' class='d-block w-100'></div>";
+      if (response.foto_object.length > 0) {
+        for (let i = 0; i < response.foto_object.length; i++) {
+          var imagen2 = base_url + response.foto_object[i].url_photo;
+          slider = slider + "<div class='carousel-item'><img src='" + imagen2 + "' class='d-block w-100'></div>"
+          peq = peq + "<li data-target='#carouselExampleCaptions' data-slide-to='" + (i + 1) + "' class=''></li>";
+        }
+
+      }
+
+      $('.carousel-indicators').html(peq);
+      $('.carousel-inner').html(slider);
+      $('#cierre_detalle').after(cronometro);
+      var x = setInterval(function () {
+        var fecha = response.detalle.fecha_cierre;
+        var deadline = new Date(fecha).getTime();
+        var currentTime = new Date().getTime();
+        var t = deadline - currentTime;
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((t % (1000 * 60)) / 1000);
+        $('#day_' + response.detalle.subasta_id).html(days);
+        $('#hour_' + response.detalle.subasta_id).html(hours);
+        $('#minute_' + response.detalle.subasta_id).html(minutes);
+        $('#second_' + response.detalle.subasta_id).html(seconds);
+
+        if (t < 0) {
+
+          clearInterval(x);
+
+          $('#day_' + response.detalle.subasta_id).html(0);
+          $('#hour_' + response.detalle.subasta_id).html(0);
+          $('#minute_' + response.detalle.subasta_id).html(0);
+          $('#second_' + response.detalle.subasta_id).html(0);
+
+        }
+
+      }, 1000);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay detalle de la subasta', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+
+  }
+</script>

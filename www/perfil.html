@@ -1,0 +1,510 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+        Personalice la directiva de seguridad de contenido en la etiqueta meta como sea necesario. Agregue "unsafe-inline" a default-src para permitir JavaScript insertado.
+        Para obtener más detalles, consulte http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+  <title>Subasta</title>
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="material_bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="material_bootstrap/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="material_bootstrap/css/style.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <style>
+    .timer {
+      margin: 0 0 4px;
+      font-family: Lato;
+      color: #fff;
+      display: inline-block;
+      font-weight: 100;
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .timer .conte {
+      padding: 1px;
+      border-radius: 3px;
+      background: #8c1822;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      width: auto;
+      opacity: 0.9;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    .timer .smalltext {
+      border-radius: 3px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      display: block;
+      padding: 1px;
+      background: #2a3681;
+      width: auto;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+  </style>
+
+  <link rel="stylesheet" href="material/css/onsenui.css">
+  <link rel="stylesheet" href="material/css/onsen-css-components.min.css">
+  <script src="material/js/onsenui.min.js"></script>
+</head>
+
+<body style="background-color: #ebebeb;">
+  <ons-navigator>
+
+    <ons-splitter>
+      <ons-splitter-side id="menu" side="left" width="250px" collapse swipeable>
+        <ons-page>
+          <ons-toolbar>
+            <div class="center">
+              <img style="height:55px; margin-left:28%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+                src="images/logo_subasta.png" alt="">
+            </div>
+
+          </ons-toolbar>
+          <ons-list style="background-color: #ebebeb !important">
+            <ons-list-item modifier="nodivider" style="margin-bottom: 0px !important; padding-bottom: 0px !important;">
+
+              <div class="left" style="padding-bottom: 0px !important; margin-bottom: 0px !important;">
+                <img style="height: 60px !important; width: 60px !important;" id="img_perfil"
+                  class="list-item__thumbnail" src="">
+              </div>
+
+              <div class="center" style="padding-bottom: 0px !important; margin-bottom: 0px !important;">
+                <span id="user_menu" class="list-item__title text-center"></span><span id="email_menu"
+                  class="list-item__subtitle text-center"></span>
+                <span id="user-role" class="list-item__subtitle text-center"></span>
+              </div>
+
+            </ons-list-item>
+            <ons-list-item style="margin-top: 0px !important; padding-top: 0px !important;" modifier="nodivider">
+              <div class="center">
+                <span style="font-size: 12px !important;" class="text-center">
+                  <ons-icon style="color:green" icon="fa-circle"></ons-icon>En-linea
+                </span>
+              </div>
+            </ons-list-item>
+
+            <ons-list-header style="background-color: #ebebeb !important"><span>General</span></ons-list-header>
+
+            <ons-list-item expandable ripple>
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-user-o"></ons-icon> Perfil
+              </span>
+              <div class="expandable-content">
+                <ons-list-item onclick="cargar_perfil();" modifier="nodivider" ripple>
+
+                  <span class="list-item__title">
+                    <ons-icon style="color:#80232b" icon="fa-id-card-o"></ons-icon> Datos de generales
+                  </span>
+
+                </ons-list-item>
+                <ons-list-item onclick="cargar_password();" modifier="nodivider" ripple>
+
+                  <span class="list-item__title">
+                    <ons-icon style="color:#80232b" icon="fa-lock"></ons-icon> Contraseña
+                  </span>
+
+                </ons-list-item>
+
+              </div>
+            </ons-list-item>
+            <ons-list-item modifier="nodivider" ripple>
+
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-briefcase"></ons-icon> Mis anuncios
+              </span>
+
+            </ons-list-item>
+            <ons-list-item modifier="nodivider" ripple>
+
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-trophy"></ons-icon> Mis subastas
+              </span>
+
+            </ons-list-item>
+
+
+
+          </ons-list>
+          <ons-bottom-toolbar>
+
+            <ons-toolbar>
+              <div class="left"></div>
+              <div class="center"></div>
+              <div class="right">
+                <ons-toolbar-button onclick="cerrar_session();">
+                  <ons-icon style="color:#80232b;" icon="fa-sign-out"></ons-icon>
+                </ons-toolbar-button>
+              </div>
+            </ons-toolbar>
+
+
+          </ons-bottom-toolbar>
+        </ons-page>
+      </ons-splitter-side>
+      <ons-splitter-content id="content" page="tabbar.html"></ons-splitter-content>
+    </ons-splitter>
+
+
+  </ons-navigator>
+
+  <template id="tabbar.html">
+    <ons-page id="tabbar-page">
+      <ons-toolbar>
+        <div class="left">
+          <ons-button onclick="volver();" modifier="quiet">
+            <ons-icon style="color: #80232b !important" icon="fa-arrow-left"></ons-icon>
+          </ons-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo_subasta.png" alt="">
+        </div>
+        <div class="right">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon style="color: #80232b !important" icon="ion-navicon, material:md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+      </ons-toolbar>
+      <ons-card>
+        <div class="row">
+          <div class="col-5">
+            <img id="foto_perfil_usuario" src=""
+              style="width: 120px;height: 120px;margin-top:10px;border-radius: 25px;margin-left: 10px;" />
+          </div>
+          <div class="col-7 text-center">
+            <a style="width: 100%; background-color: #80232b !important;" onclick="tomar_foto();"
+              class="btn btn-cyan"><i class="fa fa-camera"></i> Foto</a>
+            <label>Tómate una foto donde aparezca tu
+              rostro
+              de una manera nítida.</label>
+          </div>
+        </div>
+        <!-- Material input text -->
+        <div class="md-form">
+          <i class="fa fa-user prefix grey-text"></i>
+          <input type="text" id="cedula_perfil" class="form-control">
+          <label for="cedula_perfil" class="font-weight-light active">Cédula/Identificación</label>
+        </div>
+
+        <!-- Material input text -->
+        <div class="md-form">
+          <i class="fa fa-user prefix grey-text"></i>
+          <input type="text" id="name_perfil" class="form-control">
+          <label for="name_perfil" class="font-weight-light active">Nombre y apellido</label>
+        </div>
+
+
+        <!-- Material input email -->
+        <div class="md-form">
+          <i class="fa fa-envelope prefix grey-text"></i>
+          <input type="text" id="phone_perfil" class="form-control">
+          <label for="phone_perfil" class="font-weight-light active">Teléfono</label>
+        </div>
+
+        <div class="text-center py-4 mt-3">
+          <button style="width: 100%; background-color: #80232b !important;" onclick="change_user_data();"
+            id="btn-actualizar" class="btn btn-cyan" type="button">Actualizar
+            perfil</button>
+        </div>
+      </ons-card>
+
+    </ons-page>
+  </template>
+
+
+
+  <ons-modal direction="up">
+    <div style="text-align: center">
+      <p>
+        <ons-progress-circular indeterminate></ons-progress-circular>
+      </p>
+      <p id="body_modal"></p>
+    </div>
+  </ons-modal>
+
+
+
+</body>
+
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="material_bootstrap/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="material_bootstrap/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/mdb.min.js"></script>
+
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/urls.js"></script>
+<script type="text/javascript" src="js/perfil.js"></script>
+<script type="text/javascript" src="js/popper.js"></script>
+
+
+</html>
+<script>
+  var scroll = 800;
+  var final = 0;
+  var comienza = 0;
+  var limite = 11;
+  var lista;
+
+  var item_auth = get_data_local();
+  var modal = document.querySelector('ons-modal');
+
+  function volver() {
+    window.location.href = 'dash.html';
+  }
+  window.fn = {};
+  jQuery(function ($) {
+    $(".page-wrapper").removeClass("toggled");
+    $(".sidebar-dropdown > a").click(function () {
+      $(".sidebar-submenu").slideUp(200);
+      if (
+        $(this)
+        .parent()
+        .hasClass("active")
+      ) {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .parent()
+          .removeClass("active");
+      } else {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .next(".sidebar-submenu")
+          .slideDown(200);
+        $(this)
+          .parent()
+          .addClass("active");
+      }
+    });
+  });
+  window.fn.open = function () {
+    var menu = document.getElementById('menu');
+    menu.open();
+    $('#body_nav').show();
+    $(".page-wrapper").addClass("toggled");
+  };
+
+  window.fn.load = function (page) {
+    var content = document.getElementById('content');
+    var menu = document.getElementById('menu');
+    content.load(page)
+      .then(menu.close.bind(menu));
+
+
+  };
+
+  function error(error) {
+
+    show_error(error);
+
+  }
+
+  function change_user_data() {
+    var nombre = $("#name_perfil").val();
+    var cedula = $("#cedula_perfil").val();
+    var phone = $("#phone_perfil").val();
+    if (nombre.trim().length > 0) {
+
+      if (cedula.trim().length > 0) {
+
+        if (phone.trim().length > 0) {
+
+          var item_auth = get_data_local();
+
+          if (!item_auth) {
+            cerrar_session();
+          } else {
+            if (item_auth.user_id == 0) {
+              cerrar_session();
+            }
+          }
+          //mandar a cambiar los datos de usuarios
+          modal.show();
+          $('#body_modal').text("Actualizando perfil del usuario.")
+
+          setTimeout(function () {
+
+            var url = base_url + 'rest_user/update_datos_perfil';
+            var puser_id = item_auth.user_id;
+            var security_token = item_auth.security_token;
+            data_to_server = {
+              user_id: puser_id,
+              security_token: security_token,
+              name: nombre,
+              phone: phone,
+              cedula: cedula,
+              photo: imageURL
+            };
+
+            send_data_server(url, data_to_server, success_update_user, error);
+
+
+          }, 1000);
+
+        } else {
+          navigator.notification.alert(
+            'El teléfono es requerido', // message
+            alertDismissed1, // callback
+            'Información', // title
+            'Aceptar' // buttonName
+          );
+        }
+
+      } else { //email requerido
+        navigator.notification.alert(
+          'La cédula/pasaporte es requerida', // message
+          alertDismissed1, // callback
+          'Información', // title
+          'Aceptar' // buttonName
+        );
+      }
+
+    } else { //el campo nombre se ha quedado vacío
+
+      navigator.notification.alert(
+        'El nombre y apellidos son requeridos', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+
+  function success_update_user(response) {
+
+    modal.hide();
+
+    var status = response.status;
+    if (status == 404) { // si existe error de autenticación
+
+      cerrar_session();
+    } else {
+      update_data_local(response.user_object.name, response.user_object.photo, response.user_object.phone, response
+        .user_object.cedula);
+      cargar_datos_perfil();
+      navigator.notification.alert(
+        'Los datos han sido actualizados correctamente', // message
+        alertDismissed, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+
+
+    }
+  }
+
+
+  function cargar_perfil() {
+    window.location.href = 'perfil.html';
+  }
+
+  function cargar_password() {
+
+    window.location.href = 'contrasena.html';
+  }
+
+  function tomar_foto() {
+    var srcType = Camera.PictureSourceType.CAMERA;
+    var options = setOptions(srcType);
+
+    options.targetHeight = 400;
+    options.targetWidth = 400;
+
+    navigator.camera.getPicture(function cameraSuccess(imageData) {
+
+      displayImage(imageData);
+      // You may choose to copy the picture, save it somewhere, or upload.
+
+
+    }, function cameraError(error) {
+      console.debug("No se puede obtener la foto: " + error, "app");
+
+    }, options);
+  }
+
+  function setOptions(srcType) {
+    var options = {
+      // Some common settings are 20, 50, and 100
+      quality: 100,
+      destinationType: Camera.DestinationType.DATA_URL,
+      // In this app, dynamically set the picture source, Camera or photo gallery
+      sourceType: srcType,
+      encodingType: Camera.EncodingType.JPEG,
+      mediaType: Camera.MediaType.PICTURE,
+      allowEdit: true,
+      cameraDirection: 1
+    }
+    return options;
+  }
+
+  function displayImage(imageData) {
+
+    var elem = document.getElementById('foto_perfil_usuario');
+    elem.src = "data:image/jpeg;base64," + imageData;
+    // imageURL = "data:image/jpeg;base64," + imageData;
+    imageURL = imageData;
+  }
+
+  function alertDismissed1() {
+    // do something
+  }
+
+  function alertDismissed() {
+    // do something
+  }
+</script>
+<style>
+  ons-splitter-side[animation=overlay] {
+    border-left: 1px solid #bbb;
+  }
+
+  /*onse*/
+  :checked+.tabbar--material__button {
+    background-color: transparent;
+    color: #2a3681;
+  }
+
+  .tabbar--material__border {
+    height: 2px;
+    background-color: #80232b;
+  }
+
+  .back-button__icon {
+
+    fill: #80232b;
+
+  }
+
+  .progress-circular__primary {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke: #80232b;
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>

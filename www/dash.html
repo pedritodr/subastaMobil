@@ -1,0 +1,3798 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+        Personalice la directiva de seguridad de contenido en la etiqueta meta como sea necesario. Agregue "unsafe-inline" a default-src para permitir JavaScript insertado.
+        Para obtener más detalles, consulte http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+  <title>Subasta</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="material_bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="material_bootstrap/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="material_bootstrap/css/style.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <style>
+    .timer {
+      margin: 0 0 4px;
+      font-family: Lato;
+      color: #fff;
+      display: inline-block;
+      font-weight: 100;
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .timer .conte {
+      padding: 1px;
+      border-radius: 3px;
+      background: #8c1822;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      width: auto;
+      opacity: 0.9;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    .timer .smalltext {
+      border-radius: 3px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      display: block;
+      padding: 1px;
+      background: #2a3681;
+      width: auto;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+  </style>
+  <link rel="stylesheet" href="material/css/onsenui.css">
+  <link rel="stylesheet" href="material/css/onsen-css-components.min.css">
+  <script src="material/js/onsenui.min.js"></script>
+</head>
+
+<body style="background-color: #ebebeb;">
+  <ons-navigator id="appNavigator" swipeable swipe-target-width="80px">
+    <ons-page>
+      <ons-splitter id="appSplitter">
+        <ons-splitter-side id="sidemenu" page="sidemenu.html" swipeable side="left" collapse="" width="260px">
+        </ons-splitter-side>
+        <ons-splitter-content page="tabbar.html"></ons-splitter-content>
+      </ons-splitter>
+    </ons-page>
+  </ons-navigator>
+  <template id="sidemenu.html">
+    <ons-page>
+      <ons-toolbar style="background: #80232b;">
+        <div class="center">
+          <img style="height:55px; margin-left:28%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-list style="background-color: #ebebeb !important">
+        <ons-list-item modifier="nodivider" style="margin-bottom: 0px !important; padding-bottom: 0px !important;">
+          <div class="left" style="padding-bottom: 0px !important; margin-bottom: 0px !important;">
+            <img style="height: 60px !important; width: 60px !important;" id="img_perfil" class="list-item__thumbnail"
+              src="">
+          </div>
+          <div class="center" style="padding-bottom: 0px !important; margin-bottom: 0px !important;">
+            <span id="user_menu" class="list-item__title text-center"></span><span style="font-size: 10px;"
+              id="email_menu" class="list-item__subtitle text-center"></span>
+            <span id="user-role" class="list-item__subtitle text-center"></span>
+          </div>
+        </ons-list-item>
+        <ons-list-item style="margin-top: 0px !important; padding-top: 0px !important;" modifier="nodivider">
+          <div class="center">
+            <span style="font-size: 12px !important;" class="text-center">
+              <ons-icon style="color:green" icon="fa-circle"></ons-icon>En-linea
+            </span>
+          </div>
+        </ons-list-item>
+        <ons-list-header style="background-color: #ebebeb !important"><span>General</span></ons-list-header>
+        <ons-list-item expandable ripple>
+          <span class="list-item__title">
+            <ons-icon style="color:#80232b" icon="fa-user-o"></ons-icon> Perfil
+          </span>
+          <div class="expandable-content">
+            <ons-list-item onclick="cargar_perfil();" modifier="nodivider" ripple>
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-id-card-o"></ons-icon> Datos de generales
+              </span>
+            </ons-list-item>
+            <ons-list-item onclick="cargar_password();" modifier="nodivider" ripple>
+              <span class="list-item__title">
+                <ons-icon style="color:#80232b" icon="fa-lock"></ons-icon> Contraseña
+              </span>
+            </ons-list-item>
+          </div>
+        </ons-list-item>
+        <ons-list-item id="membresia_adquirir_dash" style="display: none;" onclick="cargar_membresias()"
+          modifier="nodivider" ripple>
+          <span class="list-item__title">
+            <ons-icon badge="7" style="color:#80232b" icon="fa-user-secret"></ons-icon> Adquirir Membresia
+          </span>
+        </ons-list-item>
+        <ons-list-item id="membresia_user_dash" style="display: none;" modifier="nodivider" ripple>
+          <span class="list-item__title" onclick="cargar_membresia_user()">
+            <ons-icon badge="7" style="color:#80232b" icon="fa-user-secret"></ons-icon> Membresia
+          </span>
+        </ons-list-item>
+        <ons-list-item modifier="nodivider" ripple>
+          <span onclick="mis_anuncios()" class="list-item__title">
+            <ons-icon badge="7" style="color:#80232b" icon="fa-briefcase"></ons-icon> Mis anuncios
+          </span>
+        </ons-list-item>
+        <ons-list-item modifier="nodivider" ripple>
+          <span class="list-item__title">
+            <ons-icon style="color:#80232b" icon="fa-trophy"></ons-icon> Mis subastas
+          </span>
+        </ons-list-item>
+      </ons-list>
+      <ons-bottom-toolbar>
+        <ons-toolbar>
+          <div class="left"></div>
+          <div class="center"></div>
+          <div class="right">
+            <ons-button onclick="cerrar_session();" style="color:#80232b;" modifier="quiet">
+              <ons-icon style="color:#80232b;" icon="fa-sign-out"></ons-icon><small>Cerrar sessión</small>
+            </ons-button>
+          </div>
+        </ons-toolbar>
+      </ons-bottom-toolbar>
+    </ons-page>
+  </template>
+  <template id="tabbar.html">
+    <ons-page id="tabbar-page">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="center">
+          <img style="height:55px; margin-left:28%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+        <div class="right">
+          <ons-toolbar-button onclick="fn.toggleMenu()">
+            <ons-icon style="color: #fff !important" icon="ion-navicon, material:md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+      </ons-toolbar>
+      <ons-tabbar style="background-color: #ebebeb !important" swipeable id="appTabbar" position="auto">
+        <ons-tab label="Subastas" icon="ion-home" page="home.html" active></ons-tab>
+        <ons-tab label="Anuncios" icon="ion-edit" page="anuncios.html"></ons-tab>
+      </ons-tabbar>
+    </ons-page>
+  </template>
+  <template id="home.html">
+    <ons-page id="page1">
+      <ons-pull-hook id="pull-hook">
+        Cargando...
+      </ons-pull-hook>
+      <ons-row id="area_subastas" class="" style="margin:0px !important">
+      </ons-row>
+      <ons-bottom-toolbar>
+        <ons-toolbar style="background-color: #ebebeb !important">
+          <div style="background-color: #ebebeb !important; margin-bottom: 2px !important;"
+            class="tabbar tabbar--top tabbar--material">
+            <label class="tabbar__item tabbar--material__item">
+              <button onclick="buscar();" class="tabbar__button tabbar--material__button">
+                <i style="color: #80232b !important" class="tabbar__icon tabbar--material__icon zmdi zmdi-search"></i>
+                <div style="color: #2a3681 !important" class="tabbar__label tabbar--material__label">Buscar subastas
+                </div>
+              </button>
+            </label>
+            <label class="tabbar__item tabbar--material__item">
+              <button onclick="cargar_categorias_subastas();" class="tabbar__button tabbar--material__button">
+                <i style="color: #80232b !important" class="tabbar__icon tabbar--material__icon zmdi zmdi-apps"></i>
+                <div style="color: #2a3681 !important" class="tabbar__label tabbar--material__label">Categorias</div>
+              </button>
+            </label>
+          </div>
+        </ons-toolbar>
+      </ons-bottom-toolbar>
+    </ons-page>
+  </template>
+  <template id="anuncios.html">
+    <ons-page id="page_anuncios">
+      <ons-pull-hook id="pull-hook">
+        Cargando...
+      </ons-pull-hook>
+
+      <ons-row id="area_anuncios" class="" style="margin:0px !important">
+
+      </ons-row>
+
+      <ons-fab onclick="publicar_anuncio();" style="background-color: #2a3681 !important;" position="bottom right">
+        <ons-icon style="color: #ffffff !important" icon="md-plus"></ons-icon>
+      </ons-fab>
+      <ons-bottom-toolbar>
+        <ons-toolbar style="background-color: #ebebeb !important;">
+          <div style="background-color: #ebebeb !important; margin-bottom: 2px !important;"
+            class="tabbar tabbar--top tabbar--material">
+            <label class="tabbar__item tabbar--material__item">
+              <button onclick="buscar_anuncio();" class="tabbar__button tabbar--material__button">
+                <i style="color: #80232b !important" class="tabbar__icon tabbar--material__icon zmdi zmdi-search"></i>
+                <div style="color: #2a3681 !important" class="tabbar__label tabbar--material__label">Buscar anuncios
+                </div>
+              </button>
+            </label>
+            <label class="tabbar__item tabbar--material__item">
+              <button onclick="cargar_categorias_anuncios();" class="tabbar__button tabbar--material__button">
+                <i style="color: #80232b !important" class="tabbar__icon tabbar--material__icon zmdi zmdi-apps"></i>
+                <div style="color: #2a3681 !important" class="tabbar__label tabbar--material__label">Categorias</div>
+              </button>
+            </label>
+          </div>
+        </ons-toolbar>
+      </ons-bottom-toolbar>
+    </ons-page>
+  </template>
+  <template id="buscar.html">
+    <ons-page id="page4">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <p style="text-align: center; margin-top: 15px;">
+            <input style="background-color: #ebebeb !important; width:100% !important;" id="autocomplete" type="search"
+              value="" onkeyup="buscar_palabra();" placeholder="Buscar subasta" class="search-input">
+          </p>
+        </div>
+      </ons-toolbar>
+      <div class="center">
+        <p id="cargando" style="display: none; text-align: center;">
+          <ons-progress-circular indeterminate></ons-progress-circular>
+        </p>
+      </div>
+      <div id="area_autocomplete" style="margin:0px !important">
+      </div>
+    </ons-page>
+  </template>
+  <template id="buscar_anuncio.html">
+    <ons-page id="page_anuncio">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <p style="text-align: center; margin-top: 15px;">
+            <input style="background-color: #ebebeb !important; width: 100% !important;" id="autocomplete2"
+              type="search" value="" onkeyup="buscar_palabra_anuncio();" placeholder="Buscar anuncio"
+              class="search-input">
+          </p>
+        </div>
+      </ons-toolbar>
+      <div class="center">
+        <p id="cargando" style="display: none; text-align: center;">
+          <ons-progress-circular indeterminate></ons-progress-circular>
+        </p>
+      </div>
+      <div id="area_autocomplete_anuncio" style="margin:0px !important">
+      </div>
+    </ons-page>
+  </template>
+  <template id="perfil_cliente.html">
+    <ons-page id="page_perfil_cliente">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-card>
+        <div class="row">
+          <div class="col-5">
+            <img id="foto_perfil_usuario" src=""
+              style="width: 120px;height: 120px;margin-top:10px;border-radius: 25px;margin-left: 10px;" />
+          </div>
+          <div class="col-7 text-center">
+            <a style="width: 100%; background-color: #80232b !important;" onclick="tomar_foto();"
+              class="btn btn-cyan"><i class="fa fa-camera"></i> Foto</a>
+            <label>Tómate una foto donde aparezca tu
+              rostro
+              de una manera nítida.</label>
+          </div>
+        </div>
+        <div class="md-form">
+          <i class="fa fa-user prefix grey-text"></i>
+          <input onchange="valida_name()" type="text" id="name_perfil" class="form-control input-text">
+          <label for="name_perfil" class="font-weight-light active">Primer nombre</label>
+        </div>
+        <div class="md-form">
+          <i class="fa fa-user-plus prefix grey-text"></i>
+          <input onchange="valida_surname()" type="text" id="surname_perfil" class="form-control input-text">
+          <label for="surname_perfil" class="font-weight-light active">Primer apellido</label>
+        </div>
+        <div class="md-form">
+          <ons-row>
+            <ons-col width="30%">
+              <ons-select style="margin-top: 7%;" id="tipo_documento_perfil">
+                <option value="1">Cédula</option>
+                <option value="2">Pasaporte</option>
+              </ons-select>
+            </ons-col>
+            <ons-col width="70%">
+              <label style="margin-left: 32%;" for="cedula" class="font-weight-light active">Documento de
+                identidad</label>
+              <input type="text" id="cedula_perfil" class="form-control">
+            </ons-col>
+          </ons-row>
+        </div>
+        <!-- Material input email -->
+        <div class="md-form">
+          <i class="fa fa-phone prefix grey-text"></i>
+          <input onchange="valida_phone()" type="text" id="phone_perfil" class="form-control input-phome">
+          <label for="phone_perfil" class="font-weight-light active">Número de teléfono</label>
+        </div>
+        <div class="text-center py-4 mt-3">
+          <button style="width: 100%; background-color: #80232b !important;" onclick="change_user_data();"
+            id="btn-actualizar" class="btn btn-cyan" type="button">Actualizar
+            perfil</button>
+        </div>
+      </ons-card>
+    </ons-page>
+  </template>
+  <template id="contrasena.html">
+    <ons-page id="page_contrasena">
+      <ons-toolbar style="background: #80232b;">
+        <div class="left">
+          <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-card>
+        <div class="md-form">
+          <i class="fa fa-lock prefix grey-text"></i>
+          <input type="password" id="password_actual" class="form-control">
+          <label for="password_actual" class="font-weight-light">Contraseña actual</label>
+        </div>
+        <div class="md-form">
+          <i class="fa fa-lock prefix grey-text"></i>
+          <input type="password" id="password_perfil" class="form-control">
+          <label for="password" class="font-weight-light">Nueva contraseña</label>
+        </div>
+        <!-- Material input email -->
+        <div class="md-form">
+          <i class="fa fa-exclamation-triangle prefix grey-text"></i>
+          <input type="password" id="repeat_password_perfil" class="form-control">
+          <label for="repeat_password" class="font-weight-light">Repita la contraseña </label>
+        </div>
+        <div class="text-center py-4 mt-3">
+          <button style="background-color: #80232b !important" onclick="change_password();" id="btn-actualizar"
+            class="btn btn-cyan" type="button">Actualizar
+            contraseña</button>
+        </div>
+      </ons-card>
+    </ons-page>
+  </template>
+  <template id="categoria_subastas.html">
+    <ons-page id="page_categoria">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-list-header id="area_categoria">
+        <h3 style="color:#80232b" class="text-center">Categorias de subastas</h3>
+      </ons-list-header>
+    </ons-page>
+  </template>
+  <template id="categoria_anuncios.html">
+    <ons-page id="page_categoria">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <div>
+        <ons-list>
+          <ons-list-header id="area_categoria_anuncio">
+            <h3 style="color:#80232b" class="text-center">Categorias de anuncios</h3>
+          </ons-list-header>
+        </ons-list>
+      </div>
+      <!--   <div id="area_categoria_anuncio" class="row">
+      </div> -->
+    </ons-page>
+  </template>
+  <template id="categoria_anuncios_publicar.html">
+    <ons-page id="page_categoria_publicar">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-list>
+        <ons-list-header id="area_categoria_anuncio_publicar">
+          <h3 style="color:#80232b" class="text-center">Selecciona la categoria</h3>
+        </ons-list-header>
+      </ons-list>
+    </ons-page>
+  </template>
+  <template id="categoria_subasta_filtro.html">
+    <ons-page id="page_categoria_subasta_filtro">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo_subasta.png" alt="">
+        </div>
+      </ons-toolbar>
+      <div id="area_subastas_categorias">
+      </div>
+    </ons-page>
+  </template>
+  <template id="categoria_anuncio_filtro.html">
+    <ons-page id="page_categoria_anuncio_filtro">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo_subasta.png" alt="">
+        </div>
+      </ons-toolbar>
+      <div id="area_anuncio_categoria">
+      </div>
+    </ons-page>
+  </template>
+  <template id="detalle_subasta.html">
+    <ons-page id="page_detalle_subasta">
+      <ons-toolbar style="background: #80232b;">
+        <div class="left">
+          <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-carousel style="margin:2px 7px 0px 7px !important" halfscreen swipeable auto-scroll overscrollable
+        id="carousel_subasta">
+      </ons-carousel>
+      <ons-card id="card_detalle_subasta"
+        style="display: none !important; padding-top:1px !important; margin-top: 1px !important;">
+        <div class="card-body card-body-cascade text-center">
+          <!-- Title -->
+          <h5 style="color:#80232b !important; margin-top: 0px !important;" id="titulo_detalle" class="card-title">
+            <strong></strong></h5>
+          <!-- Subtitle -->
+          <h6 style="color:#80232b !important;font-size:10px !important;" id="categoria_detalle"
+            class="font-weight-bold indigo-text py-2">
+          </h6>
+          <!-- Text -->
+          <p id="descripcion_detalle" class="card-text">
+          </p>
+          <h1 style="background-color:#80232b !important; font-size: 20px !important;" id="inicial_detalle"
+            class="badge">
+          </h1>
+          <p id="cierre_detalle" class="text-black-50 py-2">fecha de cierre</p>
+        </div>
+        <input name="" id="subasta_id" type="hidden" value="">
+        <input name="" id="subasta_user_id" type="hidden" value="">
+        <button style="width: 95% !important; background-color: #80232b !important; display: none;"
+          onclick="pagar_entrada_subasta();" id="entrar_subasta" class="btn btn-cyan" type="button"><span><i
+              class="fa fa-sign-in" aria-hidden="true"></i>
+            Entrar a la subasta</span></button>
+        <button style="display: none; width: 95% !important; background-color: #80232b !important;"
+          onclick="entrar_subasta_pujar();" id="pujar_subasta" class="btn btn-cyan" type="button"><span><i
+              class="fa fa-sign-in" aria-hidden="true"></i>
+            Pujar</span></button>
+        <button style="display: none; width: 95% !important; background-color: #80232b !important;"
+          onclick="pagar_subasta_directa();" id="pagar_subasta_directa" class="btn btn-cyan" type="button"><span><i
+              class="fa fa-sign-in" aria-hidden="true"></i>
+            Pagar subasta</span></button>
+      </ons-card>
+    </ons-page>
+  </template>
+  <template id="detalle_anuncio.html">
+    <ons-page id="page_detalle_anuncio">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-carousel style="margin:2px 7px 0px 7px !important" swipeable auto-scroll id="carousel_anuncio">
+      </ons-carousel>
+      <ons-card style="display: none !important; padding-top:1px !important; margin-top: 1px !important;"
+        id="body_detalle_anuncio">
+        <div class="card-body card-body-cascade text-center">
+          <!-- Title -->
+          <h5 style="color:#80232b !important; margin-top: 0px !important;" id="titulo_detalle_anuncio"
+            class="card-title">
+            <strong></strong></h5>
+          <!-- Subtitle -->
+          <h6 style="font-size:10px !important;" id="categoria_detalle_anuncio"
+            class="font-weight-bold indigo-text py-2">
+          </h6>
+          <!-- Text -->
+          <p id="descripcion_detalle_anuncio" class="card-text">
+          </p>
+          <p style="background-color:#80232b !important; font-size: 20px !important;" id="precio_anuncio" class="badge">
+          </p>
+          <a id="number_whatsaap" href="">
+            <p style="color:#00bb2d !important" class="font-weight-bold indigo-text py-2"><span id="whatsapp"></span>
+            </p>
+          </a>
+          <p id="direccion_anuncio" class="card-text">
+          </p>
+          <div class="google-maps-wrapper">
+            <div id="google-maps-inner" class="google-maps-inner">
+              <div id="map" class="google-maps">
+              </div>
+            </div>
+          </div>
+      </ons-card>
+    </ons-page>
+  </template>
+  <template id="subcategorias.html">
+    <ons-page id="page_subcategorias">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-list>
+        <ons-list-header id="header_lista">
+          <h3 style="color:#80232b" class="text-center">Selecciona la subcategoria</h3>
+        </ons-list-header>
+      </ons-list>
+    </ons-page>
+  </template>
+  <template id="galeria.html">
+    <ons-page id="page_galeria">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-card>
+        <h3 style="color:#80232b" class="text-center">Fotos del anuncio</h3>
+        <div id="galeria_imagen" class="row">
+        </div>
+        <section style="padding: 8px">
+          <ons-fab onclick="getImage();" style="background-color: #2a3681 !important;">
+            <ons-icon style="color: #fff !important;" icon="md-folder"></ons-icon>
+          </ons-fab>
+          <ons-fab onclick="tomar_foto2();" style="background-color: #80232b !important;">
+            <ons-icon style="color: #fff !important;" icon="md-camera"></ons-icon>
+          </ons-fab>
+        </section>
+        <section style="padding: 8px">
+          <ons-button id="btn_siguiente2" onclick="siguiente2();"
+            style="width:100%; background-color: #80232b !important; display: none;" modifier="large">
+            <ons-icon icon="md-arrow-right"></ons-icon> Siguiente
+          </ons-button>
+        </section>
+      </ons-card>
+    </ons-page>
+  </template>
+  <template id="formulario.html">
+    <ons-page id="page_formulario">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-card>
+        <!-- Material input text -->
+        <div class="md-form">
+          <i class="fa fa-tags prefix grey-text"></i>
+          <input type="text" id="titulo_publicar" class="form-control">
+          <label for="titulo_publicar" class="font-weight-light ">Título del anuncio</label>
+        </div>
+        <!-- Material input text -->
+        <div class="md-form">
+          <i class="fa fa-info prefix grey-text"></i>
+          <textarea class="form-control" rows="5" id="descripcion_publicar"></textarea>
+          <label for="descripcion_publicar" class="font-weight-light ">Descripción del anuncio</label>
+        </div>
+        <!-- Material input email -->
+        <div class="md-form">
+          <i class="fa fa-whatsapp prefix grey-text"></i>
+          <input type="number" id="phone_publicar" class="form-control">
+          <label for="phone_publicar" class="font-weight-light ">Teléfono de contacto</label>
+        </div>
+        <div class="md-form">
+          <i class="fa fa-money prefix grey-text"></i>
+          <input type="number" id="precio_publicar" class="form-control">
+          <label for="precio_publicar" class="font-weight-light ">Precio</label>
+        </div>
+        <section style="padding: 8px">
+          <ons-button id="btn_siguiente" onclick="siguiente();"
+            style="width:100%; background-color: #80232b !important;" modifier="large">
+            <ons-icon icon="md-arrow-right"></ons-icon> Siguiente
+          </ons-button>
+        </section>
+      </ons-card>
+    </ons-page>
+  </template>
+  <template id="mapa.html">
+    <ons-page id="page_galeria">
+      <ons-toolbar style="background: #8c1822;">
+        <div class="left">
+          <ons-back-button style="color:#80232b"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <div></div>
+      <h3 style="color:#80232b;" class="text-center">Ubicación del anuncio</h3>
+      <section>
+        <div class="google-maps-wrapper">
+          <div id="google-maps-inner" class="google-maps-inner">
+            <div class="input-group">
+              <input id="city_main" type="hidden" value="">
+              <input style="width:100%;" id="pac-input" name="pac-input" class="controls input-sm form-control"
+                type="text" placeholder="Escribe la dirección aqui">
+            </div>
+            <div style="width:100%; height:400px;" id="mapa" class="map">
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="lat" name="lat" />
+        <input type="hidden" id="lng" name="lng" />
+      </section>
+      <section style="padding: 8px">
+        <ons-button id="btn_culminar_anuncio" onclick="culminar_anuncio()"
+          style="width:100%; background-color: #80232b !important;" modifier="large">
+          <ons-icon icon="md-check"></ons-icon> Culminar
+        </ons-button>
+      </section>
+    </ons-page>
+  </template>
+  <template id="entrada.html">
+    <ons-page id="page_entrada">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button style="color:#80232b !important;"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo_subasta.png" alt="">
+        </div>
+      </ons-toolbar>
+      <h4 style="text-align: center;">Entrar a la subasta</h4>
+      <ons-card>
+        <section style="padding: 8px">
+          <div id="valor_inicial_entrada">
+          </div>
+        </section>
+        <section style="padding: 8px">
+          <ons-button id="" onclick="pagar_entrada()" style="width:100%; background-color: #80232b !important;"
+            modifier="large">
+            <ons-icon icon="md-check"></ons-icon> Pagar Entrada
+          </ons-button>
+        </section>
+      </ons-card>
+    </ons-page>
+  </template>
+  <template id="pujar.html">
+    <ons-page id="page_piujar">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button style="color:#80232b !important;"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo_subasta.png" alt="">
+        </div>
+      </ons-toolbar>
+      <h4 style="text-align: center;">Pujar</h4>
+      <ons-card>
+        <section style="padding: 8px">
+          <div id="valor_inicial_entrada">
+          </div>
+        </section>
+        <section style="padding: 8px">
+          <ons-button id="" onclick="pagar_entrada()" style="width:100%; background-color: #80232b !important;"
+            modifier="large">
+            <ons-icon icon="md-check"></ons-icon> Pagar Entrada
+          </ons-button>
+        </section>
+      </ons-card>
+    </ons-page>
+  </template>
+  <template id="adquirir_membresia.html">
+    <ons-page id="page_adquirir_membresia">
+      <ons-toolbar style="background: #80232b;">
+        <div class="left">
+          <ons-back-button style="color:#fff !important"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <h4 style="text-align: center;">Adquirir membresia</h4>
+      <div id="body_membresias">
+      </div>
+    </ons-page>
+  </template>
+  <template id="membresia_detalle.html">
+    <ons-page id="page_detalle_membresia">
+      <ons-toolbar style="background: #80232b;">
+        <div class="left">
+          <ons-back-button style="color:#fff !important"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-card style="display: none;" id="card_infomacion_membresia">
+        <div class="title">
+          <h2 style="text-align: center; color:#80232b"> Información</h2>
+          <h4 id="nombre_membresia" style="text-align: center; color:#80232b"> </h4>
+        </div>
+        <div class="content">
+          <div id="descripcion_membresia" class="text-center">
+          </div>
+          <h4 id="anuncios_disponibles" style="text-align: center; color:#80232b"> </h4>
+        </div>
+      </ons-card>
+    </ons-page>
+  </template>
+  <template id="mis_anuncios.html">
+    <ons-page id="page_mis_anuncios">
+      <ons-toolbar style="background: #80232b;">
+        <div class="left">
+          <ons-back-button onclick="llamar_anuncios()" style="color:#fff !important"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-pull-hook id="pull-hook">
+        Cargando...
+      </ons-pull-hook>
+      <div id="area_mis_anuncios" class="" style="margin:0px !important">
+      </div>
+      <ons-fab onclick="publicar_anuncio();" style="background-color: #2a3681 !important;" position="bottom right">
+        <ons-icon style="color: #ffffff !important" icon="md-plus"></ons-icon>
+      </ons-fab>
+    </ons-page>
+  </template>
+  <ons-modal id="modal_loading" direction="up">
+    <div style="text-align: center">
+      <p>
+        <ons-progress-circular indeterminate></ons-progress-circular>
+      </p>
+      <p id="body_modal"></p>
+    </div>
+  </ons-modal>
+  <ons-modal id="modal_confirmacion" direction="up">
+    <ons-card style="margin-left:6% !important; margin-right:6% !important;">
+      <div id="title_confirmacion" style="color:#80232b" class="title text-center">
+        Confirmación
+      </div>
+      <div id="body_mensaje_confirmacion" class="content">
+      </div>
+      <div class="content">
+        <ons-row>
+          <ons-col width="90%"><img style="width:100%;" src="images/logosEC.png" alt=""></ons-col>
+          <ons-col width="10%"> <img style="width:85%;" src="images/mastercard_pay.png" alt="">
+          </ons-col>
+        </ons-row>
+        <ons-row>
+          <ons-col width="25%"></ons-col>
+          <ons-col width="75%"><a href="https://www.placetopay.com"> <img style="width: 50%"
+                src="images/Logo_PlacetoPay.png" alt=""></a></ons-col>
+          <ons-col width="25%"></ons-col>
+        </ons-row>
+        <ons-row id="body_condiciones" style="margin-top: 10%;">
+          <ons-col width="100%">
+            <div class="custom-control custom-checkbox text-center">
+              <input type="checkbox" class="custom-control-input" id="selected_tc" checked />
+              <label class="custom-control-label" for="selected_tc">Acepto los términos y
+                condiciones</label>
+            </div>
+          </ons-col>
+        </ons-row>
+        <ons-row style="margin-top: 10%;">
+          <ons-col id="transaccion_pendiente" width="100%">
+          </ons-col>
+        </ons-row>
+      </div>
+      <br>
+      <p style="text-align: right">
+        <ons-button id="btn_pagar_confirmacion" onclick="adquirir_confimacion()" style="color:#80232b" modifier="quiet">
+          Pagar</ons-button>
+        <ons-button onclick="close_confirmacion()" style="color:#80232b" modifier="quiet">Cancelar</ons-button>
+      </p>
+    </ons-card>
+  </ons-modal>
+  <ons-modal id="modal_notificacion" direction="up">
+    <ons-card style="margin-left:6% !important; margin-right:6% !important;">
+      <div id="title_confirmacion" style="color:#80232b" class="title text-center">
+        Notificación
+      </div>
+      <div id="body_mensaje_notificacion" class="content">
+        <h2 style="color:#008f39 " class="text-center" id="icono_notificacion"></h2>
+        <h4 class="text-center" id="status_notificacion"></h4>
+        <p class="text-center"><strong>Referencia de la Transacción: </strong></p>
+        <p class="text-center" id="referencia_notificacion"></p>
+        <p class="text-center" id="mensaje_notificacion"></p>
+        <p class="text-center" id="product_adquirido"></p>
+      </div>
+      <div class="content">
+        <ons-row>
+          <ons-col width="90%"><img style="width:100%;" src="images/logosEC.png" alt=""></ons-col>
+          <ons-col width="10%"> <img style="width:85%;" src="images/mastercard_pay.png" alt="">
+          </ons-col>
+        </ons-row>
+        <ons-row>
+          <ons-col width="25%"></ons-col>
+          <ons-col width="75%"><a href="https://www.placetopay.com"> <img style="width: 50%"
+                src="images/Logo_PlacetoPay.png" alt=""></a></ons-col>
+          <ons-col width="25%"></ons-col>
+        </ons-row>
+      </div>
+      <br>
+      <p style="text-align: right">
+        <ons-button onclick="llamar_anuncios()" style="color:#80232b" modifier="quiet">Aceptar</ons-button>
+      </p>
+    </ons-card>
+  </ons-modal>
+</body>
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="material_bootstrap/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="material_bootstrap/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/mdb.min.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/urls.js"></script>
+<script type="text/javascript" src="js/index_dash.js"></script>
+<script type="text/javascript" src="js/popper.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0jIY1DdGJ7yWZrPDmhCiupu_K2En_4HY&libraries=places" async
+  defer></script>
+<script src="https://secure.placetopay.ec/redirection/lightbox.min.js"></script>
+
+</html>
+<script>
+  //variables
+  var scroll = 800;
+  var final = 0;
+  var id_confirmacion = null;
+  var detalle_confirmacion = null;
+  var valor_confirmacion = null;
+  var lista;
+  var imageURL = '';
+  var item_auth = get_data_local();
+  var modal = $('#modal_loading');
+  var modal_notificacion = $('#modal_notificacion');
+  var pullHook = document.getElementById('pull-hook2');
+  var modal_confirmacion = $('#modal_confirmacion');
+  var page;
+  var lat;
+  var lng;
+  var detalle_payment = null;
+  var response_payment = null;
+  var detalle_pago = null;
+  var tipo_detalle = null;
+  var puja_user_id = null;
+  var valor_inicial = null;
+  var valor_pago = null;
+  var id = null;
+  var monto = null;
+  var subasta_id = null;
+  var comienzo = null;
+  var titulo_publicar = null;
+  var descripcion_publicar = null;
+  var phone_publicar = null;
+  var precio_publicar = null;
+  var subcategoria = null;
+  var latidud = null;
+  var longitud = null;
+  var ciudad = null;
+  var array_fotos = [];
+  var contador = 1;
+
+  //carga cuando se ejecuta antes del cambio
+  document.addEventListener('preopen', function (event) {
+    buscar_membresia_user();
+  });
+  //carga cuando se ejecuta un cambio previo
+  document.addEventListener('prechange', function (event) {
+    //document.querySelector('ons-toolbar .center').innerHTML = event.tabItem.getAttribute('label');
+    var etiqueta = null;
+    if (event.tabItem) {
+      var etiqueta = event.tabItem.getAttribute('label');
+    }
+
+    if (etiqueta == "Subastas") {
+      $('#area_subastas').hide();
+      window.location.href = 'dash.html';
+    }
+    if (etiqueta == "Anuncios") {
+      $('#area_anuncios').hide();
+      modal.show();
+      $('#body_modal').text("Cargando anuncios...");
+      $('#area_anuncios').empty();
+      var item_auth = get_data_local();
+      setTimeout(function () {
+        var url = base_url + 'rest_anuncio/cargar_anuncios';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        comienza2 = 0;
+        limite2 = 11;
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          comienza: comienza2,
+          limite: limite2
+        };
+        send_data_server(url, data_to_server, success_all_anuncios,
+          error);
+      }, 1000);
+      page.onInfiniteScroll = function (done) {
+        console.log("entro en el infinito del anuncio pre");
+        infinito_anuncio();
+      }
+    }
+
+  });
+  //carga despues que se carga la app
+  /*   document.addEventListener('postchange', function (event) {
+      //page = event.target;
+    }); */
+  //carga durante el incio de la app
+  document.addEventListener('init', function (event) {
+    item_auth = get_data_local();
+    page = event.target;
+    if (page.id == "page1") {
+      $('#body_modal').text("Cargando ...");
+      modal.show();
+      $('#area_anuncios').empty();
+      setTimeout(function () {
+        var url = base_url + 'rest_subasta/cargar_subastas';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          comienza: comienza,
+          limite: limite
+        };
+        send_data_server(url, data_to_server, success_all_subastas,
+          error);
+      }, 1000);
+      page.onInfiniteScroll = function (done) {
+        console.log("entro en infinito de subasta 1");
+        infinito();
+      }
+      //buscar membresia
+      buscar_membresia_user();
+    }
+    if (page.id == "page_perfil_cliente") {
+      var item_auth = get_data_local();
+      $("#name_perfil").val(item_auth.name);
+      $('#surname_perfil').val(item_auth.surname);
+      $("#cedula_perfil").val(item_auth.cedula);
+      $("#tipo_documento_perfil").val(item_auth.tipo_documento);
+      $("#phone_perfil").val(item_auth.phone);
+      if (item_auth.photo) {
+        var imageURL = item_auth.photo;
+        let valido = imageURL.indexOf("uploads");
+        if (valido > 0) {
+          $('#foto_perfil_usuario').attr("src", url_photo + imageURL);
+        } else {
+          $('#foto_perfil_usuario').attr("src", imageURL);
+        }
+      } else {
+        var imageURL = "images/icon_profile_dash.png";
+        $("#foto_perfil_usuario").attr("src", "images/icon_profile_dash.png");
+      }
+    }
+    if (page.id == "page_anuncios") {
+      $('#area_anuncios').hide();
+      $('#body_modal').text("Cargando ...");
+      modal.show();
+      $('#area_anuncios').empty();
+      var item_auth = get_data_local();
+      setTimeout(function () {
+        var url = base_url + 'rest_anuncio/cargar_anuncios';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        comienza2 = 0;
+        limite2 = 11;
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          comienza: comienza2,
+          limite: limite2
+        };
+        send_data_server(url, data_to_server, success_all_anuncios,
+          error);
+      }, 1000);
+      /*     page.onInfiniteScroll = function (done) {
+            console.log("entro en el infinito del anuncio init");
+            infinito_anuncio();
+          } */
+    }
+    if (page.id == "page_mis_anuncios") {
+      $('#area_mis_anuncios').hide();
+      $('#body_modal').text("Cargando mis anuncios...");
+      modal.show();
+      $('#area_mis_anuncios').empty();
+      var item_auth = get_data_local();
+      setTimeout(function () {
+        var url = base_url + 'rest_anuncio/cargar_mis_anuncios';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        comienza_mis_anuncios = 0;
+        limite_mis_anuncios = 11;
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          comienza: comienza_mis_anuncios,
+          limite: limite_mis_anuncios
+        };
+        send_data_server(url, data_to_server, success_mis_anuncios,
+          error);
+      }, 1000);
+      /*  page.onInfiniteScroll = function (done) {
+         console.log("entro en el infinito del anuncio init");
+         infinito_mis_anuncio();
+       } */
+    }
+    var prev = function () {
+      var carousel = document.getElementById('carousel');
+      carousel.prev();
+    };
+
+    var next = function () {
+      var carousel = document.getElementById('carousel');
+      carousel.next();
+    };
+  });
+  //valida el input phone
+  function valida_phone() {
+    var phone = $("#phone_perfil").val();
+    ValidatePhone(phone);
+  }
+  //valida el input name
+  function valida_name() {
+    let texto = $('#name_perfil').val();
+    texto = texto.trim();
+    texto = texto.split(" ");
+    if (texto.length > 1) {
+      texto = texto[0];
+    } else {
+      texto = texto[0];
+    }
+    $('#name_perfil').val(texto);
+    ValidateName(texto);
+  }
+  //valida el input surname
+  function valida_surname() {
+    let texto = $('#surname_perfil').val();
+    texto = texto.trim();
+    texto = texto.split(" ");
+    if (texto.length >= 2) {
+      texto = texto[0] + " " + texto[1];
+    } else {
+      texto = texto[0];
+    }
+    $('#surname_perfil').val(texto);
+    ValidateSurname(texto);
+  }
+  //funcion que valida el input phone
+  function ValidatePhone(phone) {
+    var regex = /^[0-9+ ]+$/;
+    valido = regex.test(phone.trim());
+    if (valido) {
+      $('#phone_perfil').val(phone.trim());
+    } else {
+      $('#phone_perfil').val("");
+      $('#phome_perfil').focus();
+      navigator.notification.alert(
+        'Formato del teléfono es incorrecto', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que valida el input name
+  function ValidateName(name) {
+    var regex = /^[a-zA-ZáéíóúñüàèÑ ]+$/;
+    valido = regex.test(name.trim());
+    if (valido) {
+      $('#name_perfil').val(name.trim());
+    } else {
+      $('#name_perfil').val("");
+      $('#name_perfil').focus();
+      navigator.notification.alert(
+        'Formato del nombre es incorrecto', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que valida el input surname
+  function ValidateSurname(surname) {
+    var regex = /^[a-zA-ZáéíóúñüàèÑ ]+$/;
+    valido = regex.test(surname.trim());
+    if (valido) {
+      $('#surname_perfil').val(surname.trim());
+    } else {
+      $('#surname_perfil').val("");
+      $('#surname_perfil').focus();
+      navigator.notification.alert(
+        'Formato del apellido es incorrecto', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //se ejecuta con el boton membresia en el dash
+  function cargar_membresia_user() {
+    pushPage('#appNavigator', 'membresia_detalle.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando membresia...")
+    setTimeout(function () {
+      var url = base_url + 'rest_membresia/buscar_membresia_user';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+      };
+      send_data_server(url, data_to_server, success_detalle_membresia,
+        error);
+    }, 1000);
+  }
+  //se ejecuta con el boton adquirir membresia
+  function cargar_membresias() {
+    pushPage('#appNavigator', 'adquirir_membresia.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando membresias...")
+    setTimeout(function () {
+      var url = base_url + 'rest_membresia/listar';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+      };
+      send_data_server(url, data_to_server, success_adquirir_membresias,
+        error);
+    }, 1000);
+  }
+  //success de cargar_membresia_user muestra la informacion de la membresia adquirida
+  function success_detalle_membresia(response) {
+    modal.hide();
+    let status = response.status;
+    let membresia = response.membresia_user;
+    if (status == 200) {
+      $('#nombre_membresia').text(membresia.nombre);
+      $('#descripcion_membresia').html(membresia.descripcion);
+      $('#descripcion_membresia').after(
+        "<p style='color:#80232b' class='text-center'><strong>Fecha de compra:</strong> " + membresia.fecha_inicio +
+        " </p><p style='color:#80232b' class='text-center'><strong>Fecha de vencimiento:</strong> " + membresia
+        .fecha_fin + " </p>")
+      $('#anuncios_disponibles').text("Anuncios disponibles: " + membresia.anuncios_publi);
+      $('#card_infomacion_membresia').show();
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay membresias', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //success de cargar_membresia mostrando un listado de las membresias
+  function success_adquirir_membresias(response) {
+    modal.hide();
+    // response = JSON.parse(response);
+    var status = response.status;
+    let membresias = response.membresias;
+    let card = "";
+    if (status == 200) {
+      if (membresias.length > 0) {
+        for (let i = 0; i < membresias.length; i++) {
+          card += " <ons-card><div class='title'><div style='color:#80232b' class='text-center'>" + membresias[i]
+            .nombre +
+            "</div><div style='color:#80232b' class='text-center'>$" + parseFloat(membresias[i].precio).toFixed(2) +
+            "</div></div><div class='content text-center'>" + membresias[i].descripcion +
+            "</div> <button style='width: 95% !important; background-color: #80232b !important;' onclick=buy_membresia('" +
+            btoa(JSON.stringify(membresias[i])) +
+            "');  class='btn btn-cyan' type='button'><span> Adquirir</span></button></ons-card>";
+        }
+        $('#body_membresias').append(card);
+      }
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay membresias', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que cierra el modal confirmacion que es de pago.
+  function close_confirmacion() {
+    let modal_confirmacion = $('#modal_confirmacion');
+    modal_confirmacion.hide();
+  }
+  //function que se ejecuta previo al pago placetopay
+  function adquirir_confimacion() {
+    var aceptado_tc = $('#selected_tc').is(":checked");
+    if (aceptado_tc) {
+      close_confirmacion();
+      modal.show();
+      $('#body_modal').text("Cargando ...");
+      setTimeout(function () {
+        var url = base_url + 'rest_payment/checkout';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          id: id_confirmacion,
+          detalle: detalle_confirmacion,
+          tipo: tipo_detalle,
+          monto: valor_confirmacion
+        };
+        send_data_server(url, data_to_server, success_producto_adquirida,
+          error);
+      }, 1000);
+    } else {
+      navigator.notification.alert(
+        'Usted debe aceptar los términos y condiciones', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //regreso al comercio luego de pagar
+  P.on('response', function (data) {
+    response_payment = data;
+    let requestId = data.requestId;
+    let reference = data.reference;
+    let estado_payment = 0;
+    if (data.status.status == "APPROVED") {
+      estado_payment = 1;
+    } else if (data.status.status == "REJECTED") {
+      estado_payment = 2;
+    } else if (data.status.status == "PENDING") {
+      estado_payment = 3;
+    }
+    if (estado_payment > 1) {
+      var url = base_url + 'rest_payment/update_request';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        request_id: requestId,
+        reference: reference,
+        status: estado_payment
+      };
+      send_data_server(url, data_to_server, success_update_payment,
+        error);
+    } else {
+      modal.hide();
+      if (estado_payment == 1 && detalle_payment.tipo == 0) {
+        //compra de membresia
+        $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
+        $('#status_notificacion').text("Transacción Aprobada");
+        $('#product_adquirido').html("<strong>Membresia adquirida : </strong>" + detalle_payment.detalle);
+        $('#mensaje_notificacion').text(data.status.message);
+        $('#referencia_notificacion').html(data.reference);
+        modal_notificacion.show();
+      } else if (estado_payment == 1 && detalle_payment.tipo == 1) {
+        //piso de subasta
+        $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
+        $('#status_notificacion').text("Transacción Aprobada");
+        $('#product_adquirido').html("<strong>Descripción : </strong>" + detalle_payment.detalle);
+        $('#mensaje_notificacion').text(data.status.message);
+        $('#referencia_notificacion').html(data.reference);
+        modal_notificacion.show();
+      } else if (estado_payment == 1 && detalle_payment.tipo == 2) {
+        //anuncio destacado
+        $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
+        $('#status_notificacion').text("Transacción Aprobada");
+        $('#product_adquirido').html("<strong>Anuncio detacado : </strong>" + detalle_payment.detalle);
+        $('#mensaje_notificacion').text(data.status.message);
+        $('#referencia_notificacion').html(data.reference);
+        modal_notificacion.show();
+      } else if (estado_payment == 1 && detalle_payment.tipo == 3) {
+        //compra de inversa
+        $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
+        $('#status_notificacion').text("Transacción Aprobada");
+        $('#product_adquirido').html("<strong>Subasta adquirida : </strong>" + detalle_payment.detalle);
+        $('#mensaje_notificacion').text(data.status.message);
+        $('#referencia_notificacion').html(data.reference);
+        modal_notificacion.show();
+      }
+    }
+  });
+  //relacionado con el boton de pago placetopay
+  $("#lightboxIt").on('click', function () {
+    P.init($("#processUrl").val());
+  });
+  //funcion que se ejecuta luego de dar click en boton regresar al comercio para actualizar los estatus de la transaccion en caso de que sea rechazada o pendiente.
+  function success_update_payment(response) {
+    var result = response.payment;
+    var status = response.status;
+    // let membresias = response.membresia_user;
+    if (status == 200) {
+      modal.hide();
+      if (result.status == 1 && result.tipo == 0) {
+        //compra de membresia
+        $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
+        $('#status_notificacion').text("Transacción Aprobada");
+        $('#product_adquirido').html("<strong>Membresia adquirida : </strong>" + result.detalle);
+        $('#mensaje_notificacion').text(response_payment.status.message);
+        $('#referencia_notificacion').html(result.reference);
+        modal_notificacion.show();
+      } else if (result.status == 1 && result.tipo == 1) {
+        //piso de subasta
+        $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
+        $('#status_notificacion').text("Transacción Aprobada");
+        $('#product_adquirido').html("<strong>Descripción : </strong>" + result.detalle);
+        $('#mensaje_notificacion').text(response_payment.status.message);
+        $('#referencia_notificacion').html(result.reference);
+        modal_notificacion.show();
+      } else if (result.status == 1 && result.tipo == 2) {
+        //anuncio destacado
+        $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
+        $('#status_notificacion').text("Transacción Aprobada");
+        $('#product_adquirido').html("<strong>Anuncio detacado : </strong>" + result.detalle);
+        $('#mensaje_notificacion').text(response_payment.status.message);
+        $('#referencia_notificacion').html(result.reference);
+        modal_notificacion.show();
+      } else if (result.status == 1 && result.tipo == 3) {
+        //compra de inversa
+        $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
+        $('#status_notificacion').text("Transacción Aprobada");
+        $('#product_adquirido').html("<strong>Subasta adquirida : </strong>" + result.detalle);
+        $('#mensaje_notificacion').text(response_payment.status.message);
+        $('#referencia_notificacion').html(result.reference);
+        modal_notificacion.show();
+      }
+      if (result.status == 2) {
+        $('#icono_notificacion').html("<i class='fa fa-times-circle-o'></i>");
+        $('#status_notificacion').text("El pago ha sido rechazado");
+        $('#mensaje_notificacion').text(response_payment.status.message);
+        $('#referencia_notificacion').html(result.reference);
+        modal_notificacion.show();
+      } else if (result.status == 3) {
+        $('#icono_notificacion').html("<i class='fa fa-question-circle-o'></i>");
+        $('#status_notificacion').text("El proceso de pago está pendiente");
+        $('#mensaje_notificacion').text(response_payment.status.message);
+        $('#referencia_notificacion').html(result.reference);
+        modal_notificacion.show();
+      }
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'Ocurrio un error intente mas tarde', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que se ejecuta como respuesta del boton pagar placetopay y levanta el modal de pago
+  function success_producto_adquirida(response) {
+    //  modal.hide();
+    // response = JSON.parse(response);
+    detalle_payment = response.payment;
+    var result = response.result;
+    var status = response.status;
+    // let membresias = response.membresia_user;
+    if (status == 200) {
+      var processUrl = result.processUrl;
+      P.init(processUrl);
+      $("#processUrl").val(processUrl);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que ejecuta la seleccion de la membresia y abre el modal de confirmacion
+  function buy_membresia(obj) {
+    detalle_pago = atob(obj);
+    detalle_pago = JSON.parse(detalle_pago);
+    tipo_detalle = 0;
+    modal.show();
+    $('#btn_pagar_confirmacion').hide();
+    setTimeout(function () {
+      var url = base_url + 'rest_payment/payments_user';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+      };
+      send_data_server(url, data_to_server, success_confirmacion_payment,
+        error);
+    }, 1000);
+  };
+  //funcion que se ejecuta para mostrar el mensaje de lo ocurrido con la transaccion y abre el modal de notificacion
+  function success_confirmacion_payment(response) {
+    modal.hide();
+    $('#body_condiciones').hide();
+    $('#transaccion_pendiente').hide();
+    let status = response.status;
+    if (status == 200) {
+      $('#body_mensaje_confirmacion').empty();
+      let cadena = "<h5  class='text-center'>" + detalle_pago.nombre +
+        "</h5><h5  class='text-center'>$" + parseFloat(detalle_pago.precio).toFixed(2) + "</h5>";
+      $('#body_mensaje_confirmacion').append(cadena);
+      $('#title_confirmacion').text("Membresia");
+      $('#transaccion_pendiente').html(
+        "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p>");
+      $('#transaccion_pendiente').show();
+      id_confirmacion = detalle_pago.membresia_id;
+      valor_confirmacion = detalle_pago.precio;
+      detalle_confirmacion = detalle_pago.nombre;
+      $('#btn_pagar_confirmacion').hide();
+      $('#body_condiciones').hide();
+      modal_confirmacion.show();
+    }
+    if (status == 404) {
+      $('#body_mensaje_confirmacion').empty();
+      let cadena = "<h5  class='text-center'>" + detalle_pago.nombre +
+        "</h5><h5  class='text-center'>$" + parseFloat(detalle_pago.precio).toFixed(2) + "</h5>";
+      $('#body_mensaje_confirmacion').append(cadena);
+      $('#title_confirmacion').text("Membresia");
+      id_confirmacion = detalle_pago.membresia_id;
+      valor_confirmacion = detalle_pago.precio;
+      detalle_confirmacion = detalle_pago.nombre;
+      $('#btn_pagar_confirmacion').show();
+      $('#body_condiciones').show();
+      modal_confirmacion.show();
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'Disculpe intente mas tarde', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion para pagar el piso de la subasta
+  function pagar_entrada_subasta() {
+    pushPage('#appNavigator', 'entrada.html', '');
+    modal.show();
+    setTimeout(function () {
+      $('#valor_inicial_entrada').html(
+        "<h3 style='color:#80232b !important; font-size: 20px !important;' class='text-center'>$" +
+        parseFloat(valor_inicial).toFixed(2) + "</h3>");
+      modal.hide();
+    }, 1000);
+  }
+  //funcion que ejecuta la carga de las categorias de subata
+  function cargar_categorias_subastas() {
+    pushPage('#appNavigator', 'categoria_subastas.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando categorias...")
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/subasta_categoria';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+      };
+      send_data_server(url, data_to_server, success_subasta_categoria,
+        error);
+    }, 1000);
+  }
+  //funcion de respuesta para cargar las categorias de anuncios
+  function success_anuncio_categoria(response) {
+    lista = response.lista;
+    count = lista.length;
+    modal.hide();
+    //  response = JSON.parse(response.data);
+    var status = response.status;
+    if (status == 200) {
+      cargar_categorias_anuncio(lista, count);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay categorias', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion de respuesta para cargar las categorias de anuncios
+  function success_anuncio_categoria2(response) {
+    lista = response.lista;
+    count = lista.length;
+    modal.hide();
+    //  response = JSON.parse(response.data);
+    var status = response.status;
+    if (status == 200) {
+      cargar_categorias_anuncio2(lista, count);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay categorias', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion de respuesta para cargar las subcategorias de anuncios
+  function success_anuncio_subcategoria(response) {
+    modal.hide();
+    //  response = JSON.parse(response.data);
+    var status = response.status;
+    if (status == 200) {
+      lista = response.object;
+      count = lista.length;
+      cargar_subcategorias_anuncio(lista, count);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay categorias', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion de repuesta para cargar las categorias de la subasta
+  function success_subasta_categoria(response) {
+    lista = response.lista;
+    count = lista.length;
+    modal.hide();
+    //  response = JSON.parse(response.data);
+    var status = response.status;
+    if (status == 200) {
+      cargar_categorias(lista, count);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay categorias', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //carga las categoias de la subasta
+  function cargar_categorias(lista, count) {
+    colores = ["#3498DB", "#2ECC71", "#9B59B6", "#D5658D", "#B89579", "#53B9C5", "#757790", "#344953", "#3498DB",
+      "#2ECC71", "#9B59B6", "#D5658D", "#B89579", "#53B9C5", "#757790", "#344953", "#3498DB", "#2ECC71", "#9B59B6",
+      "#D5658D", "#B89579", "#53B9C5", "#757790", "#344953"
+    ];
+    contador = 7;
+    cadena_cate = ""
+    if (count > 0) {
+      for (let i = 0; i < count; i++) {
+        var img = base_url + lista[i].photo;
+        cadena_cate +=
+          "   <ons-list-item onclick='buscar_subastas(" +
+          lista[i].categoria_id +
+          ");' ripple modifier='chevron' tappable><div class='left'><img  style='background-color:" +
+          colores[i] +
+          ";' class='list-item__thumbnail' src='" +
+          img +
+          "'></div> <div class='center'><h4><span class='list-item__title'>" + lista[i].name_espa +
+          "</span></h4></div></ons-list-item>";
+      }
+      $('#area_categoria').after(cadena_cate);
+    }
+  }
+  //carga las categorias de los anuncios
+  function cargar_categorias_anuncio(lista, count) {
+    colores = ["#3498DB", "#2ECC71", "#9B59B6", "#D5658D", "#B89579", "#53B9C5", "#757790", "#344953"];
+    contador = 7;
+    cadena_cate = ""
+    if (count > 0) {
+      for (let i = 0; i < count; i++) {
+        var img = base_url + lista[i].photo;
+        cadena_cate +=
+          "   <ons-list-item onclick='buscar_anuncios(" +
+          lista[i].cate_anuncio_id +
+          ");' ripple modifier='chevron' tappable><div class='left'><img class='list-item__thumbnail' src='" +
+          img +
+          "'></div> <div class='center'><h4><span class='list-item__title'>" + lista[i].nombre +
+          "</span><span> (" + lista[i].contador + ")</span></h4></div></ons-list-item>";
+      }
+      $('#area_categoria_anuncio').after(cadena_cate);
+    }
+  }
+  //carga las categorias de los anuncios
+  function cargar_subcategorias_anuncio(lista, count) {
+    cadena_cate = ""
+    if (count > 0) {
+      for (let i = 0; i < count; i++) {
+        cadena_cate += "<ons-list-item id='subcategoria_'" + lista[i].subcate_id + " onclick='cargar_formulario(" +
+          lista[i].subcate_id + ");'ripple modifier='chevron' tappable><h4>" + lista[i].nombre +
+          "</h4></ons-list-item>";
+      }
+      $('#header_lista').append(cadena_cate);
+    }
+  }
+  //carga las categorias de los anuncios
+  function cargar_categorias_anuncio2(lista, count) {
+    cadena_cate = ""
+    if (count > 0) {
+      for (let i = 0; i < count; i++) {
+        var img = base_url + lista[i].photo;
+        cadena_cate +=
+          "   <ons-list-item onclick='buscar_subcategoria(" +
+          lista[i].cate_anuncio_id +
+          ");' ripple modifier='chevron' tappable><div class='left'><img class='list-item__thumbnail' src='" +
+          img +
+          "'></div> <div class='center'><h4><span class='list-item__title'>" + lista[i].nombre +
+          "</span><span> (" + lista[i].contador + ")</span></h4></div></ons-list-item>";
+      }
+      $('#area_categoria_anuncio_publicar').after(cadena_cate);
+    }
+  }
+  //carga la ventana para buscar las subastas
+  function buscar() {
+    pushPage('#appNavigator', 'buscar.html', 'Buscar subasta');
+  }
+  //carga la ventana para buscar anuncios
+  function buscar_anuncio() {
+    pushPage('#appNavigator', 'buscar_anuncio.html', 'Buscar anuncio');
+  }
+  //funcion que se ejecuta para buscar la membresia del cliente
+  function buscar_membresia_user() {
+    var item_auth = get_data_local();
+    setTimeout(function () {
+      var url = base_url + 'rest_membresia/buscar_membresia_user';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+      };
+      send_data_server(url, data_to_server, success_get_membresia,
+        error);
+    }, 1000);
+  }
+  //infinito para subasta
+  function infinito() {
+    if (limite >= 11) {
+      comienza = limite;
+      limite = comienza + 11;
+      setTimeout(function () {
+        var url = base_url + 'rest_subasta/cargar_subastas';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          comienza: comienza,
+          limite: limite
+        };
+        send_data_server(url, data_to_server, success_all_subastas,
+          error);
+      }, 1000);
+    }
+  }
+  //infinito para los anuncios
+  function infinito_anuncio() {
+    if (limite2 >= 11) {
+      comienza2 = limite2;
+      limite2 = comienza2 + 11;
+      setTimeout(function () {
+        var url = base_url + 'rest_anuncio/cargar_anuncios';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          comienza: comienza2,
+          limite: limite2
+        };
+        send_data_server(url, data_to_server, success_all_anuncios,
+          error);
+      }, 1000);
+    }
+
+  }
+  //respuesta para carga la membresias
+  function success_get_membresia(response) {
+    var status = response.status;
+    if (status == 200) {
+      $('#membresia_adquirir_dash').hide();
+      $('#membresia_user_dash').show();
+    }
+    if (status == 404) {
+      $('#membresia_adquirir_dash').show();
+      $('#membresia_user_dash').hide();
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //crea el obj del menu
+  window.fn = {};
+  //funcion el obj del menu
+  window.fn.toggleMenu = function () {
+    document.getElementById('appSplitter').left.toggle();
+  };
+  //funcion el obj del menu
+  window.fn.loadView = function (index) {
+    document.getElementById('appTabbar').setActiveTab(index);
+    document.getElementById('sidemenu').close();
+  };
+  //funcion el obj del menu
+  window.fn.loadLink = function (url) {
+    window.open(url, '_blank');
+  };
+  //funcion el obj del menu
+  window.fn.pushPage = function (page, anim) {
+    if (anim) {
+      document.getElementById('appNavigator').pushPage(page.id, {
+        data: {
+          title: page.title
+        },
+        animation: anim
+      });
+    } else {
+      document.getElementById('appNavigator').pushPage(page.id, {
+        data: {
+          title: page.title
+        }
+      });
+    }
+  };
+  //funcion que carga los datos del perfil
+  function cargar_perfil() {
+    pushPage('#appNavigator', 'perfil_cliente.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando");
+    setTimeout(function () {
+      modal.hide();
+    }, 1000);
+  }
+  //funcion que carga las credenciales
+  function cargar_password() {
+    fn.toggleMenu();
+    pushPage('#appNavigator', 'contrasena.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando");
+    setTimeout(function () {
+      modal.hide();
+    }, 1000);
+  }
+  //carga el listado de subasta
+  function cargar_subastas(lista) {
+    var cadena = "";
+    if (lista.length > 0) {
+      for (var i = 0; i < lista.length; i++) {
+        var img = base_url + lista[i].photo;
+        var tipo_subasta = ""
+        var precio_subasta = 0
+        if (lista[i].tipo_subasta == 1) {
+          tipo_subasta =
+            "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Directa</span>";
+          precio_subasta = parseFloat(lista[i].valor_inicial).toFixed(2);
+        } else {
+          tipo_subasta =
+            "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Inversa</span>";
+          precio_subasta = parseFloat(lista[i].intervalo[0].valor).toFixed(2);
+        }
+        cadena = cadena +
+          "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas_" +
+          lista[i].subasta_id +
+          "' onclick=''><div class='row'><div class='col-12'><h4 id='desc_" +
+          lista[i].subasta_id +
+          "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
+          lista[i].nombre_espa +
+          " </strong></h4> </div><div class='col-12'>" + tipo_subasta +
+          "<img style='width:100%; position:relative' class='rounded' src='" +
+          img +
+          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important;margin-top:0px !important; background: #80232b !important' class='badge badge-danger'>$" +
+          precio_subasta +
+          "</span></p></div><div class='col-12' style='padding: 1px 1px 1px 1px !important;'><p style='font-size:10px !important; line-height:1.5px !important; margin-bottom:2px !important;text-align:center !important' class='card-text'>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
+          lista[i].ciudad.name_ciudad +
+          "</span></p></div></div></ons-card></ons-col>";
+      }
+      $('#area_subastas').append(cadena);
+      for (let k = 0; k < lista.length; k++) {
+        $('#ver_mas_' + lista[k].subasta_id).attr('onclick', 'detalle_subasta("' + lista[k].subasta_id + '")');
+      }
+    }
+  }
+  //carga el lista de subasta por categorias
+  function cargar_subastas_categorias(lista) {
+    var cadena = "";
+    if (lista.length > 0) {
+      for (var i = 0; i < lista.length; i++) {
+        var img = base_url + lista[i].photo;
+        cadena = cadena +
+          "<ons-card ripple id='ver_mas_" +
+          lista[i].subasta_id +
+          "' onclick='' ><div class='row'><div class='col-4'><img style='width:100%' class='rounded' src='" +
+          img +
+          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important; background: #80232b !important' class='badge badge-danger'>$" +
+          parseFloat(lista[i]
+            .valor_inicial).toFixed(2) +
+          "</span></p></div><div class='col-8' style='padding: 1px 1px 1px 1px !important;'> <h4 id='desc_" +
+          lista[
+            i]
+          .subasta_id +
+          "' style='font-size:16px !important; color:#80232b !important; line-height:1.5px !important; margin-top:15px !important;' class='card-title'><strong>" +
+          lista[i].nombre_espa +
+          "</strong></h4> <p style='font-size:10px !important; line-height:1.5px !important;' class='card-text'><span><i class='fa fa-tag' aria-hidden='true'></i> " +
+          lista[i].categoria.name_espa +
+          "</span>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
+          lista[i]
+          .ciudad.name_ciudad +
+          "</span></p> <div class='text-left'><div class='timer'><div class='timer conte'><span class='days'  id='day_3" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Dias</div></div><div class='timer'><div class='timer conte'><span class='hours' id='hour_3" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Horas</div></div><div class='timer'><div class='timer conte'><span class='minutes' id='minute_3" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Minutos</div></div><div class='timer'><div class='timer conte'><span class='seconds' id='second_3" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Segundos</div></div></div></div></div></ons-card>";
+      }
+      $('#area_subastas_categorias').append(cadena);
+      for (let j = 0; j < lista.length + 1; j++) {
+        var x = setInterval(function () {
+          var fecha = lista[j].fecha_cierre;
+          var deadline = new Date(fecha).getTime();
+          var currentTime = new Date().getTime();
+          var t = deadline - currentTime;
+          var days = Math.floor(t / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((t % (1000 * 60)) / 1000);
+          $('#day_3' + lista[j].subasta_id).html(days);
+          $('#hour_3' + lista[j].subasta_id).html(hours);
+          $('#minute_3' + lista[j].subasta_id).html(minutes);
+          $('#second_3' + lista[j].subasta_id).html(seconds);
+          if (t < 0) {
+            clearInterval(x);
+            $('#day_3' + lista[j].subasta_id).html(0);
+            $('#hour_3' + lista[j].subasta_id).html(0);
+            $('#minute_3' + lista[j].subasta_id).html(0);
+            $('#second_3' + lista[j].subasta_id).html(0);
+          }
+        }, 1000);
+      }
+      for (let k = 0; k < lista.length; k++) {
+        $('#ver_mas_' + lista[k].subasta_id).attr('onclick', 'detalle_subasta("' + lista[k].subasta_id + '")');
+        var myP = $('#desc_' + lista[k].subasta_id);
+        if (myP.text().length > 27) {
+          myP.text(myP.text().substring(0, 24));
+          $('#desc_' + lista[k].subasta_id).html(myP.text() + "...");
+        }
+      }
+    }
+  }
+  //carga las subasta buscada
+  function cargar_subastas_buscadas(lista) {
+    var cadena = "";
+    if (lista.length > 0) {
+      for (var i = 0; i < lista.length; i++) {
+        var img = base_url + lista[i].photo;
+        cadena = cadena +
+          "<ons-card ripple id='ver_mas_" +
+          lista[i].subasta_id +
+          "' onclick='' ><div class='row'><div class='col-4'><img style='width:100%' class='rounded' src='" +
+          img +
+          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important; background: #80232b !important' class='badge badge-danger'>$" +
+          parseFloat(lista[i]
+            .valor_inicial).toFixed(2) +
+          "</span></p></div><div class='col-8' style='padding: 1px 1px 1px 1px !important;'> <h4 id='desc_" +
+          lista[
+            i]
+          .subasta_id +
+          "' style='font-size:16px !important; color:#80232b !important; line-height:1.5px !important; margin-top:15px !important;' class='card-title'><strong>" +
+          lista[i].nombre_espa +
+          "</strong></h4> <p style='font-size:10px !important; line-height:1.5px !important;' class='card-text'><span><i class='fa fa-tag' aria-hidden='true'></i> " +
+          lista[i].categoria.name_espa +
+          "</span>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
+          lista[i]
+          .ciudad.name_ciudad +
+          "</span></p> <div class='text-left'><div class='timer'><div class='timer conte'><span class='days'  id='day_4" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Dias</div></div><div class='timer'><div class='timer conte'><span class='hours' id='hour_4" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Horas</div></div><div class='timer'><div class='timer conte'><span class='minutes' id='minute_4" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Minutos</div></div><div class='timer'><div class='timer conte'><span class='seconds' id='second_4" +
+          lista[i]
+          .subasta_id +
+          "'></span></div><div class='smalltext'>Segundos</div></div></div></div></div></ons-card>";
+      }
+      $('#area_autocomplete').append(cadena);
+      for (let j = 0; j < lista.length + 1; j++) {
+        var x = setInterval(function () {
+          var fecha = lista[j].fecha_cierre;
+          var deadline = new Date(fecha).getTime();
+          var currentTime = new Date().getTime();
+          var t = deadline - currentTime;
+          var days = Math.floor(t / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((t % (1000 * 60)) / 1000);
+          $('#day_4' + lista[j].subasta_id).html(days);
+          $('#hour_4' + lista[j].subasta_id).html(hours);
+          $('#minute_4' + lista[j].subasta_id).html(minutes);
+          $('#second_4' + lista[j].subasta_id).html(seconds);
+          if (t < 0) {
+            clearInterval(x);
+            $('#day_4' + lista[j].subasta_id).html(0);
+            $('#hour_4' + lista[j].subasta_id).html(0);
+            $('#minute_4' + lista[j].subasta_id).html(0);
+            $('#second_4' + lista[j].subasta_id).html(0);
+          }
+        }, 1000);
+      }
+      for (let k = 0; k < lista.length; k++) {
+        $('#ver_mas_' + lista[k].subasta_id).attr('onclick', 'detalle_subasta("' + lista[k].subasta_id + '")');
+        var myP = $('#desc_' + lista[k].subasta_id);
+        if (myP.text().length > 27) {
+          myP.text(myP.text().substring(0, 24));
+          $('#desc_' + lista[k].subasta_id).html(myP.text() + "...");
+        }
+      }
+    }
+  }
+  //funcion de respuesta cargar subastas
+  function success_all_subastas(response) {
+    var status = response.status;
+    //  response = JSON.parse(response.lista);
+    // var status = response.status;
+    modal.hide();
+    if (status == 200) {
+      // $('#area_subastas').show();
+      lista = response.lista;
+      cargar_subastas(lista);
+      $('#area_subastas').show();
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay subastas disponible', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion de respuesta para cargar las categorias de las subastas
+  function success_all_subastas_categorias(response) {
+    var status = response.status;
+    //  response = JSON.parse(response.lista);
+    // var status = response.status;
+    modal.hide();
+    if (status == 200) {
+      // $('#area_subastas').show();
+      lista = response.lista;
+      cargar_subastas_categorias(lista);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay categorias disponible', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion para buscar las subasta por palabra
+  function buscar_palabra() {
+    var compara = $("#autocomplete").val();
+    if (compara.length > 4) {
+      $('#cargando').show();
+      setTimeout(function () {
+        var url = base_url + 'rest_subasta/buscar_subastas';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          buscar: compara
+        };
+        send_data_server(url, data_to_server, success_buscadas,
+          error);
+      }, 1000);
+    }
+  }
+  //funcion que busca los anuncios por palabra
+  function buscar_palabra_anuncio() {
+    var compara = $("#autocomplete2").val();
+    if (compara.length > 4) {
+      $('#cargando').show();
+      setTimeout(function () {
+        var url = base_url + 'rest_anuncio/buscar_anuncios';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          buscar: compara
+        };
+        send_data_server(url, data_to_server, success_anuncios_buscados,
+          error);
+      }, 1000);
+    }
+  }
+  //funcion que realiza la busqueda por categorias de la subastas
+  function buscar_subastas(id) {
+    pushPage('#appNavigator', 'categoria_subasta_filtro.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando subastas");
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/cargar_subastas2';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        comienza: 0,
+        limite: 200,
+        id: id
+      };
+      send_data_server(url, data_to_server, success_all_subastas_categorias,
+        error);
+    }, 1000);
+  }
+  //funcion que realiza la busqueda por categorias de anuncios
+  function buscar_anuncios(id) {
+    pushPage('#appNavigator', 'categoria_anuncio_filtro.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando anuncios...");
+    setTimeout(function () {
+      var url = base_url + 'rest_anuncio/cargar_anuncio2';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        comienza: 0,
+        limite: 200,
+        id: id
+      };
+      send_data_server(url, data_to_server, success_all_anuncio_categorias,
+        error);
+    }, 1000);
+  }
+  //funcion de respuesta de cargar las subastas
+  function success_buscadas(response) {
+    var status = response.status;
+    if (status == 200) {
+      lista = response.lista;
+      $('#area_autocomplete').empty();
+      $('#cargando').hide();
+      cargar_subastas_buscadas(lista);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay resultados en la busqueda', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion de respuesta de los anuncios buscados
+  function success_anuncios_buscados(response) {
+    var status = response.status;
+    if (status == 200) {
+      lista = response.lista;
+      $('#area_autocomplete_anuncio').empty();
+      $('#cargando').hide();
+      cargar_anuncios_buscados(lista);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        '"No hay resultados en la busqueda.', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion para cargar el detalle de la subasta
+  function detalle_subasta(id) {
+    pushPage('#appNavigator', 'detalle_subasta.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando detalle de la subasta...");
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/detalle_subasta';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        id: id
+      };
+      send_data_server(url, data_to_server, success_detalle_subasta,
+        error);
+    }, 1000);
+  }
+  //funcion de la respuesta del detalle de subasta
+  function success_detalle_subasta(response) {
+    modal.hide();
+    // response = JSON.parse(response.data);
+    var status = response.status;
+    if (status == 200) {
+      // $('#area_detalle_subasta').show();
+      var precio_inicial_subasta = 0;
+      var fecha_cierre_subasta = null;
+
+      if (response.detalle.tipo_subasta == 1) {
+        fecha_cierre_subasta = response.detalle.fecha_cierre;
+        precio_inicial_subasta = parseFloat(response.detalle.valor_inicial).toFixed(2);
+        var tipo_subasta_name =
+          "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Directa</span>";
+      } else {
+        fecha_cierre_subasta = response.detalle.intervalo[0].fecha;
+        precio_inicial_subasta = parseFloat(response.detalle.intervalo[0].valor).toFixed(2);
+        var tipo_subasta_name =
+          "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Inversa</span>";
+      }
+      subasta_id = response.detalle.subasta_id;
+      $('#titulo_detalle').html(response.detalle.nombre_espa + tipo_subasta_name);
+      $('#categoria_detalle').html("<span><i class='fa fa-tag' aria-hidden='true'></i> " + response.categoria
+        .name_espa +
+        "</span>&nbsp|&nbsp" + response.subcategoria.nombre +
+        "<br><span><i class='fa fa-map-marker' aria-hidden='true'></i> " + response.ciudad
+        .name_ciudad +
+        "</span> ");
+      $('#descripcion_detalle').html(response.detalle.descrip_espa);
+      $('#entrada_detalle').text("Valor de entrada: $" + parseFloat(response.detalle.valor_pago).toFixed(2));
+      $('#inicial_detalle').text(" $" + precio_inicial_subasta);
+      $('#cierre_detalle').text("Fecha de cierre: " + fecha_cierre_subasta);
+      var cronometro =
+        "<div class='col-12'><div class='timer'><div class='timer conte'><span class='days'  id='day_2" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Dias</div></div><div class='timer'><div class='timer conte'><span class='hours' id='hour_2" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Horas</div></div><div class='timer'><div class='timer conte'><span class='minutes' id='minute_2" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Minutos</div></div><div class='timer'><div class='timer conte'><span class='seconds' id='second_2" +
+        response.detalle.subasta_id +
+        "'></span></div><div class='smalltext'>Segundos</div></div></div>";
+      var imagen1 = base_url + response.detalle.photo;
+      valor_inicial = response.detalle.valor_inicial;
+      valor_pago = response.detalle.valor_pago;
+      //slider
+      var slider =
+        "<ons-carousel-item><img style='width:100%' src='" +
+        imagen1 + "'></ons-carousel-item>";
+      if (response.foto_object.length > 0) {
+        for (let i = 0; i < response.foto_object.length; i++) {
+          if (response.foto_object[i].url_photo.indexOf("upload") >= 0) {
+            imagen2 = base_url + response.foto_object[i].url_photo;
+          } else {
+            imagen2 = response.foto_object[i].url_photo;
+          }
+          slider = slider +
+            "<ons-carousel-item><img style='width:100%' src='" +
+            imagen2 + "'></ons-carousel-item>";
+        }
+      }
+      $('#carousel_subasta').append(slider);
+      $('#cierre_detalle').after(cronometro);
+      var x = setInterval(function () {
+        var fecha = response.detalle.fecha_cierre;
+        var deadline = new Date(fecha).getTime();
+        var currentTime = new Date().getTime();
+        var t = deadline - currentTime;
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((t % (1000 * 60)) / 1000);
+        $('#day_2' + response.detalle.subasta_id).html(days);
+        $('#hour_2' + response.detalle.subasta_id).html(hours);
+        $('#minute_2' + response.detalle.subasta_id).html(minutes);
+        $('#second_2' + response.detalle.subasta_id).html(seconds);
+        if (t < 0) {
+          clearInterval(x);
+          $('#day_2' + response.detalle.subasta_id).html(0);
+          $('#hour_2' + response.detalle.subasta_id).html(0);
+          $('#minute_2' + response.detalle.subasta_id).html(0);
+          $('#second_2' + response.detalle.subasta_id).html(0);
+        }
+      }, 1000);
+      $('#card_detalle_subasta').show();
+
+      if (response.subasta_user == null) {
+        $('#entrar_subasta').show();
+      } else {
+        $('#subasta_user_id').val(response.subasta_user.subasta_user_id);
+        // $('#pujar_subasta').show();
+      }
+      if (response.puja) {
+        monto = response.puja.valor;
+      }
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay detalle de la subasta', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //modal entrar a la subasta
+  function modal_entrar() {
+    $('#modal_entrar').modal('show');
+    $('#entrar').text("$" + parseFloat(valor_pago).toFixed(2));
+  }
+  //modal para pujar subasta
+  function modal_pujar() {
+    $('#modal_pujar').modal('show');;
+    if (monto) {
+      $('#valor_alto').text("$" + parseFloat(monto).toFixed(2));
+    } else {
+      $('#valor_alto').text("$" + parseFloat(valor_inicial).toFixed(2));
+    }
+  }
+  //funcion de respuesta para la puja alta
+  function success_alta(response) {
+    // response = JSON.parse(response.data);
+    var status = response.status;
+    if (status == 200) {
+      if (response.object.valor != null) {
+        var valor_user = response.object_user.valor;
+        var valor_max = response.object.valor;
+        if ((valor_user >= valor_max)) {
+          $('#entrar_subasta').hide();
+          $('#pujar_subasta').hide();
+          if (response.object) {
+            $('#inicial_detalle').text("$" + parseFloat(valor_max).toFixed(2));
+            $('#inicial_detalle').css('font-size', '30px');
+            $('#inicial_detalle').css('background', '#28a745');
+          }
+        } else {
+          //$('#entrar_subasta').hide();
+          $('#pujar_subasta').show();
+          if (response.object) {
+            if (response.object.valor > 0) {
+              $('#inicial_detalle').text("$" + parseFloat(response.object.valor).toFixed(2));
+              $('#inicial_detalle').css('font-size', '30px');
+              $('#inicial_detalle').css('background', '#28a745');
+            }
+          }
+        }
+      } else {
+        $('#pujar_subasta').show();
+      }
+    }
+  }
+  //pagar entrada de la subasta
+  function pagar_entrada() {
+    modal.show();
+    $('#body_modal').text("Realizando pago")
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/entrar_subasta';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        subasta_id: subasta_id
+      };
+      send_data_server(url, data_to_server, success_pagar_entrada,
+        error);
+    }, 1000);
+  }
+  //pujar
+  function pujar() {
+    if (monto) {
+      var valor = monto
+    } else {
+      var valor = valor_inicial
+    }
+    if (parseFloat($('#valor_puja').val()) > valor) {
+      $('#myModalloadsubasta').modal('show');
+      $('#modal_pujar').modal('hide');
+      $('#valor').val('');
+      setTimeout(function () {
+        var url = base_url + 'rest_subasta/pujar_user';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        var valor_pujado = $('#valor_puja').val();
+        var subasta_user_id = $('#subasta_user_id').val();
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          subasta_id: subasta_id,
+          subasta_user_id: subasta_user_id,
+          valor: valor_pujado
+        };
+        send_data_server(url, data_to_server, success_pujar_user,
+          error);
+      }, 1000);
+    } else {
+      $('#valor').val('');
+      navigator.notification.alert(
+        'El valor a pujar es menor a la puja mayor', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion de la respuesta de pujar
+  function success_pujar_user(response) {
+    $('#myModalloadsubasta').modal('hide');
+    response = JSON.parse(response.data);
+    var status = response.status;
+    if (status == 200) {
+      navigator.notification.alert(
+        'Tu puja fue realizada con exito', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+      $('#entrar_subasta').hide();
+      $('#pujar_subasta').hide();
+      if (response.object) {
+        $('#inicial_detalle').text(parseFloat(response.object.valor).toFixed(2));
+        $('#inicial_detalle').css('font-size', '30px');
+        $('#inicial_detalle').css('background', '#28a745');
+      }
+    }
+    if (status == 300) {
+      navigator.notification.alert(
+        'Tu puja no se realizo exite un valor mas alto', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+      $('#entrar_subasta').hide();
+      $('#pujar_subasta').show();
+      if (response.object) {
+        puja_user_id = response;
+        $('#inicial_detalle').text("$" + parseFloat(response.object.valor).toFixed(2));
+        $('#inicial_detalle').css('font-size', '30px');
+        $('#inicial_detalle').css('background', '#28a745');
+      }
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No se realizo el pago', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion de la respuesta de pagar la entrada de la subasta
+  function success_pagar_entrada(response) {
+    modal.hide();
+    response = JSON.parse(response.data);
+    var status = response.status;
+    if (status == 200) {
+      $('#subasta_user_id').val(response.object.subasta_user_id);
+      navigator.notification.alert(
+        'Ya puedes comenzar a pujar en la subasta', // message
+        llamar_anuncios, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+      $('#entrar_subasta').hide();
+      $('#pujar_subasta').show();
+      if (response.puja) {
+        $('#inicial_detalle').text(response.puja.valor);
+        $('#inicial_detalle').css('font-size', '30px');
+        $('#inicial_detalle').css('background', '#28a745');
+      }
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No se realizo el pago', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que ejecuta el cambio de password
+  function change_password() {
+    $("#success-password").hide();
+    $("#error-password").hide();
+    var old_password = $("#password_actual").val();
+    var password = $("#password_perfil").val();
+    var repeta_password = $("#repeat_password_perfil").val();
+    if (old_password.trim().length > 0) {
+      if (password.trim().length > 0) {
+        if (password.trim() == repeta_password.trim()) {
+          var item_auth = get_data_local();
+          if (!item_auth) {
+            cerrar_session();
+          } else {
+            if (item_auth.user_id == 0) {
+              cerrar_session();
+            }
+          }
+          modal.show();
+          $('#body_modal').text("Cambiando contraseña");
+          setTimeout(function () {
+            var url = base_url + 'rest_user/change_password';
+            var puser_id = item_auth.user_id;
+            var security_token = item_auth.security_token;
+            data_to_server = {
+              user_id: puser_id,
+              security_token: security_token,
+              old_password: old_password,
+              new_password: password
+            };
+            send_data_server(url, data_to_server, success_password,
+              error);
+          }, 1000);
+        } else {
+          navigator.notification.alert(
+            'La contraseña nueva y su repetición no coinciden', // message
+            alertDismissed1, // callback
+            'Información', // title
+            'Aceptar' // buttonName
+          );
+        }
+      } else { //email requerido
+        navigator.notification.alert(
+          'La contraseña nueva no puede esta vacía', // message
+          alertDismissed1, // callback
+          'Información', // title
+          'Aceptar' // buttonName
+        );
+      }
+    } else { //el campo nombre se ha quedado vacío
+      navigator.notification.alert(
+        'La contraseña anterior no puede esta vacía', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion de respuesta de la actualizacion del password
+  function success_password(response) {
+    modal.hide();
+    var status = response.status;
+    if (status == 404) { // si existe error de autenticación
+      cerrar_session();
+    } else if (status == 500) { //no coincide la contraseña anterior
+      navigator.notification.alert(
+        'La contraseña anterior no coincide', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    } else {
+      var token = response.token;
+      var item_auth = get_data_local();
+      save_data_local(item_auth.user_id, item_auth.email, token, 2, item_auth.name, item_auth.photo, item_auth.phone,
+        item_auth.cedula);
+      cargar_datos_perfil();
+      $("#old_password").val("");
+      $("#password").val("");
+      $("#repeat_password").val("");
+      navigator.notification.alert(
+        'La contraseña ha sido cambiada correctamente', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que se ejecuta para actualizar el perfil del cliente
+  function change_user_data() {
+    var nombre = $("#name_perfil").val();
+    var cedula = $("#cedula_perfil").val();
+    var phone = $("#phone_perfil").val();
+    var apellido = $("#surname_perfil").val();
+    var tipo_documento = $("#tipo_documento_perfil").val();
+    if (nombre.trim().length > 0) {
+      if (apellido.trim().length > 0) {
+        if (cedula.trim().length > 0) {
+          if (phone.trim().length > 0) {
+            var item_auth = get_data_local();
+            if (!item_auth) {
+              cerrar_session();
+            } else {
+              if (item_auth.user_id == 0) {
+                cerrar_session();
+              }
+            }
+            //mandar a cambiar los datos de usuarios
+            modal.show();
+            $('#body_modal').text("Actualizando perfil del usuario.")
+            setTimeout(function () {
+              var url = base_url + 'rest_user/update_datos_perfil';
+              var puser_id = item_auth.user_id;
+              var security_token = item_auth.security_token;
+              data_to_server = {
+                user_id: puser_id,
+                security_token: security_token,
+                name: nombre,
+                phone: phone,
+                cedula: cedula,
+                photo: imageURL,
+                tipo_documento: tipo_documento,
+                surname: apellido
+              };
+              send_data_server(url, data_to_server, success_update_user, error);
+            }, 1000);
+          } else {
+            navigator.notification.alert(
+              'El teléfono es requerido', // message
+              alertDismissed1, // callback
+              'Información', // title
+              'Aceptar' // buttonName
+            );
+          }
+        } else { //email requerido
+          navigator.notification.alert(
+            'La cédula/pasaporte es requerida', // message
+            alertDismissed1, // callback
+            'Información', // title
+            'Aceptar' // buttonName
+          );
+        }
+      } else {
+        navigator.notification.alert(
+          'El apellido es requerido', // message
+          alertDismissed1, // callback
+          'Información', // title
+          'Aceptar' // buttonName
+        );
+      }
+    } else { //el campo nombre se ha quedado vacío
+      navigator.notification.alert(
+        'El nombre es requerido', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion de respuesta de la actualizacion del perfil del cliente
+  function success_update_user(response) {
+    modal.hide();
+    var status = response.status;
+    if (status == 404) { // si existe error de autenticación
+      cerrar_session();
+    }
+    if (status == 200) {
+      update_data_local(response.user_object.name, response.user_object.photo, response.user_object.phone, response
+        .user_object.cedula, response.user_object.surname, response.user_object.tipo_documento);
+      cargar_datos_perfil();
+      navigator.notification.alert(
+        'Los datos han sido actualizados correctamente', // message
+        alertDismissed, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        response.msg, // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que se ejecuta para abrir la camara del phone
+  function tomar_foto() {
+    var srcType = Camera.PictureSourceType.CAMERA;
+    var options = setOptions(srcType);
+    options.targetHeight = 240;
+    options.targetWidth = 240;
+    navigator.camera.getPicture(function cameraSuccess(imageData) {
+      displayImage(imageData);
+      // You may choose to copy the picture, save it somewhere, or upload.
+    }, function cameraError(error) {
+      console.debug("No se puede obtener la foto: " + error, "app");
+    }, options);
+  }
+  //funcion que se ejecuta luego de tomar la foto con la camara
+  function setOptions(srcType) {
+    var options = {
+      // Some common settings are 20, 50, and 100
+      quality: 100,
+      destinationType: Camera.DestinationType.DATA_URL,
+      // In this app, dynamically set the picture source, Camera or photo gallery
+      sourceType: srcType,
+      encodingType: Camera.EncodingType.JPEG,
+      mediaType: Camera.MediaType.PICTURE,
+      allowEdit: true,
+      cameraDirection: 1
+    }
+    return options;
+  }
+  //funcion que muestra la foto tomada para el perfil del cliente
+  function displayImage(imageData) {
+    var elem = document.getElementById('foto_perfil_usuario');
+    elem.src = "data:image/jpeg;base64," + imageData;
+    // imageURL = "data:image/jpeg;base64," + imageData;
+    imageURL = imageData;
+  }
+  //funcion de respuesta al cargar los anuncios en el home
+  function success_all_anuncios(response) {
+    var status = response.status;
+    //  response = JSON.parse(response.lista);
+    // var status = response.status;
+    modal.hide();
+    if (status == 200) {
+      // $('#area_subastas').show();
+      lista = response.lista;
+      cargar_anuncios(lista);
+      $('#area_anuncios').show();
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay anuncios disponible', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion de respuesta para cargar las categorias de los anuncios
+  function success_all_anuncio_categorias(response) {
+    var status = response.status;
+    //  response = JSON.parse(response.lista);
+    // var status = response.status;
+    modal.hide();
+    if (status == 200) {
+      lista = response.lista;
+      cargar_anuncios_categoria(lista);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay anuncios disponible', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que ejecuta cargar las categorias de anuncios
+  function cargar_categorias_anuncios() {
+    pushPage('#appNavigator', 'categoria_anuncios.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando categorias...")
+    setTimeout(function () {
+      var url = base_url + 'rest_anuncio/anuncio_categoria';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+      };
+      send_data_server(url, data_to_server, success_anuncio_categoria,
+        error);
+    }, 1000);
+  }
+  //funcion que lista los anuncios
+  function cargar_anuncios(lista) {
+    var cadena = "";
+    if (lista.length > 0) {
+      for (var i = 0; i < lista.length; i++) {
+        if (lista[i].anuncio_photo.indexOf("upload") >= 0) {
+          img = base_url + lista[i].anuncio_photo;
+        } else {
+          img = lista[i].anuncio_photo;
+        }
+        var ads_destacado = ""
+        if (lista[i].destacado == 1) {
+          ads_destacado =
+            "<span style='background: #00bb2d !important;font-size:10px !important ;position:absolute; top:2%;z-index:100; class='badge badge-danger'> Destacado</span>";
+        } else {
+          ads_destacado =
+            "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Destacado</span>";
+        }
+        cadena = cadena +
+          "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas2_" +
+          lista[i].anuncio_id +
+          "' onclick=''><div class='row'><div class='col-12'><h4 id='titulo_anuncio_" +
+          lista[i].anuncio_id +
+          "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
+          lista[i].titulo +
+          " </strong></h4> </div><div class='col-12'>" + ads_destacado +
+          "<img style='width:100%; position:relative' class='rounded' src='" +
+          img +
+          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important;margin-top:0px !important; background: #80232b !important' class='badge badge-danger'>$" +
+          parseFloat(lista[i]
+            .precio).toFixed(2) +
+          "</span></p></div><div class='col-12' style='padding: 1px 1px 1px 1px !important;'><p style='font-size:10px !important; line-height:1.5px !important; margin-bottom:2px !important;text-align:center !important' class='card-text'>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
+          lista[i].ciudad +
+          "</span></p></div></div></ons-card></ons-col>";
+      }
+      $('#area_anuncios').append(cadena);
+      for (let k = 0; k < lista.length; k++) {
+        $('#ver_mas2_' + lista[k].anuncio_id).attr('onclick', 'detalle_anuncio("' + lista[k].anuncio_id + '")');
+      }
+    }
+  }
+  //funcion que lista los anuncios por categoria
+  function cargar_anuncios_categoria(lista) {
+    var cadena = "";
+    if (lista.length > 0) {
+      for (var i = 0; i < lista.length; i++) {
+        if (lista[i].anuncio_photo.indexOf("upload") >= 0) {
+          img = base_url + lista[i].anuncio_photo;
+        } else {
+          img = lista[i].anuncio_photo;
+        }
+        cadena = cadena +
+          "<ons-card id='ver_mas3_" +
+          lista[i].anuncio_id +
+          "' onclick=''><div class='row'><div class='col-4'><img style='width:100%' class='rounded' src='" +
+          img +
+          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important; background: #80232b !important' class='badge badge-danger'>$" +
+          parseFloat(lista[i]
+            .precio).toFixed(2) +
+          "</span></p></div><div class='col-8' style='padding: 1px 1px 1px 1px !important;'><h4 id='titulo_anuncio3_" +
+          lista[i].anuncio_id +
+          "' style='font-size:16px !important; color:#80232b !important; line-height:1.5px !important; margin-top:15px !important;' class='card-title'><strong>" +
+          lista[i].titulo +
+          "</strong></h4> <p style='font-size:10px !important; line-height:1.5px !important;' class='card-text'><span><i class='fa fa-tag' aria-hidden='true'></i> " +
+          lista[i].categoria +
+          "/" + lista[i].subcategoria + "</span>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
+          lista[i].ciudad +
+          "</span></p><p style='font-size:12px !important;' class='card-text'>" + lista[i]
+          .corta +
+          "<span><i class='fa fa-whatsapp' aria-hidden='true'></i> " +
+          lista[i]
+          .whatsapp +
+          " </span></p></div></div></ons-card>";
+      }
+      $('#area_anuncio_categoria').append(cadena);
+      for (let k = 0; k < lista.length; k++) {
+        $('#ver_mas3_' + lista[k].anuncio_id).attr('onclick', 'detalle_anuncio("' + lista[k].anuncio_id + '")');
+        var myP = $('#titulo_anuncio3_' + lista[k].anuncio_id);
+        if (myP.text().length > 27) {
+          myP.text(myP.text().substring(0, 24));
+          $('#titulo_anuncio3_' + lista[k].anuncio_id).html(myP.text() + "...");
+        }
+      }
+    }
+  }
+  //funcion que lista los anuncios por busqueda
+  function cargar_anuncios_buscados(lista) {
+    var cadena = "";
+    if (lista.length > 0) {
+      for (var i = 0; i < lista.length; i++) {
+        if (lista[i].anuncio_photo.indexOf("upload") >= 0) {
+          img = base_url + lista[i].anuncio_photo;
+        } else {
+          img = lista[i].anuncio_photo;
+        }
+        cadena = cadena +
+          "<ons-card id='ver_mas2_anuncio" +
+          lista[i].anuncio_id +
+          "' onclick=''><div class='row'><div class='col-4'><img style='width:100%' class='rounded' src='" +
+          img +
+          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important; background: #80232b !important' class='badge badge-danger'>$" +
+          parseFloat(lista[i]
+            .precio).toFixed(2) +
+          "</span></p></div><div class='col-8' style='padding: 1px 1px 1px 1px !important;'><h4 id='titulo_anuncio_buscado" +
+          lista[i].anuncio_id +
+          "' style='font-size:16px !important; color:#80232b !important; line-height:1.5px !important; margin-top:15px !important;' class='card-title'><strong>" +
+          lista[i].titulo +
+          "</strong></h4> <p style='font-size:10px !important; line-height:1.5px !important;' class='card-text'><span><i class='fa fa-tag' aria-hidden='true'></i> " +
+          lista[i].categoria +
+          "/" + lista[i].subcategoria + "</span>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
+          lista[i].ciudad +
+          "</span></p><p style='font-size:12px !important;' class='card-text'>" + lista[i]
+          .corta +
+          "<span><i class='fa fa-whatsapp' aria-hidden='true'></i> " +
+          lista[i]
+          .whatsapp +
+          " </span></p></div></div></ons-card>";
+      }
+      $('#area_autocomplete_anuncio').append(cadena);
+      for (let k = 0; k < lista.length; k++) {
+        $('#ver_mas2_anuncio' + lista[k].anuncio_id).attr('onclick', 'detalle_anuncio("' + lista[k].anuncio_id +
+          '")');
+        var myP = $('#titulo_anuncio_buscado' + lista[k].anuncio_id);
+        if (myP.text().length > 27) {
+          myP.text(myP.text().substring(0, 24));
+          $('#titulo_anuncio_buscado' + lista[k].anuncio_id).html(myP.text() + "...");
+        }
+      }
+    }
+  }
+  //funcion que se ejecuta para ver el detalle del anuncio
+  function detalle_anuncio(id) {
+    $('#body_detalle_anuncio').hide();
+    pushPage('#appNavigator', 'detalle_anuncio.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando detalle del anuncio...");
+    setTimeout(function () {
+      var url = base_url + 'rest_anuncio/detalle_anuncio';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        id: id
+      };
+      send_data_server(url, data_to_server, success_detalle_anuncio,
+        error);
+    }, 1000);
+  }
+  //funcion que muestra el detalle del anuncio
+  function success_detalle_anuncio(response) {
+    modal.hide();
+    // response = JSON.parse(response.data);
+    var status = response.status;
+    if (status == 200) {
+      // $('#area_detalle_subasta').show();
+      $('#titulo_detalle_anuncio').text(response.detalle.titulo);
+      $('#categoria_detalle_anuncio').html("<span><i class='fa fa-tag' aria-hidden='true'></i> " + response.detalle
+        .categoria +
+        "|" + response.detalle.subcategoria +
+        "</span>&nbsp;<br><span><i class='fa fa-map-marker' aria-hidden='true'></i> " + response.detalle
+        .ciudad +
+        "</span> ");
+      $('#descripcion_detalle_anuncio').html(response.detalle.descripcion);
+      $('#precio_anuncio').text("Precio: $" + parseFloat(response.detalle.precio).toFixed(2));
+      $('#number_whatsaap').attr("href", "https://api.whatsapp.com/send?phone=593" + response.detalle.whatsapp);
+      $('#whatsapp').html("<i class='fa fa-whatsapp' aria-hidden='true'></i> " + response.detalle.whatsapp + "");
+      /* $('#inicial_detalle').text(" $" + parseFloat(response.detalle.valor_inicial).*/
+      if (response.detalle.anuncio_photo.indexOf("upload") >= 0) {
+        imagen1 = base_url + response.detalle.anuncio_photo;
+      } else {
+        imagen1 = response.detalle.anuncio_photo;
+      }
+      //slider
+      var slider =
+        "<ons-carousel-item><img style='width:100%' src='" +
+        imagen1 + "'></ons-carousel-item>";
+      if (response.foto_object.length > 0) {
+        for (let i = 0; i < response.foto_object.length; i++) {
+          if (response.detalle.anuncio_photo.indexOf("upload") >= 0) {
+            imagen2 = base_url + response.foto_object[i].photo_anuncio;
+          } else {
+            imagen2 = response.foto_object[i].photo_anuncio;
+          }
+          slider = slider +
+            "<ons-carousel-item><img style='width:100%' src='" +
+            imagen2 + "'></ons-carousel-item>";
+        }
+      }
+      //$('.carousel-indicators').html(peq);
+      $('#carousel_anuncio').append(slider);
+      lat = response.detalle.lat;
+      lng = response.detalle.lng;
+      mapa =
+        " <iframe width='280' height='170'frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.com/maps?q=" +
+        lat + "," + lng + "&hl=es&z=14&amp;output=embed'></iframe>";
+      $('#map').html(mapa);
+      getReverseGeocodingData(lat, lng);
+      $('#body_detalle_anuncio').show();
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay detalle del anuncio', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que dadas la kongitud y latitud devuelve la direccion
+  function getReverseGeocodingData(lat, lng) {
+    var latlng = new google.maps.LatLng(lat, lng);
+    // This is making the Geocode request
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+      'latLng': latlng
+    }, function (results, status) {
+      if (status !== google.maps.GeocoderStatus.OK) {
+        alert(status);
+      }
+      // This is checking to see if the Geoeode Status is OK before proceeding
+      if (status == google.maps.GeocoderStatus.OK) {
+        var address = (results[0].formatted_address);
+        $('#direccion_anuncio').html("Direccion:<span>" + address + "</span>");
+      }
+    });
+  }
+  //funcion que busca las categorias de los anuncios
+  function publicar_anuncio() {
+    pushPage('#appNavigator', 'categoria_anuncios_publicar.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando categorias...")
+    setTimeout(function () {
+      var url = base_url + 'rest_anuncio/anuncio_categoria';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+      };
+      send_data_server(url, data_to_server, success_anuncio_categoria2,
+        error);
+    }, 1000);
+  }
+  //funcion que busca las subcategorias para los anuncios
+  function buscar_subcategoria(id) {
+    pushPage('#appNavigator', 'subcategorias.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando subcategorias...");
+    setTimeout(function () {
+      var url = base_url + 'rest_anuncio/subcategorias';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        id: id
+      };
+      send_data_server(url, data_to_server, success_anuncio_subcategoria,
+        error);
+    }, 1000);
+  }
+  //funcion que carga el formulario del anuncio
+  function cargar_formulario(id) {
+    subcategoria = id;
+    pushPage('#appNavigator', 'formulario.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando...");
+    setTimeout(function () {
+      modal.hide();
+    }, 1000);
+  }
+  //funcion que ejecuta para darle paso a la continuacion de la creacion del anuncio
+  function siguiente() {
+    titulo_publicar = $('#titulo_publicar').val();
+    descripcion_publicar = $('#descripcion_publicar').val();
+    phone_publicar = $('#phone_publicar').val();
+    precio_publicar = $('#precio_publicar').val();
+    if (titulo_publicar.trim().length == 0) {
+      navigator.notification.alert(
+        'El titulo del anuncio es requerido', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    } else if (descripcion_publicar.trim().length == 0) {
+      navigator.notification.alert(
+        'La descripción del anuncio es requerida', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    } else if (phone_publicar.trim().length == 0) {
+      navigator.notification.alert(
+        'El telefono de contacto es requerido', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    } else if (precio_publicar.trim().length == 0) {
+      navigator.notification.alert(
+        'El precio del anuncio es requerido', // message
+        alertDismissed1, // callback
+        'Información', // title
+        'Aceptar' // buttonName
+      );
+    } else {
+      pushPage('#appNavigator', 'galeria.html', '');
+    }
+  }
+  //funcion que se ejecuta para obtener imgenes de la galeria del telefono
+  function getImage() {
+    var srcType = Camera.PictureSourceType.SAVEDPHOTOALBUM;
+    var options = setOptions(srcType);
+    //var func = createNewFileEntry;
+    options.targetHeight = 1936;
+    options.targetWidth = 1936;
+    navigator.camera.getPicture(function cameraSuccess(imageUri) {
+      uploadPhoto(imageUri);
+      // Do something with image
+    }, function cameraError(error) {
+      console.debug("Unable to obtain picture: " + error, "app");
+    }, options);
+  }
+  ////funcion que muestra las fotos de la galeria
+  function uploadPhoto(imageURI) {
+    imagen = imageURI;
+    array_fotos.push({
+      "id": contador,
+      "imagen": "data:image/jpeg;base64," + imagen
+    });
+    var img =
+      "<div id='" + contador +
+      "' class='col-4' style='margin-bottom:2px !important;'><img src='data:image/jpeg;base64," +
+      imagen +
+      "' style='width: 80px; height: 80px;'><ons-button id='" + contador +
+      "' onclick='deleteItem(this)' modifier='quiet' ripple style='position: absolute; right:10px'><ons-icon style='color:#80232b; font-size:20px' icon='md-delete'></ons-icon></ons-button></div>"
+    $('#galeria_imagen').append(img);
+    // $('#img_load').show();
+    //$('#img_load').attr('src', imagen);
+    contador++;
+    if (array_fotos.length > 0) {
+      $('#btn_siguiente2').show();
+    }
+  };
+  //funcion que se ejecuta al tomar una foto con la camara del phone
+  function tomar_foto2() {
+    var srcType = Camera.PictureSourceType.CAMERA;
+    var options = setOptions2(srcType);
+    options.targetHeight = 1936;
+    options.targetWidth = 1936;
+    navigator.camera.getPicture(function cameraSuccess(imageData) {
+      displayImage2(imageData);
+      // You may choose to copy the picture, save it somewhere, or upload.
+    }, function cameraError(error) {
+      console.debug("No se puede obtener la foto: " + error, "app");
+    }, options);
+  }
+  //funcion que se ejecuta luego de tomar una foto para la galeria del anuncio
+  function setOptions2(srcType) {
+    var options = {
+      // Some common settings are 20, 50, and 100
+      quality: 100,
+      destinationType: Camera.DestinationType.DATA_URL,
+      // In this app, dynamically set the picture source, Camera or photo gallery
+      sourceType: srcType,
+      encodingType: Camera.EncodingType.JPEG,
+      mediaType: Camera.MediaType.PICTURE,
+      allowEdit: true,
+      cameraDirection: 1
+    }
+    return options;
+  }
+  //funcion que muestra las fotos de la galeria
+  function displayImage2(imageData) {
+    array_fotos.push({
+      "id": contador,
+      "imagen": "data:image/jpeg;base64," + imageData
+    });
+    var img = "<div id='" + contador +
+      "' style='margin-bottom:2px !important;' class='col-4'><img src='data:image/jpeg;base64," +
+      imageData +
+      "' style='width: 80px; height: 80px;'><ons-button  onclick='deleteItem(this)' modifier='quiet' ripple style='position: absolute; right:10px'><ons-icon style='color:#80232b; font-size:20px' icon='md-delete'></ons-icon></ons-button></div>"
+
+    $('#galeria_imagen').append(img);
+    contador++;
+    if (array_fotos.length > 0) {
+      $('#btn_siguiente2').show();
+    }
+  }
+  //funcion que borra los item de la galeria de las fotos pertenecientes al anuncio
+  function deleteItem(e) {
+    let id = $(e.parentElement).attr('id');
+    $(e.parentElement).remove();
+    let indice = -1;
+    //eliminar del array inicio
+    if (array_fotos) {
+      if (array_fotos.length > 0) {
+        for (var i = 0; i < array_fotos.length; i++) {
+          if (id == array_fotos[i].id) {
+            indice = i;
+          }
+        }
+      }
+      if (indice != -1) {
+        array_fotos.splice(indice, 1)
+      }
+    }
+    if (array_fotos.length == 0) {
+      $('#btn_siguiente2').hide();
+    }
+  }
+  //ejecuta la ventana del mapa
+  function siguiente2() {
+    pushPage('#appNavigator', 'mapa.html', '');
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  }
+  //funcion que se ejecuta para buscar la ciudad dando la latitud y longitud
+  function search_city_2(lat, lng) {
+    var latlng;
+    latlng = new google.maps.LatLng(lat, lng);
+    new google.maps.Geocoder().geocode({
+      'latLng': latlng
+    }, function (results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[1]) {
+          var country = null,
+            countryCode = null,
+            city = null,
+            cityAlt = null;
+          var c, lc, component;
+          for (var r = 0, rl = results.length; r < rl; r += 1) {
+            var result = results[r];
+
+            if (!city && result.types[0] === 'locality') {
+              for (c = 0, lc = result.address_components.length; c < lc; c += 1) {
+                component = result.address_components[c];
+
+                if (component.types[0] === 'locality') {
+                  city = component.long_name;
+                  break;
+                }
+              }
+            } else if (!city && !cityAlt && result.types[0] ===
+              'administrative_area_level_1') {
+              for (c = 0, lc = result.address_components.length; c < lc; c += 1) {
+                component = result.address_components[c];
+                if (component.types[0] === 'administrative_area_level_1') {
+                  cityAlt = component.long_name;
+                  break;
+                }
+              }
+            } else if (!country && result.types[0] === 'country') {
+              country = result.address_components[0].long_name;
+              countryCode = result.address_components[0].short_name;
+            }
+            if (city && country) {
+              break;
+            }
+          }
+          $("#city_main").val(city);
+          // console.log("City: " + city + ", City2: " + cityAlt + ", Country: " + country + ", Country Code: " + countryCode);
+        }
+      }
+    });
+  }
+  //funcion que busca en el mapa la ubicacion del mapa
+  var onSuccess = function (position) {
+    search_city_2(position.coords.latitude, position.coords.longitude);
+    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    // This is making the Geocode request
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+      'latLng': latlng
+    }, function (results, status) {
+      if (status !== google.maps.GeocoderStatus.OK) {
+        alert(status);
+      }
+      // This is checking to see if the Geoeode Status is OK before proceeding
+      if (status == google.maps.GeocoderStatus.OK) {
+        var direccion = (results[0].formatted_address);
+        /* var direccion = address.split(',');
+         var city = direccion[1];
+         direccion = city.split(' ');
+         ciudad = "QUITO";*/
+        $('#pac-input').val(direccion);
+        $.ajax({
+          url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + direccion +
+            ",+EC&key=AIzaSyCxSjmDtXEki2dmimctXMPd5y-FQrZpGmQ",
+          dataType: 'json',
+          success: function (response) {
+            var pos = {
+              lat: parseFloat(response.results[0].geometry.location.lat),
+              lng: parseFloat(response.results[0].geometry.location.lng)
+            };
+            var mapa = new google.maps.Map(document.getElementById('mapa'), {
+              center: pos,
+              scrollwheel: false,
+              zoom: 13
+            });
+            var marker = new google.maps.Marker({
+              position: pos,
+              map: mapa,
+              draggable: true
+            });
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById('pac-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+            // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            $('#lat').val(pos.lat);
+            $('#lng').val(pos.lng);
+            // Bias the SearchBox results towards current map's viewport.
+            mapa.addListener('bounds_changed', function () {
+              searchBox.setBounds(mapa.getBounds());
+            });
+            var markers = [];
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function () {
+              var places = searchBox.getPlaces();
+              if (places.length == 0) {
+                return;
+              }
+              // Clear out the old markers.
+              markers.forEach(function (marker) {
+                marker.setMap(null);
+              });
+              //  marker = [];
+              // For each place, get the icon, name and location.
+              var bounds = new google.maps.LatLngBounds();
+              places.forEach(function (place) {
+                if (!place.geometry) {
+                  console.log("Returned place contains no geometry");
+                  return;
+                }
+                var icon = {
+                  url: "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+                  size: new google.maps.Size(71, 71),
+                  origin: new google.maps.Point(0, 0),
+                  anchor: new google.maps.Point(17, 34),
+                  scaledSize: new google.maps.Size(25, 25)
+                };
+                if (marker === false) {
+                  marker = new google.maps.Marker({
+                    position: place.geometry.location,
+                    map: mapa,
+                    draggable: true //make it draggable
+                  });
+                } else {
+                  marker.setPosition(place.geometry.location);
+                }
+                if (place.geometry.viewport) {
+                  // Only geocodes have viewport.
+                  bounds.union(place.geometry.viewport);
+                } else {
+                  bounds.extend(place.geometry.location);
+                }
+              });
+              mapa.fitBounds(bounds);
+              var currentLocation = marker.getPosition();
+              var lat = currentLocation.lat(); //latitude
+              var lng = currentLocation.lng(); //longitude
+              $('#lat').val(lat);
+              $('#lng').val(lng);
+              search_city(lat, lng);
+              getReverseGeocodingData2(lat, lng)
+              google.maps.event.addListener(marker, 'dragend', function (event) {
+                var currentLocation = marker.getPosition();
+                var lat = currentLocation.lat(); //latitude
+                var lng = currentLocation.lng(); //longitude
+                $('#lat').val(lat);
+                $('#lng').val(lng);
+                search_city(lat, lng);
+                getReverseGeocodingData2(lat, lng)
+              });
+            });
+            //Listen for any clicks on the map.
+            google.maps.event.addListener(mapa, 'click', function (event) {
+              //Get the location that the user clicked.
+              var clickedLocation = event.latLng;
+              //If the marker hasn't been added.
+              if (marker === false) {
+                //Create the marker.
+                marker = new google.maps.Marker({
+                  position: clickedLocation,
+                  map: mapa,
+                  draggable: true //make it draggable
+                });
+                //Listen for drag events!
+                google.maps.event.addListener(marker, 'dragend', function (event) {
+                  // markerLocation();.
+                  var currentLocation = marker.getPosition();
+                  var lat = currentLocation.lat(); //latitude
+                  var lng = currentLocation.lng(); //longitude
+
+                });
+              } else {
+                //Marker has already been added, so just change its location.
+                marker.setPosition(clickedLocation);
+              }
+              //Get the marker's location.
+              markerLocation();
+              //This function will get the marker's current location and then add the lat/long
+              //values to our textfields so that we can save the location.
+              function markerLocation() {
+                //Get location.
+                var currentLocation = marker.getPosition();
+                var lat = currentLocation.lat(); //latitude
+                var lng = currentLocation.lng(); //longitude
+                var geocoder = new google.maps.Geocoder;
+                var infowindow = new google.maps.InfoWindow;
+                search_city(lat, lng);
+                getReverseGeocodingData2(lat, lng);
+                $('#lat').val(lat);
+                $('#lng').val(lng);
+              }
+            });
+            //getReverseGeocodingData2
+            function getReverseGeocodingData2(lat, lng) {
+              var latlng = new google.maps.LatLng(lat, lng);
+              // This is making the Geocode request
+              var geocoder = new google.maps.Geocoder();
+              geocoder.geocode({
+                'latLng': latlng
+              }, function (results, status) {
+                if (status !== google.maps.GeocoderStatus.OK) {
+                  alert(status);
+                }
+                // This is checking to see if the Geoeode Status is OK before proceeding
+                if (status == google.maps.GeocoderStatus.OK) {
+                  var address = (results[0].formatted_address);
+                  $('#pac-input').val(address);
+                }
+              });
+            }
+            //search_city
+            function search_city(lat, lng) {
+              var latlng;
+              latlng = new google.maps.LatLng(lat, lng); // New York, US
+              new google.maps.Geocoder().geocode({
+                'latLng': latlng
+              }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  if (results[1]) {
+                    var country = null,
+                      countryCode = null,
+                      city = null,
+                      cityAlt = null;
+                    var c, lc, component;
+                    for (var r = 0, rl = results.length; r < rl; r += 1) {
+                      var result = results[r];
+                      if (!city && result.types[0] === 'locality') {
+                        for (c = 0, lc = result.address_components.length; c < lc; c += 1) {
+                          component = result.address_components[c];
+                          if (component.types[0] === 'locality') {
+                            city = component.long_name;
+                            break;
+                          }
+                        }
+                      } else if (!city && !cityAlt && result.types[0] ===
+                        'administrative_area_level_1') {
+                        for (c = 0, lc = result.address_components.length; c < lc; c += 1) {
+                          component = result.address_components[c];
+                          if (component.types[0] === 'administrative_area_level_1') {
+                            cityAlt = component.long_name;
+                            break;
+                          }
+                        }
+                      } else if (!country && result.types[0] === 'country') {
+                        country = result.address_components[0].long_name;
+                        countryCode = result.address_components[0].short_name;
+                      }
+                      if (city && country) {
+                        break;
+                      }
+                    }
+                    $("#city_main").val(city);
+                    // console.log("City: " + city + ", City2: " + cityAlt + ", Country: " + country + ", Country Code: " + countryCode);
+                  }
+                }
+              });
+            }
+          }
+        });
+      }
+    });
+  };
+  //error en la ubicacion del phone
+  function onError(error) {
+    alert('code: ' + error.code + '\n' +
+      'message: ' + error.message + '\n');
+  }
+  //funcion que se ejecuta al culminar anuncio
+  function culminar_anuncio() {
+    modal.show();
+    $('#page_galeria').hide();
+    $('#body_modal').text("Creando el anuncio...")
+    setTimeout(function () {
+      var url = base_url + 'rest_anuncio/add';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      latidud = $('#lat').val();
+      longitud = $('#lng').val();
+      city = $('#city_main').val();
+      direccion = $('#pac-input').val();
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        precio: precio_publicar,
+        descripcion: descripcion_publicar,
+        titulo: titulo_publicar,
+        sub: subcategoria,
+        phone: phone_publicar,
+        lat: latidud,
+        lng: longitud,
+        city: city,
+        direccion: direccion,
+        'array': JSON.stringify(array_fotos)
+      };
+      send_data_server(url, data_to_server, success_add,
+        error);
+    }, 1000);
+  }
+  //funcion de respuesta de culminar_anuncio
+  function success_add(response) {
+    modal.hide();
+    var status = response.status;
+    if (status == 200) {
+      navigator.notification.alert(
+        'Anuncio creado correctamente', // message
+        mis_anuncios, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'Ocurrio un problema en la creación del anuncio', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que llama el home
+  function llamar_anuncios() {
+    window.location.href = 'dash.html';
+  }
+  //funcion de carga los anuncios del cliente
+  function mis_anuncios() {
+    $('#area_mis_anuncios').hide();
+    pushPage('#appNavigator', 'mis_anuncios.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando mis anuncios...");
+    $('#area_mis_anuncios').empty();
+    var item_auth = get_data_local();
+    console.log("entro en mis anuncios");
+    setTimeout(function () {
+      var url = base_url + 'rest_anuncio/cargar_mis_anuncios';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      comienza_mis_anuncios = 0;
+      limite_mis_anuncios = 11;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        comienza: comienza_mis_anuncios,
+        limite: limite_mis_anuncios
+      };
+      send_data_server(url, data_to_server, success_mis_anuncios,
+        error);
+    }, 1000);
+  } //funcion de respuesta al cargar los anuncios del cliente
+  function success_mis_anuncios(response) {
+    console.log("entro en el response mis anuncios");
+    console.log(response);
+    var status = response.status;
+    //  response = JSON.parse(response.lista);
+    // var status = response.status;
+    modal.hide();
+    if (status == 200) {
+      // $('#area_subastas').show();
+      lista = response.lista;
+      cargar_mis_anuncios(lista);
+      $('#area_mis_anuncios').show();
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No hay anuncios disponible', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  //funcion que lista los anuncios
+  function cargar_mis_anuncios(lista) {
+    var cadena = "";
+    if (lista.length > 0) {
+      for (var i = 0; i < lista.length; i++) {
+        if (lista[i].anuncio_photo.indexOf("upload") >= 0) {
+          img = base_url + lista[i].anuncio_photo;
+        } else {
+          img = lista[i].anuncio_photo;
+        }
+        var ads_destacado = ""
+        if (lista[i].destacado == 1) {
+          ads_destacado =
+            "<span style='background: #00bb2d !important;font-size:11px !important' class='badge badge-danger'> Destacado</span>";
+        }
+        cadena = cadena +
+          "<ons-card id='ver_mi_anuncio_" +
+          lista[i].anuncio_id +
+          "' onclick=''><div class='row'><div class='col-4'><img style='width:100%;' class='rounded' src='" +
+          img +
+          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important;margin-top:0px !important; background: #80232b !important' class='badge badge-danger'>$" +
+          parseFloat(lista[i]
+            .precio).toFixed(2) +
+          "</span></p></div><div class='col-8' style='padding: 1px 1px 1px 1px !important;'><h4 id='titulo_mi_anuncio_" +
+          lista[i].anuncio_id +
+          "' style='font-size:16px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
+          lista[i].titulo +
+          " </strong>" + ads_destacado +
+          "</h4> <p style='font-size:10px !important; line-height:1.5px !important; margin-bottom:2px !important;' class='card-text'><span><i class='fa fa-tag' aria-hidden='true'></i> " +
+          lista[i].categoria +
+          "/" + lista[i].subcategoria + "</span>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
+          lista[i].ciudad +
+          "</span></p><p style='font-size:12px !important;' class='card-text'>" + lista[i]
+          .corta +
+          " <span><i class='fa fa-whatsapp' aria-hidden='true'></i> " +
+          lista[i]
+          .whatsapp +
+          " </span></p></div></div></ons-card>";
+      }
+      $('#area_mis_anuncios').append(cadena);
+      for (let k = 0; k < lista.length; k++) {
+        $('#ver_mi_anuncio_' + lista[k].anuncio_id).attr('onclick', 'detalle_anuncio("' + lista[k].anuncio_id + '")');
+      }
+    }
+  }
+  //infinito para los anuncios
+  function infinito_mis_anuncio() {
+    if (limite_mis_anuncios >= 11) {
+      comienza_mis_anuncios = limite_mis_anuncios;
+      limite_mis_anuncios = comienza_mis_anuncios + 11;
+      setTimeout(function () {
+        var url = base_url + 'rest_anuncio/cargar_mis_anuncios';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          comienza: comienza_mis_anuncios,
+          limite: limite_mis_anuncios
+        };
+        send_data_server(url, data_to_server, success_mis_anuncios,
+          error);
+      }, 1000);
+
+    }
+  }
+  //funcion que muestra el error
+  function error(error) {
+    show_error(error);
+  }
+  //alertDismissed1
+  function alertDismissed1() {
+    // do something
+  }
+  //alertDismissed1
+  function alertDismissed() {
+    // do something
+  }
+</script>
+<style>
+  #input_id::placeholder {
+    color: white;
+  }
+
+  #map {
+    height: 100%;
+  }
+
+  ons-splitter-side[animation=overlay] {
+    border-left: 1px solid #bbb;
+  }
+
+  /*onse*/
+  :checked+.tabbar--material__button {
+    background-color: transparent;
+    color: #2a3681;
+  }
+
+  .tabbar--material__border {
+    height: 2px;
+    background-color: #80232b;
+  }
+
+  .progress-circular__primary {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+   

@@ -1,0 +1,651 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+        Personalice la directiva de seguridad de contenido en la etiqueta meta como sea necesario. Agregue "unsafe-inline" a default-src para permitir JavaScript insertado.
+        Para obtener más detalles, consulte http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="material_bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="material_bootstrap/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="material_bootstrap/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="material/css/onsenui.css">
+    <link rel="stylesheet" href="material/css/onsen-css-components.min.css">
+    <script src="material/js/onsenui.min.js"></script>
+
+    <title>Subasta</title>
+
+</head>
+
+<body>
+    <template id="register.html">
+        <ons-page id="register">
+            <ons-toolbar style="background: #8c1822;">
+                <div class="center">
+                    <img style="height:55px; margin-left:28%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+                        src="images/logo-subasta-hor.png" alt="">
+                </div>
+                <div class="right">
+                    <ons-toolbar-button onclick="fn.toggleMenu()">
+                        <ons-icon style="color: #fff !important" icon="ion-navicon, material:md-menu"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-card>
+                <div style="text-align: center;" class="title">
+                    <p class="h4 text-center py-4">Registro de usuario</p>
+                </div>
+                <div class="content">
+                    <!-- Material input text -->
+                    <div class="md-form">
+                        <i class="fa fa-user prefix grey-text"></i>
+                        <input type="text" id="name" class="form-control">
+                        <label for="name" class="font-weight-light">Primer nombre</label>
+                    </div>
+                    <div class="md-form">
+                        <i class="fa fa-user prefix grey-text"></i>
+                        <input type="text" id="name" class="form-control">
+                        <label for="surname" class="font-weight-light">Primer apellido</label>
+                    </div>
+                    <div class="md-form">
+                        <i class="fa fa-id-card prefix grey-text"></i>
+                        <label for="cedula" class="font-weight-light">Documento de identidad</label>
+                        <select class="mdb-select md-form">
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                    </div>
+
+                    <div class="md-form">
+                        <i class="fa fa-id-card prefix grey-text"></i>
+                        <input type="text" id="cedula" class="form-control">
+                        <label for="cedula" class="font-weight-light">Documento de identidad</label>
+                    </div>
+                    <!-- Material input email -->
+                    <div class="md-form">
+                        <i class="fa fa-phone prefix grey-text"></i>
+                        <input type="text" id="phone" class="form-control">
+                        <label for="phone" class="font-weight-light">Número de teléfono</label>
+                    </div>
+
+                    <!-- Material input email -->
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix grey-text"></i>
+                        <input type="email" id="email" class="form-control">
+                        <label for="email" class="font-weight-light">Correo electrónico</label>
+                    </div>
+
+
+                    <!-- Material input password -->
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix grey-text"></i>
+                        <input type="password" id="password" class="form-control">
+                        <label for="password" class="font-weight-light">Contraseña</label>
+                    </div>
+
+                    <!-- Material input email -->
+                    <div class="md-form">
+                        <i class="fa fa-exclamation-triangle prefix grey-text"></i>
+                        <input type="password" id="repeat_password" class="form-control">
+                        <label for="repeat_password" class="font-weight-light">Repita la contraseña </label>
+                    </div>
+
+                    <div class="text-center">
+                        <button
+                            style="width: 100% !important; border-color: #2a3681 !important; color: #2a3681 !important;"
+                            type="button" onclick="ver_terminos_condiciones();"
+                            class="btn btn-outline-primary waves-effect">Ver los términos y condiciones</button>
+                        <br /><br />
+
+                    </div>
+
+                    <!-- Default checked -->
+                    <div class="custom-control custom-checkbox text-center">
+                        <input type="checkbox" class="custom-control-input" id="selected_tc" checked />
+                        <label class="custom-control-label" for="selected_tc">Acepto los términos y
+                            condiciones</label>
+                    </div>
+                    <div class="text-center py-4 mt-3">
+                        <button style="width: 100% !important; background-color: #80232b !important;"
+                            onclick="registrar_nuevo_cliente();" id="btn-registrar" class="btn btn-cyan"
+                            type="button"><span><i class="fa fa-user-plus" aria-hidden="true"></i>
+                                Registrar usuario </span></button>
+                    </div>
+                </div>
+
+
+            </ons-card>
+        </ons-page>
+    </template>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div id="section_content_register" class="col-12">
+                <!-- Card -->
+
+                <!-- Card -->
+
+                <!-- Card -->
+                <div style="display:none;" id="area_form_verify_code" class="card">
+
+                    <!-- Card body -->
+                    <div class="card-body">
+
+                        <!-- Material form register -->
+                        <form>
+                            <p class="h4 text-center py-4"> </p>
+
+                            <!-- Material input text -->
+                            <div class="md-form">
+
+                                <p class="text-center">Revisa tu correo electrónico y coloca el código de 4 dígitos
+                                    que te llegó. </p>
+                                <p class="text-center">Si no te llegó el código, puedes generar otro presionando el
+                                    siguiente botón:</p>
+
+                            </div>
+                            <div class="text-center py-4 mt-3">
+                                <a onclick="generar_nuevo_codigo();"
+                                    style="margin: 10px;background-color:white !important;color: #2193D0 !important;"
+                                    class="btn btn-default"><i style="color: #2193d0;" class="fa fa-cogs"></i> Generar
+                                    nuevo código</a>
+                            </div>
+                            <hr>
+                            <!-- Material input email -->
+                            <p class="h4 text-center py-4">Código de verificación</p>
+                            <div class="row">
+
+                                <div class="col-3">
+                                    <input onkeyup="change_numero(1);" id="number1" type="number" maxlength="1"
+                                        class="form-control" />
+                                </div>
+
+                                <div class="col-3">
+                                    <input onkeyup="change_numero(2);" id="number2" type="number" maxlength="1"
+                                        class="form-control" />
+                                </div>
+
+                                <div class="col-3">
+                                    <input onkeyup="change_numero(3);" id="number3" type="number" maxlength="1"
+                                        class="form-control" />
+                                </div>
+
+                                <div class="col-3">
+                                    <input onkeyup="change_numero(4);" id="number4" type="number" maxlength="1"
+                                        class="form-control" />
+                                </div>
+
+                            </div>
+                            <div class="text-center py-4 mt-3">
+                                <a onclick="validar_codigo_completo();" id="btn_validar_code" class="btn btn-primary"><i
+                                        class="fa fa-check"></i> Completar verificación</a>
+                                <label style="display: none;color:#2193d0; " id="label_validando">Validando
+                                    código...</label>
+                            </div>
+
+
+                        </form>
+                        <!-- Material form register -->
+
+                    </div>
+                    <!-- Card body -->
+
+                </div>
+                <!-- Card -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <div style="position: fixed;top: 0;right: 0;bottom: 0;left: 0;overflow: hidden;" class="modal fade"
+        id="myModalLoadTime" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="position: fixed;margin: 0;  width: 100%;  height: 100%;padding: 0;"
+            role="document">
+            <div class="modal-content"
+                style=" position: absolute;top: 0;right: 0;bottom: 0;left: 0;border-radius: 0;box-shadow: none;">
+
+                <div class="modal-body">
+                    <div class="text-center">
+
+                        <img src="images/loading_clasic.gif" style="height: 200px; width: 260px;margin-top: 50%;" />
+                        <div>
+                            <label style="color: #2292b8;font-weight: bold;font-size: 16px;">Cometando
+                                operación...</label>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div style="position: fixed;top: 0;right: 0;bottom: 0;left: 0;overflow: hidden;" class="modal fade" id="myModalLoad"
+        tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="position: fixed;margin: 0;  width: 100%;  height: 100%;padding: 0;"
+            role="document">
+            <div class="modal-content"
+                style=" position: absolute;top: 0;right: 0;bottom: 0;left: 0;border-radius: 0;box-shadow: none;">
+
+                <div class="modal-body">
+                    <div class="text-center">
+
+                        <img src="images/team.gif" style="height: 200px; width: 260px;margin-top: 50%;" />
+                        <div>
+                            <label style="color: #2292b8;font-weight: bold;font-size: 16px;">Registrando cliente</label>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModalTC" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-notify modal-info" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="heading lead">Términos y condiciones</p>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div style="height:350px;overflow:auto;">
+
+
+                        <div style="text-align:center;margin-left:5px;margin-right:5px;">
+                            <h5>Términos y Condiciones para el Uso de la Aplicación <b>“APP”</b></h5>
+                        </div>
+                        <hr />
+                        <div style="margin-left:5px;margin-right:5px;text-align:center;">
+
+
+
+
+
+                            <p style="text-align:justify;">
+                                Detalles...
+
+
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
+
+
+<!-- SCRIPTS -->
+<script type="text/javascript" src="cordova.js"></script>
+<!-- JQuery -->
+<script type="text/javascript" src="material_bootstrap/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="material_bootstrap/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="material_bootstrap/js/mdb.min.js"></script>
+
+<script type="text/javascript" src="js/urls.js"></script>
+
+
+
+<script type="text/javascript" src="js/index_registro.js"></script>
+
+
+<script type="text/javascript">
+    var token = null;
+    var user_id = null;
+    var user_object_response = null;
+
+    function generar_nuevo_codigo() {
+        $('#myModalLoadTime').modal('show');
+        setTimeout(function () {
+            var url = base_url + 'rest_user/generar_nuevo_codigo';
+            data_to_server = {
+                email: user_object_response.email
+            };
+            send_data_server(url, data_to_server, success_generar_nuevo_codigo,
+                error);
+        }, 2000);
+
+    }
+
+    function success_generar_nuevo_codigo(response) {
+        $('#myModalLoadTime').modal('hide');
+        if (response.status == 200) {
+
+            navigator.notification.alert(
+                'Felicidades !!! Su código de activación ha sido generado satisfactoriamente y enviado a su correo electrónico', // message
+                alertDismissed1, // callback
+                'Información', // title
+                'Aceptar' // buttonName
+            );
+        } else {
+            navigator.notification.alert(
+                'No se puede generar un nuevo código en este momento. Por favor intente más tarde', // message
+                alertDismissed1, // callback
+                'Información', // title
+                'Aceptar' // buttonName
+            );
+        }
+    }
+
+    function change_numero(num) {
+        switch (num) {
+            case 1: {
+                $("#number2").focus();
+                $("#number2").empty();
+                break;
+            }
+            case 2: {
+                $("#number3").focus();
+                $("#number3").empty();
+                break;
+            }
+
+            case 3: {
+                $("#number4").focus();
+                $("#number4").empty();
+                break;
+            }
+
+            case 4: {
+                break;
+            }
+        }
+    }
+
+    function validar_codigo_completo() {
+        $("#btn_validar_code").hide();
+        $("#label_validando").fadeIn(500);
+        var firstDigit = $("#number1").val();
+        var secondDigit = $("#number2").val();
+        var thirdDigit = $("#number3").val();
+        var fourDigit = $("#number4").val();
+
+
+        setTimeout(function () {
+            var url = base_url + 'rest_user/validar_codigo_verificacion';
+
+            data_to_server = {
+                email: user_object_response.email,
+                codigo: firstDigit + secondDigit + thirdDigit + fourDigit
+            };
+
+            send_data_server(url, data_to_server, success_validar_registro,
+                error);
+
+
+        }, 2000);
+    }
+
+    function success_validar_registro(response) {
+        if (response.status == 200) {
+
+            save_data_local(user_id, user_object_response.email, token,
+                user_object_response.role_id, user_object_response.name,
+                user_object_response.photo, response.phone, response.cedula);
+            window.location.href = 'dash.html';
+
+        } else {
+            $("#label_validando").hide();
+            $("#btn_validar_code").fadeIn(500);
+
+            navigator.notification.alert(
+                response.msg, // message
+                alertDismissed1, // callback
+                'Información', // title
+                'Aceptar' // buttonName
+            );
+        }
+    }
+
+    var tiene_huella = 0;
+    var token_huella = "";
+    var temp_email = "";
+    var temp_password = "";
+
+    var imageValidate = false;
+    var imageURL = '';
+
+    function responseDetect() {
+
+    }
+
+
+    function ver_terminos_condiciones() {
+        $("#myModalTC").modal('show');
+
+    }
+
+
+    function regresar_registro() {
+
+        if ($("#area_form_verify_code").is(':visible') && $("#area_form_registro").is(':hidden')) {
+            $("#area_form_verify_code").hide();
+            $("#area_form_registro").fadeIn(400);
+
+        }
+        if ($('#area_form_registro').is(':visible') && $("#area_form_verify_code").is(':hidden')) {
+
+            call_view('login.html', 'register.html');
+        }
+
+    }
+
+
+    function ValidateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    function alertDismissed1() {
+        // do something
+    }
+
+
+
+    function registrar_nuevo_cliente() {
+
+        var aceptado_tc = $('#selected_tc').is(":checked");
+        if (aceptado_tc) {
+
+            var nombre = $("#name").val();
+            var cedula = $("#cedula").val();
+            var email = $("#email").val();
+            var password = $("#password").val();
+            var repeat_password = $("#repeat_password").val();
+            var phone = $("#phone").val();
+            if (cedula.trim().length > 0) {
+                if (nombre.trim().length > 0) {
+
+                    if (email.trim().length > 0) {
+
+                        if (phone.trim().length > 0) {
+
+                            if (password.trim().length > 0) {
+
+                                if (ValidateEmail(email)) {
+
+                                    if (password.trim() == repeat_password.trim()) {
+
+                                        //mandar a registrar al usuario
+
+
+                                        $('#myModalLoad').modal('show');
+
+
+                                        setTimeout(function () {
+                                            var url = base_url + 'rest_user/register';
+                                            data_to_server = {
+                                                name: nombre,
+                                                cedula: cedula,
+                                                email: email,
+                                                phone: phone,
+                                                password: password,
+                                                repeat_password: repeat_password
+                                            };
+
+                                            send_data_server(url, data_to_server, success_register_cliente,
+                                                error);
+
+
+
+                                        }, 2000);
+
+
+
+
+                                    } else {
+                                        navigator.notification.alert(
+                                            'No coinciden las contraseñas', // message
+                                            alertDismissed1, // callback
+                                            'Información', // title
+                                            'Aceptar' // buttonName
+                                        );
+
+                                    }
+
+                                } else { //formato de email incorrecto
+                                    navigator.notification.alert(
+                                        'Formato de email incorrecto', // message
+                                        alertDismissed1, // callback
+                                        'Información', // title
+                                        'Aceptar' // buttonName
+                                    );
+                                }
+
+                            } else { // contraseña requerida
+                                navigator.notification.alert(
+                                    'La contraseña es requerida', // message
+                                    alertDismissed1, // callback
+                                    'Información', // title
+                                    'Aceptar' // buttonName
+                                );
+
+                            }
+                        } else {
+
+                            navigator.notification.alert(
+                                'El teléfono es requerido', // message
+                                alertDismissed1, // callback
+                                'Información', // title
+                                'Aceptar' // buttonName
+                            );
+
+
+                        }
+
+                    } else { //email requerido
+
+                        navigator.notification.alert(
+                            'El email es requerido', // message
+                            alertDismissed1, // callback
+                            'Información', // title
+                            'Aceptar' // buttonName
+                        );
+                    }
+
+                } else { //el campo nombre se ha quedado vacío
+
+                    navigator.notification.alert(
+                        'El nombre y apellidos son requeridos', // message
+                        alertDismissed1, // callback
+                        'Información', // title
+                        'Aceptar' // buttonName
+                    );
+                }
+            } else {
+                navigator.notification.alert(
+                    'La cédula/identificación es un valor requerido', // message
+                    alertDismissed1, // callback
+                    'Información', // title
+                    'Aceptar' // buttonName
+                );
+            }
+
+        } else {
+
+            navigator.notification.alert(
+                'Usted debe aceptar los términos y condiciones', // message
+                alertDismissed1, // callback
+                'Información', // title
+                'Aceptar' // buttonName
+            );
+        }
+    }
+
+    function error(error) {
+
+        show_error(error);
+
+    }
+
+    function success_register_cliente(response) {
+        $('#myModalLoad').modal('hide');
+        var status = response.status;
+        if (status ==
+            404
+        ) { // si existe error de autenticación
+            navigator.notification.alert(
+                response.msg, // message
+                alertDismissed1, // callback
+                'Información', // title
+                'Aceptar' // buttonName
+            );
+        } else {
+            token = response.security_token;
+            user_id = response.user_object.user_id;
+            user_object_response = response.user_object;
+            $("#area_form_registro").hide();
+            $("#area_form_verify_code").show();
+
+            // save_data_local(user_id, response.user_object.email, token, response.user_object.role_id, response.user_object.name);
+            //
+            //window.location.href = 'dash.html';
+        }
+    }
+</script>
