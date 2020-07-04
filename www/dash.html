@@ -801,8 +801,9 @@
       <ons-pull-hook id="pull-hook">
         Cargando...
       </ons-pull-hook>
-      <div id="area_mis_anuncios" class="" style="margin:0px !important">
-      </div>
+      <ons-row id="area_mis_anuncios" class="" style="margin:0px !important">
+
+      </ons-row>
       <ons-fab onclick="publicar_anuncio();" style="background-color: #2a3681 !important;" position="bottom right">
         <ons-icon style="color: #ffffff !important" icon="md-plus"></ons-icon>
       </ons-fab>
@@ -995,6 +996,8 @@
   var page_active = null;
   var puja_mayor = 0;
   var valida_modal_open = false;
+  var comienza_mis_anuncios = null;
+  var limite_mis_anuncios = null;
   //carga cuando se ejecuta antes del cambio
   document.addEventListener('preopen', function (event) {
     buscar_membresia_user();
@@ -1006,7 +1009,6 @@
     if (event.tabItem) {
       var etiqueta = event.tabItem.getAttribute('label');
     }
-
     if (etiqueta == "Subastas") {
       $('#area_subastas').hide();
       window.location.href = 'dash.html';
@@ -1033,7 +1035,6 @@
           error);
       }, 1000);
       page.onInfiniteScroll = function (done) {
-        console.log("entro en el infinito del anuncio pre");
         infinito_anuncio();
       }
     }
@@ -1045,7 +1046,6 @@
     }); */
   //carga durante el incio de la app
   document.addEventListener('init', function (event) {
-
     item_auth = get_data_local();
     page = event.target;
     page_active = page.id;
@@ -1067,7 +1067,6 @@
           error);
       }, 1000);
       page.onInfiniteScroll = function (done) {
-        console.log("entro en infinito de subasta 1");
         infinito();
       }
       //buscar membresia
@@ -1094,56 +1093,14 @@
       }
     }
     if (page.id == "page_anuncios") {
-      $('#area_anuncios').hide();
-      $('#body_modal').text("Cargando ...");
-      modal.show();
-      $('#area_anuncios').empty();
-      var item_auth = get_data_local();
-      setTimeout(function () {
-        var url = base_url + 'rest_anuncio/cargar_anuncios';
-        var user_id = item_auth.user_id;
-        var security_token = item_auth.security_token;
-        comienza2 = 0;
-        limite2 = 11;
-        data_to_server = {
-          user_id: user_id,
-          security_token: security_token,
-          comienza: comienza2,
-          limite: limite2
-        };
-        send_data_server(url, data_to_server, success_all_anuncios,
-          error);
-      }, 1000);
-      /*     page.onInfiniteScroll = function (done) {
-            console.log("entro en el infinito del anuncio init");
-            infinito_anuncio();
-          } */
+      page.onInfiniteScroll = function (done) {
+        infinito_anuncio();
+      }
     }
     if (page.id == "page_mis_anuncios") {
-      $('#area_mis_anuncios').hide();
-      $('#body_modal').text("Cargando mis anuncios...");
-      modal.show();
-      $('#area_mis_anuncios').empty();
-      var item_auth = get_data_local();
-      setTimeout(function () {
-        var url = base_url + 'rest_anuncio/cargar_mis_anuncios';
-        var user_id = item_auth.user_id;
-        var security_token = item_auth.security_token;
-        comienza_mis_anuncios = 0;
-        limite_mis_anuncios = 11;
-        data_to_server = {
-          user_id: user_id,
-          security_token: security_token,
-          comienza: comienza_mis_anuncios,
-          limite: limite_mis_anuncios
-        };
-        send_data_server(url, data_to_server, success_mis_anuncios,
-          error);
-      }, 1000);
-      /*  page.onInfiniteScroll = function (done) {
-         console.log("entro en el infinito del anuncio init");
-         infinito_mis_anuncio();
-       } */
+      page.onInfiniteScroll = function (done) {
+        infinito_mis_anuncio();
+      }
     }
     var prev = function () {
       var carousel = document.getElementById('carousel');
@@ -2303,7 +2260,7 @@
         'Aceptar' // buttonName
       );
     }
-    if (status == 404) {
+    if (status == 404 && !response.infinito) {
       navigator.notification.alert(
         'No hay subastas disponible', // message
         cerrar_push, // callback
@@ -3007,7 +2964,7 @@
         'Aceptar' // buttonName
       );
     }
-    if (status == 404) {
+    if (status == 404 && !response.infinito) {
       navigator.notification.alert(
         'No hay anuncios disponible', // message
         cerrar_push, // callback
@@ -3073,10 +3030,9 @@
         var ads_destacado = ""
         if (lista[i].destacado == 1) {
           ads_destacado =
-            "<span style='background: #00bb2d !important;font-size:10px !important ;position:absolute; top:2%;z-index:100; class='badge badge-danger'> Destacado</span>";
+            "<span style='background: #00bb2d !important;font-size:10px !important ;position:absolute; top:2%;z-index:100; color:#fff !important; class='badge badge-danger'><strong> Destacado</strong></span>";
         } else {
-          ads_destacado =
-            "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Destacado</span>";
+          ads_destacado = "";
         }
         cadena = cadena +
           "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas2_" +
@@ -3850,7 +3806,8 @@
     }, 1000);
   } //funcion de respuesta al cargar los anuncios del cliente
   function success_mis_anuncios(response) {
-
+    // Reset the whole stack instead of popping 1 page
+    // document.querySelector('ons-navigator').resetToPage('dash.html');
     //  console.log(response);
     var status = response.status;
     //  response = JSON.parse(response.lista);
@@ -3870,7 +3827,7 @@
         'Aceptar' // buttonName
       );
     }
-    if (status == 404) {
+    if (status == 404 && !response.infinito) {
       navigator.notification.alert(
         'No hay anuncios disponible', // message
         cerrar_push, // callback
@@ -3881,6 +3838,7 @@
   }
   //funcion que lista los anuncios
   function cargar_mis_anuncios(lista) {
+
     var cadena = "";
     if (lista.length > 0) {
       for (var i = 0; i < lista.length; i++) {
@@ -3892,37 +3850,36 @@
         var ads_destacado = ""
         if (lista[i].destacado == 1) {
           ads_destacado =
-            "<span style='background: #00bb2d !important;font-size:11px !important' class='badge badge-danger'> Destacado</span>";
+            "<span style='background: #00bb2d !important;font-size:10px !important ;position:absolute; top:2%;z-index:100; color:#fff !important; class='badge badge-danger'><strong> Destacado</strong></span>";
+        } else {
+          ads_destacado = "";
         }
         cadena = cadena +
-          "<ons-card id='ver_mi_anuncio_" +
+          "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas2_" +
           lista[i].anuncio_id +
-          "' onclick=''><div class='row'><div class='col-4'><img style='width:100%;' class='rounded' src='" +
+          "' onclick=''><div class='row'><div class='col-12'><h4 id='titulo_anuncio_" +
+          lista[i].anuncio_id +
+          "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
+          lista[i].titulo +
+          " </strong></h4> </div><div class='col-12'>" + ads_destacado +
+          "<img style='width:100%; position:relative' class='rounded' src='" +
           img +
           "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important;margin-top:0px !important; background: #80232b !important' class='badge badge-danger'>$" +
           parseFloat(lista[i]
             .precio).toFixed(2) +
-          "</span></p></div><div class='col-8' style='padding: 1px 1px 1px 1px !important;'><h4 id='titulo_mi_anuncio_" +
-          lista[i].anuncio_id +
-          "' style='font-size:16px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
-          lista[i].titulo +
-          " </strong>" + ads_destacado +
-          "</h4> <p style='font-size:10px !important; line-height:1.5px !important; margin-bottom:2px !important;' class='card-text'><span><i class='fa fa-tag' aria-hidden='true'></i> " +
-          lista[i].categoria +
-          "/" + lista[i].subcategoria + "</span>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
+          "</span></p></div><div class='col-12' style='padding: 1px 1px 1px 1px !important;'><p style='font-size:10px !important; line-height:1.5px !important; margin-bottom:2px !important;text-align:center !important' class='card-text'>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
           lista[i].ciudad +
-          "</span></p><p style='font-size:12px !important;' class='card-text'>" + lista[i]
-          .corta +
-          " <span><i class='fa fa-whatsapp' aria-hidden='true'></i> " +
-          lista[i]
-          .whatsapp +
-          " </span></p></div></div></ons-card>";
+          "</span></p></div></div></ons-card></ons-col>";
       }
       $('#area_mis_anuncios').append(cadena);
       for (let k = 0; k < lista.length; k++) {
         $('#ver_mi_anuncio_' + lista[k].anuncio_id).attr('onclick', 'detalle_anuncio("' + lista[k].anuncio_id + '")');
       }
     }
+  }
+
+  function editSelects(event) {
+    console.log(event)
   }
   //infinito para los anuncios
   function infinito_mis_anuncio() {
