@@ -494,20 +494,24 @@
           <!-- Text -->
           <p id="descripcion_detalle" class="card-text">
           </p>
-          <h1 style="background-color:#80232b !important; font-size: 20px !important;" id="inicial_detalle"
-            class="badge">
+          <h1 style="background-color:#80232b !important; font-size: 20px !important;padding: 2px !important;"
+            id="inicial_detalle" class="badge">
           </h1>
           <p id="cierre_detalle" class="text-black-50 py-2">fecha de cierre</p>
+          <ons-row style="margin-top: 4%; display:none;" id="win_subasta">
+            <ons-col id="name_win">
+            </ons-col>
+          </ons-row>
         </div>
         <input name="" id="subasta_id" type="hidden" value="">
         <input name="" id="subasta_user_id" type="hidden" value="">
         <button style="width: 95% !important; background-color: #80232b !important; display: none;"
-          onclick="pagar_entrada_subasta();" id="entrar_subasta" class="btn btn-cyan" type="button"><span><i
+          onclick="pagar_subasta_inversa();" id="entrar_subasta" class="btn btn-cyan" type="button"><span><i
               class="fa fa-sign-in" aria-hidden="true"></i>
             Entrar a la subasta</span></button>
         <button style="display: none; width: 95% !important; background-color: #80232b !important;"
-          onclick="entrar_subasta_pujar();" id="pujar_subasta" class="btn btn-cyan" type="button"><span><i
-              class="fa fa-sign-in" aria-hidden="true"></i>
+          onclick="subasta_directa_pujar();" id="pujar_subasta" class="btn btn-cyan" type="button"><span><i
+              class="fa fa-hand-paper-o" aria-hidden="true"></i>
             Pujar</span></button>
         <button style="display: none; width: 95% !important; background-color: #80232b !important;"
           onclick="pagar_subasta_inversa();" id="pagar_subasta_directa" class="btn btn-cyan" type="button"><span><i
@@ -778,6 +782,7 @@
           <div id="descripcion_membresia" class="text-center">
           </div>
           <h4 id="anuncios_disponibles" style="text-align: center; color:#80232b"> </h4>
+          <h4 id="subastas_disponibles" style="text-align: center; color:#80232b"> </h4>
         </div>
       </ons-card>
     </ons-page>
@@ -883,7 +888,45 @@
       </div>
       <br>
       <p style="text-align: right">
-        <ons-button onclick="llamar_anuncios()" style="color:#80232b" modifier="quiet">Aceptar</ons-button>
+        <ons-button id="btn_notificacion_inversa" onclick="llamar_anuncios()" style="color:#80232b" modifier="quiet">
+          Aceptar</ons-button>
+        <ons-button id="btn_notificacion_membresia" onclick="llamar_anuncios()" style="color:#80232b" modifier="quiet">
+          Aceptar</ons-button>
+        <ons-button id="btn_notificacion_piso" onclick="llamar_subasta_directa()" style="color:#80232b"
+          modifier="quiet">
+          Aceptar</ons-button>
+        <ons-button id="btn_notificacion_aceptar" onclick="llamar_anuncios()" style="color:#80232b" modifier="quiet">
+          Aceptar</ons-button>
+      </p>
+    </ons-card>
+  </ons-modal>
+  <ons-modal id="modal_puja" direction="up">
+    <ons-card style="margin-left:6% !important; margin-right:6% !important;">
+      <div id="title_confirmacion" style="color:#80232b" class="title text-center">
+        Pujar
+      </div>
+      <div class="content">
+        <ons-row style="text-align: center; margin-top: 30px;" id="win_subasta_puja">
+          <ons-col id="name_win_puja"> <i style="color:#80232b !important;font-size:40px !important;"
+              class="fa fa-user"></i> Pedro Duran <span
+              style="background: #00bb2d !important;font-size:14px !important;" class="badge badge-danger">
+              $1000</span> <i style="color:#80232b !important;font-size:20px !important;" class="fa fa-trophy"></i>
+          </ons-col>
+        </ons-row>
+        <div style="text-align: center; margin-top: 30px;">
+          <p>
+            <ons-input id="valor_puja_directa" modifier="underbar" type="number" placeholder="Valor de la puja" float>
+            </ons-input>
+          </p>
+        </div>
+      </div>
+      <br>
+      <p style="text-align: right; margin-top: 30px;">
+        <ons-button id="btn_confirmar_puja" onclick="confirmar_puja()" style="color:#80232b" modifier="quiet">
+          Pujar</ons-button>
+        <ons-button id="btn_cancelar_puja" onclick="cancelar_puja()" style="color:#80232b" modifier="quiet">
+          Cancelar</ons-button>
+
       </p>
     </ons-card>
   </ons-modal>
@@ -920,6 +963,7 @@
   var modal_notificacion = $('#modal_notificacion');
   var pullHook = document.getElementById('pull-hook2');
   var modal_confirmacion = $('#modal_confirmacion');
+  var modal_puja_directa = $('#modal_puja');
   var page;
   var lat;
   var lng;
@@ -948,6 +992,9 @@
   var detalle_inicial_subasta = null;
   var tipo_inicial_subasta = null;
   var subasta_activa_pay = null;
+  var page_active = null;
+  var puja_mayor = 0;
+  var valida_modal_open = false;
   //carga cuando se ejecuta antes del cambio
   document.addEventListener('preopen', function (event) {
     buscar_membresia_user();
@@ -998,8 +1045,10 @@
     }); */
   //carga durante el incio de la app
   document.addEventListener('init', function (event) {
+
     item_auth = get_data_local();
     page = event.target;
+    page_active = page.id;
     if (page.id == "page1") {
       $('#body_modal').text("Cargando ...");
       modal.show();
@@ -1235,6 +1284,7 @@
         " </p><p style='color:#80232b' class='text-center'><strong>Fecha de vencimiento:</strong> " + membresia
         .fecha_fin + " </p>")
       $('#anuncios_disponibles').text("Anuncios disponibles: " + membresia.anuncios_publi);
+      $('#subastas_disponibles').text("Subastas disponibles: " + membresia.qty_subastas);
       $('#card_infomacion_membresia').show();
     }
     if (status == 500) {
@@ -1362,7 +1412,7 @@
   //regreso al comercio luego de pagar
   P.on('response', function (data) {
     response_payment = data;
-    console.log(response_payment);
+    // console.log(response_payment);
     let requestId = data.requestId;
     let reference = data.reference;
     let estado_payment = 0;
@@ -1389,6 +1439,10 @@
     } else {
       modal.hide();
       if (estado_payment == 1 && detalle_payment.tipo == 0) {
+        $('#btn_notificacion_membresia').show();
+        $('#btn_notificacion_inversa').hide();
+        $('#btn_notificacion_piso').hide();
+        $('#btn_notificacion_aceptar').hide();
         //compra de membresia
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -1397,6 +1451,10 @@
         $('#referencia_notificacion').html(data.reference);
         modal_notificacion.show();
       } else if (estado_payment == 1 && detalle_payment.tipo == 1) {
+        $('#btn_notificacion_membresia').hide();
+        $('#btn_notificacion_inversa').hide();
+        $('#btn_notificacion_piso').show();
+        $('#btn_notificacion_aceptar').hide();
         //piso de subasta
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -1413,6 +1471,10 @@
         $('#referencia_notificacion').html(data.reference);
         modal_notificacion.show();
       } else if (estado_payment == 1 && detalle_payment.tipo == 3) {
+        $('#btn_notificacion_membresia').hide();
+        $('#btn_notificacion_inversa').show();
+        $('#btn_notificacion_piso').hide();
+        $('#btn_notificacion_aceptar').hide();
         //compra de inversa
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -1436,6 +1498,10 @@
       modal.hide();
       if (result.status == 1 && result.tipo == 0) {
         //compra de membresia
+        $('#btn_notificacion_membresia').show();
+        $('#btn_notificacion_inversa').hide();
+        $('#btn_notificacion_piso').hide();
+        $('#btn_notificacion_aceptar').hide();
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
         $('#product_adquirido').html("<strong>Membresia adquirida : </strong>" + result.detalle);
@@ -1443,6 +1509,10 @@
         $('#referencia_notificacion').html(result.reference);
         modal_notificacion.show();
       } else if (result.status == 1 && result.tipo == 1) {
+        $('#btn_notificacion_membresia').hide();
+        $('#btn_notificacion_inversa').hide();
+        $('#btn_notificacion_piso').show();
+        $('#btn_notificacion_aceptar').hide();
         //piso de subasta
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -1460,6 +1530,10 @@
         modal_notificacion.show();
       } else if (result.status == 1 && result.tipo == 3) {
         //compra de inversa
+        $('#btn_notificacion_membresia').hide();
+        $('#btn_notificacion_inversa').show();
+        $('#btn_notificacion_piso').hide();
+        $('#btn_notificacion_aceptar').hide();
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
         $('#product_adquirido').html("<strong>Subasta adquirida : </strong>" + result.detalle);
@@ -1468,12 +1542,20 @@
         modal_notificacion.show();
       }
       if (result.status == 2) {
+        $('#btn_notificacion_membresia').hide();
+        $('#btn_notificacion_inversa').hide();
+        $('#btn_notificacion_piso').hide();
+        $('#btn_notificacion_aceptar').show();
         $('#icono_notificacion').html("<i class='fa fa-times-circle-o'></i>");
         $('#status_notificacion').text("El pago ha sido rechazado");
         $('#mensaje_notificacion').text(response_payment.status.message);
         $('#referencia_notificacion').html(result.reference);
         modal_notificacion.show();
       } else if (result.status == 3) {
+        $('#btn_notificacion_membresia').hide();
+        $('#btn_notificacion_inversa').hide();
+        $('#btn_notificacion_piso').hide();
+        $('#btn_notificacion_aceptar').show();
         $('#icono_notificacion').html("<i class='fa fa-question-circle-o'></i>");
         $('#status_notificacion').text("El proceso de pago está pendiente");
         $('#mensaje_notificacion').text(response_payment.status.message);
@@ -1988,14 +2070,19 @@
         var img = base_url + lista[i].photo;
         var tipo_subasta = ""
         var precio_subasta = 0
+        var tipo_subasta_lista = null;
         if (lista[i].tipo_subasta == 1) {
+          tipo_subasta_lista = 1;
           tipo_subasta =
-            "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Directa</span>";
+            "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100; color:#fff !important' class='badge badge-danger'> Directa</span>";
           precio_subasta = parseFloat(lista[i].valor_inicial).toFixed(2);
+
         } else {
+          tipo_subasta_lista = 2;
           tipo_subasta =
             "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Inversa</span>";
           precio_subasta = parseFloat(lista[i].intervalo[0].valor).toFixed(2);
+          cadena_qty = lista[i].intervalo[0].cantidad;
         }
         cadena = cadena +
           "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas_" +
@@ -2007,15 +2094,46 @@
           " </strong></h4> </div><div class='col-12'>" + tipo_subasta +
           "<img style='width:100%; position:relative' class='rounded' src='" +
           img +
-          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important;margin-top:0px !important; background: #80232b !important' class='badge badge-danger'>$" +
+          "' alt='Card image cap'><p id='body_footer_" + lista[i].subasta_id +
+          "' style='font-size:10px !important; text-align:center !important;' class='text-center'>Precio inicial <span style='margin-top:0px !important;margin-bottom:0px !important;  background: #80232b !important' class='badge badge-danger'>$" +
           precio_subasta +
-          "</span></p></div><div class='col-12' style='padding: 1px 1px 1px 1px !important;'><p style='font-size:10px !important; line-height:1.5px !important; margin-bottom:2px !important;text-align:center !important' class='card-text'>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
-          lista[i].ciudad.name_ciudad +
           "</span></p></div></div></ons-card></ons-col>";
+
       }
       $('#area_subastas').append(cadena);
       for (let k = 0; k < lista.length; k++) {
         $('#ver_mas_' + lista[k].subasta_id).attr('onclick', 'detalle_subasta("' + lista[k].subasta_id + '")');
+        if (lista[k].tipo_subasta == 1) {
+          var cadena_win = null;
+          if (lista[k].user_win) {
+            cadena_win =
+              "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-user'></i> <span style='font-size:10px !important;'>" +
+              lista[k].user_win.name + " " + lista[k].user_win.surname +
+              "</span> <span style='background: #00bb2d !important;font-size:10px !important;' class='badge badge-danger'>$" +
+              parseFloat(lista[k].puja_win.valor).toFixed(2) +
+              "</span> <i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i>";
+          }
+          if (cadena_win) {
+            var cadena_nueva = "<br><span id='name_win_portada_" + lista[k].subasta_id + "'>" + cadena_win +
+              "</span><br><span style='font-size:10px !important;><i style='color:#80232b !important;' class='fa fa-map-marker'></i> " +
+              lista[k].ciudad.name_ciudad + "</span>";
+            $('#body_footer_' + lista[k].subasta_id).append(cadena_nueva);
+          } else {
+            var cadena_nueva =
+              "<br><span style='font-size:10px !important;><i style='color:#80232b !important;' class='fa fa-map-marker'></i> " +
+              lista[k].ciudad.name_ciudad + "</span>";
+            $('#body_footer_' + lista[k].subasta_id).append(cadena_nueva);
+          }
+
+        } else {
+          var cadena_qty = lista[k].intervalo[0].cantidad;
+          var cadena_nueva_inversa = "<br><span> Cantidad disponible: " +
+            cadena_qty +
+            "</span><br><span style='font-size:10px !important;><i style='color:#80232b !important;' class='fa fa-map-marker'></i> " +
+            lista[k].ciudad.name_ciudad + "</span>";
+          $('#body_footer_' + lista[k].subasta_id).append(cadena_nueva_inversa);
+        }
+
       }
     }
   }
@@ -2381,7 +2499,7 @@
       subasta_activa_pay = response.detalle.subasta_id;
       var precio_inicial_subasta = 0;
       var fecha_cierre_subasta = null;
-
+      var stock_inversa = 0;
       if (response.detalle.tipo_subasta == 1) {
         fecha_cierre_subasta = response.detalle.fecha_cierre;
         precio_inicial_subasta = parseFloat(response.detalle.valor_inicial).toFixed(2);
@@ -2391,11 +2509,12 @@
         var tipo_subasta_name =
           "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Directa</span>";
       } else {
-        fecha_cierre_subasta = response.detalle.intervalo[0].fecha;
-        precio_inicial_subasta = parseFloat(response.detalle.intervalo[0].valor).toFixed(2);
+        fecha_cierre_subasta = response.detalle.intervalo.fecha;
+        precio_inicial_subasta = parseFloat(response.detalle.intervalo.valor).toFixed(2);
         precio_payment = precio_inicial_subasta;
         detalle_inicial_subasta = response.detalle.nombre_espa;
         tipo_inicial_subasta = 3;
+        stock_inversa = response.detalle.intervalo.cantidad;
         var tipo_subasta_name =
           "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Inversa</span>";
         $('#pagar_subasta_directa').show();
@@ -2409,8 +2528,15 @@
         .name_ciudad +
         "</span> ");
       $('#descripcion_detalle').html(response.detalle.descrip_espa);
+      if (stock_inversa > 0) {
+        $('#descripcion_detalle').after("Cantidad disponible: " + stock_inversa + "<br>");
+      }
       $('#entrada_detalle').text("Valor de entrada: $" + parseFloat(response.detalle.valor_pago).toFixed(2));
-      $('#inicial_detalle').text(" $" + precio_inicial_subasta);
+      if (tipo_inicial_subasta == 3) {
+        $('#inicial_detalle').text("Precio: $" + precio_inicial_subasta);
+      } else {
+        $('#inicial_detalle').text("Precio inicial: $" + precio_inicial_subasta);
+      }
       $('#cierre_detalle').text("Fecha de cierre: " + fecha_cierre_subasta);
       var cronometro =
         "<div class='col-12'><div class='timer'><div class='timer conte'><span class='days'  id='day_2" +
@@ -2443,6 +2569,50 @@
       }
       $('#carousel_subasta').append(slider);
       $('#cierre_detalle').after(cronometro);
+      if (response.subasta_user) {
+        if (!response.puja_user.valor) {
+          if (!response.user_win) {
+            $('#name_win').empty();
+            var cadena_win =
+              "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> Subasta anuncio <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+              parseFloat(response.detalle.valor_inicial).toFixed(2) +
+              "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+            $('#name_win').append(cadena_win);
+            $('#win_subasta').show();
+          } else {
+            if (response.user_win) {
+              $('#name_win').empty();
+              var cadena_win =
+                "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                response.user_win.name + " " + response.user_win.surname +
+                " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+                parseFloat(response.puja_win.valor).toFixed(2) +
+                "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+              $('#name_win').append(cadena_win);
+              $('#win_subasta').show();
+            }
+          }
+          $('#pujar_subasta').show();
+        } else {
+          if (response.user_win) {
+            $('#name_win').empty();
+            var cadena_win =
+              "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+              response.user_win.name + " " + response.user_win.surname +
+              " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+              parseFloat(response.puja_win.valor).toFixed(2) +
+              "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+            $('#name_win').append(cadena_win);
+            $('#win_subasta').show();
+          }
+          if (response.puja_win.valor > response.puja_user.valor) {
+            $('#pujar_subasta').show();
+          } else {
+            $('#pujar_subasta').hide();
+          }
+
+        }
+      }
       var x = setInterval(function () {
         var fecha = response.detalle.fecha_cierre;
         var deadline = new Date(fecha).getTime();
@@ -2470,7 +2640,7 @@
           $('#entrar_subasta').show();
         } else {
           $('#subasta_user_id').val(response.subasta_user.subasta_user_id);
-          // $('#pujar_subasta').show();
+          //  $('#pujar_subasta').show();
         }
       }
       if (response.puja) {
@@ -2557,96 +2727,7 @@
         error);
     }, 1000);
   }
-  //pujar
-  function pujar() {
-    if (monto) {
-      var valor = monto
-    } else {
-      var valor = valor_inicial
-    }
-    if (parseFloat($('#valor_puja').val()) > valor) {
-      $('#myModalloadsubasta').modal('show');
-      $('#modal_pujar').modal('hide');
-      $('#valor').val('');
-      setTimeout(function () {
-        var url = base_url + 'rest_subasta/pujar_user';
-        var user_id = item_auth.user_id;
-        var security_token = item_auth.security_token;
-        var valor_pujado = $('#valor_puja').val();
-        var subasta_user_id = $('#subasta_user_id').val();
-        data_to_server = {
-          user_id: user_id,
-          security_token: security_token,
-          subasta_id: subasta_id,
-          subasta_user_id: subasta_user_id,
-          valor: valor_pujado
-        };
-        send_data_server(url, data_to_server, success_pujar_user,
-          error);
-      }, 1000);
-    } else {
-      $('#valor').val('');
-      navigator.notification.alert(
-        'El valor a pujar es menor a la puja mayor', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-  }
-  //funcion de la respuesta de pujar
-  function success_pujar_user(response) {
-    $('#myModalloadsubasta').modal('hide');
-    response = JSON.parse(response.data);
-    var status = response.status;
-    if (status == 200) {
-      navigator.notification.alert(
-        'Tu puja fue realizada con exito', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-      $('#entrar_subasta').hide();
-      $('#pujar_subasta').hide();
-      if (response.object) {
-        $('#inicial_detalle').text(parseFloat(response.object.valor).toFixed(2));
-        $('#inicial_detalle').css('font-size', '30px');
-        $('#inicial_detalle').css('background', '#28a745');
-      }
-    }
-    if (status == 300) {
-      navigator.notification.alert(
-        'Tu puja no se realizo exite un valor mas alto', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-      $('#entrar_subasta').hide();
-      $('#pujar_subasta').show();
-      if (response.object) {
-        puja_user_id = response;
-        $('#inicial_detalle').text("$" + parseFloat(response.object.valor).toFixed(2));
-        $('#inicial_detalle').css('font-size', '30px');
-        $('#inicial_detalle').css('background', '#28a745');
-      }
-    }
-    if (status == 500) {
-      navigator.notification.alert(
-        'No tiene acceso a la plataforma', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-    if (status == 404) {
-      navigator.notification.alert(
-        'No se realizo el pago', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-  }
+
   //funcion de la respuesta de pagar la entrada de la subasta
   function success_pagar_entrada(response) {
     modal.hide();
@@ -3751,7 +3832,7 @@
     $('#body_modal').text("Cargando mis anuncios...");
     $('#area_mis_anuncios').empty();
     var item_auth = get_data_local();
-    console.log("entro en mis anuncios");
+    //   console.log("entro en mis anuncios");
     setTimeout(function () {
       var url = base_url + 'rest_anuncio/cargar_mis_anuncios';
       var user_id = item_auth.user_id;
@@ -3769,8 +3850,8 @@
     }, 1000);
   } //funcion de respuesta al cargar los anuncios del cliente
   function success_mis_anuncios(response) {
-    console.log("entro en el response mis anuncios");
-    console.log(response);
+
+    //  console.log(response);
     var status = response.status;
     //  response = JSON.parse(response.lista);
     // var status = response.status;
@@ -3876,6 +3957,339 @@
   function alertDismissed() {
     // do something
   }
+
+  function llamar_subasta_directa() {
+    if (detalle_payment) {
+      $('#entrar_subasta').hide();
+      $('#pujar_subasta').show();
+      modal_notificacion.hide();
+    } else {
+      llamar_anuncios();
+    }
+  }
+
+  function subasta_directa_pujar() {
+    modal.show();
+    $('#body_modal').text("Cargando...");
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/puja_alta';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        subasta_id: subasta_id
+      };
+      send_data_server(url, data_to_server, success_prepare_puja,
+        error);
+    }, 1000);
+
+  }
+
+  function success_prepare_puja(response) {
+    modal.hide();
+    var status = response.status;
+    if (status == 200) {
+      if (response.subasta_user) {
+        if (!response.user_win) {
+          puja_mayor = parseFloat(response.subasta.valor_inicial).toFixed(2);
+          $('#name_win_puja').empty();
+          var cadena_win =
+            "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> Subasta anuncio <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+            parseFloat(response.subasta.valor_inicial).toFixed(2) +
+            "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+          $('#name_win_puja').append(cadena_win);
+
+        } else {
+          if (response.user_win) {
+            puja_mayor = parseFloat(response.puja_win.valor).toFixed(2);
+            $('#name_win').empty();
+            var cadena_win =
+              "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+              response.user_win.name + " " + response.user_win.surname +
+              " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+              parseFloat(response.puja_win.valor).toFixed(2) +
+              "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+            $('#name_win_puja').append(cadena_win);
+
+          }
+        }
+        modal_puja_directa.show();
+        valida_modal_open = true;
+      } else {
+        navigator.notification.alert(
+          'Dispulpe ocurrio un error intente otra vez', // message
+          cerrar_push, // callback
+          'Notificación', // title
+          'Aceptar' // buttonName
+        );
+      }
+    }
+  }
+
+  function cancelar_puja() {
+    modal_puja_directa.hide();
+    valida_modal_open = false;
+  }
+  $('#valor_puja_directa').change(function () {
+    var valor_puja_directa = $('#valor_puja_directa').val();
+    if (puja_mayor > valor_puja_directa) {
+      navigator.notification.alert(
+        'El valor a pujar es menor a la puja mayor', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+
+  })
+
+  function confirmar_puja() {
+    var valor_puja_directa = $('#valor_puja_directa').val().trim();
+    valor_puja_directa = parseFloat(parseFloat(valor_puja_directa).toFixed(2));
+    puja_mayor = parseFloat(parseFloat(puja_mayor).toFixed(2));
+    if (puja_mayor > valor_puja_directa) {
+      navigator.notification.alert(
+        'El valor a pujar es menor a la puja mayor', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    } else {
+      modal.show();
+      setTimeout(function () {
+        var url = base_url + 'rest_subasta/pujar_user';
+        var user_id = item_auth.user_id;
+        var security_token = item_auth.security_token;
+        var valor_pujado = $('#valor_puja').val();
+        var subasta_user_id = $('#subasta_user_id').val();
+        data_to_server = {
+          user_id: user_id,
+          security_token: security_token,
+          subasta_id: subasta_id,
+          subasta_user_id: subasta_user_id,
+          valor: valor_puja_directa
+        };
+        send_data_server(url, data_to_server, success_pujar_user,
+          error);
+      }, 1000);
+    }
+
+  }
+
+  //funcion de la respuesta de pujar
+  function success_pujar_user(response) {
+    modal.hide();
+    var status = response.status;
+    if (status == 200) {
+      navigator.notification.alert(
+        'Tu puja fue realizada con exito', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+      $('#pujar_subasta').hide();
+      modal_puja_directa.hide();
+      valida_modal_open = false;
+      $('#name_win').empty();
+      var cadena_win =
+        "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i>" +
+        response.user_win.name + " " + response.user_win.surname +
+        " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+        parseFloat(response.object.valor).toFixed(2) +
+        "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+      $('#name_win').append(cadena_win);
+      $('#win_subasta').show();
+      puja_mayor = parseFloat(response.object.valor).toFixed(2);
+    }
+    if (status == 300) {
+      navigator.notification.alert(
+        'Tu puja no se realizo exite un valor mas alto', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+
+
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No se realizo el pago', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  let y = setInterval(function () {
+    if (document.querySelector('ons-tabbar').getActiveTabIndex() == 0) {
+      var url = base_url + 'rest_subasta/all_subastas';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token
+      };
+      send_data_server(url, data_to_server, success_all_directas,
+        error);
+
+      function success_all_directas(response) {
+        var status = response.status;
+        var lista = response.lista;
+        if (status == 200) {
+          for (let k = 0; k < lista.length; k++) {
+            var cadena_win = null;
+            if (lista[k].user_win) {
+              cadena_win =
+                "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-user'></i> <span style='font-size:10px !important;'>" +
+                lista[k].user_win.name + " " + lista[k].user_win.surname +
+                "</span> <span style='background: #00bb2d !important;font-size:10px !important;' class='badge badge-danger'>$" +
+                parseFloat(lista[k].puja_win.valor).toFixed(2) +
+                "</span> <i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i>";
+              if (cadena_win) {
+                $('#name_win_portada_' + lista[k].subasta_id).empty();
+                $('#name_win_portada_' + lista[k].subasta_id).append(cadena_win)
+              }
+            }
+          }
+        }
+
+      }
+    }
+    if (page_active == "page_detalle_subasta" && tipo_inicial_subasta == 1 && !valida_modal_open) {
+      var url = base_url + 'rest_subasta/puja_alta';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        subasta_id: subasta_id
+      };
+      send_data_server(url, data_to_server, success_pujar_mayor,
+        error);
+
+      function success_pujar_mayor(response) {
+        var status = response.status;
+        if (status == 200) {
+          if (response.subasta_user) {
+            if (!response.puja_user.valor) {
+              if (!response.user_win) {
+                $('#name_win').empty();
+                var cadena_win =
+                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> Subasta anuncio <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+                  parseFloat(response.subasta.valor_inicial).toFixed(2) +
+                  "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                $('#name_win').append(cadena_win);
+                $('#win_subasta').show();
+                puja_mayor = parseFloat(response.subasta.valor_inicial).toFixed(2);
+              } else {
+                if (response.user_win) {
+                  $('#name_win').empty();
+                  var cadena_win =
+                    "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                    response.user_win.name + " " + response.user_win.surname +
+                    " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+                    parseFloat(response.puja_win.valor).toFixed(2) +
+                    "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                  $('#name_win').append(cadena_win);
+                  $('#win_subasta').show();
+                  puja_mayor = parseFloat(response.puja_win.valor).toFixed(2);
+                }
+              }
+            } else {
+              if (response.user_win) {
+                $('#name_win').empty();
+                var cadena_win =
+                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                  response.user_win.name + " " + response.user_win.surname +
+                  " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+                  parseFloat(response.puja_win.valor).toFixed(2) +
+                  "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                $('#name_win').append(cadena_win);
+                puja_mayor = parseFloat(response.puja_win.valor).toFixed(2);
+                $('#win_subasta').show();
+              }
+              if (response.puja_win.valor > response.puja_user.valor) {
+                $('#pujar_subasta').show()
+              } else {
+                $('#pujar_subasta').hide()
+              }
+
+            }
+
+          }
+
+        }
+      }
+    }
+    if (valida_modal_open) {
+      var url = base_url + 'rest_subasta/puja_alta';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        subasta_id: subasta_id
+      };
+      send_data_server(url, data_to_server, success_pujar_mayor2,
+        error);
+
+      function success_pujar_mayor2(response) {
+        var status = response.status;
+        if (status == 200) {
+          if (response.subasta_user) {
+            if (!response.puja_user.valor) {
+              if (!response.user_win) {
+                $('#name_win_puja').empty();
+                var cadena_win =
+                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> Subasta anuncio <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+                  parseFloat(response.subasta.valor_inicial).toFixed(2) +
+                  "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                $('#name_win_puja').append(cadena_win);
+                puja_mayor = parseFloat(response.subasta.valor_inicial).toFixed(2);
+              } else {
+                if (response.user_win) {
+                  $('#name_win_puja').empty();
+                  var cadena_win =
+                    "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                    response.user_win.name + " " + response.user_win.surname +
+                    " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+                    parseFloat(response.puja_win.valor).toFixed(2) +
+                    "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                  $('#name_win_puja').append(cadena_win);
+                  puja_mayor = parseFloat(response.puja_win.valor).toFixed(2);
+                }
+              }
+            } else {
+              if (response.user_win) {
+                $('#name_win_puja').empty();
+                var cadena_win =
+                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                  response.user_win.name + " " + response.user_win.surname +
+                  " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+                  parseFloat(response.puja_win.valor).toFixed(2) +
+                  "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                $('#name_win_puja').append(cadena_win);
+                puja_mayor = parseFloat(response.puja_win.valor).toFixed(2);
+
+              }
+
+            }
+
+          }
+
+        }
+      }
+    }
+  }, 6000);
 </script>
 <style>
   #input_id::placeholder {
