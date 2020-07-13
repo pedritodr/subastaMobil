@@ -9,22 +9,6 @@
         "parents": {
           "/*": [
             {
-              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             },
@@ -37,7 +21,23 @@
               "count": 1
             },
             {
+              "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
               "count": 1
             },
             {
@@ -45,7 +45,7 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
+              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             }
           ]
@@ -54,10 +54,6 @@
       "AndroidManifest.xml": {
         "parents": {
           "/*": [
-            {
-              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-              "count": 1
-            },
             {
               "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
               "count": 2
@@ -73,11 +69,9 @@
             {
               "xml": "<uses-feature android:name=\"android.hardware.location.gps\" />",
               "count": 1
-            }
-          ],
-          "application": [
+            },
             {
-              "xml": "<provider android:authorities=\"${applicationId}.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"org.apache.cordova.camera.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/camera_provider_paths\" /></provider>",
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
               "count": 1
             }
           ],
@@ -86,112 +80,53 @@
               "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
               "count": 1
             }
+          ],
+          "application": [
+            {
+              "xml": "<provider android:authorities=\"${applicationId}.provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:name=\"org.apache.cordova.camera.FileProvider\"><meta-data android:name=\"android.support.FILE_PROVIDER_PATHS\" android:resource=\"@xml/camera_provider_paths\" /></provider>",
+              "count": 1
+            }
           ]
         }
       }
     }
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-dialogs": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-camera": {
-      "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
     "cordova-plugin-file": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.subastanuncio"
     },
     "cordova-plugin-advanced-http": {
       "OKHTTP_VERSION": "3.10.0",
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.subastanuncio"
+    },
+    "cordova-plugin-camera": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.subastanuncio"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.subastanuncio"
     },
-    "es6-promise-plugin": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-screen-orientation": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "com.subastanuncio"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.subastanuncio"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.subastanuncio"
+    },
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.subastanuncio"
+    },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "com.subastanuncio"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.subastanuncio"
     }
   },
   "dependent_plugins": {},
   "modules": [
-    {
-      "id": "cordova-plugin-dialogs.notification",
-      "file": "plugins/cordova-plugin-dialogs/www/notification.js",
-      "pluginId": "cordova-plugin-dialogs",
-      "merges": [
-        "navigator.notification"
-      ]
-    },
-    {
-      "id": "cordova-plugin-dialogs.notification_android",
-      "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
-      "pluginId": "cordova-plugin-dialogs",
-      "merges": [
-        "navigator.notification"
-      ]
-    },
-    {
-      "id": "cordova-plugin-network-information.network",
-      "file": "plugins/cordova-plugin-network-information/www/network.js",
-      "pluginId": "cordova-plugin-network-information",
-      "clobbers": [
-        "navigator.connection",
-        "navigator.network.connection"
-      ]
-    },
-    {
-      "id": "cordova-plugin-network-information.Connection",
-      "file": "plugins/cordova-plugin-network-information/www/Connection.js",
-      "pluginId": "cordova-plugin-network-information",
-      "clobbers": [
-        "Connection"
-      ]
-    },
-    {
-      "id": "cordova-plugin-camera.Camera",
-      "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
-      "pluginId": "cordova-plugin-camera",
-      "clobbers": [
-        "Camera"
-      ]
-    },
-    {
-      "id": "cordova-plugin-camera.CameraPopoverOptions",
-      "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
-      "pluginId": "cordova-plugin-camera",
-      "clobbers": [
-        "CameraPopoverOptions"
-      ]
-    },
-    {
-      "id": "cordova-plugin-camera.camera",
-      "file": "plugins/cordova-plugin-camera/www/Camera.js",
-      "pluginId": "cordova-plugin-camera",
-      "clobbers": [
-        "navigator.camera"
-      ]
-    },
-    {
-      "id": "cordova-plugin-camera.CameraPopoverHandle",
-      "file": "plugins/cordova-plugin-camera/www/CameraPopoverHandle.js",
-      "pluginId": "cordova-plugin-camera",
-      "clobbers": [
-        "CameraPopoverHandle"
-      ]
-    },
     {
       "id": "cordova-plugin-file.DirectoryEntry",
       "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
@@ -429,6 +364,38 @@
       ]
     },
     {
+      "id": "cordova-plugin-camera.Camera",
+      "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
+      "pluginId": "cordova-plugin-camera",
+      "clobbers": [
+        "Camera"
+      ]
+    },
+    {
+      "id": "cordova-plugin-camera.CameraPopoverOptions",
+      "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
+      "pluginId": "cordova-plugin-camera",
+      "clobbers": [
+        "CameraPopoverOptions"
+      ]
+    },
+    {
+      "id": "cordova-plugin-camera.camera",
+      "file": "plugins/cordova-plugin-camera/www/Camera.js",
+      "pluginId": "cordova-plugin-camera",
+      "clobbers": [
+        "navigator.camera"
+      ]
+    },
+    {
+      "id": "cordova-plugin-camera.CameraPopoverHandle",
+      "file": "plugins/cordova-plugin-camera/www/CameraPopoverHandle.js",
+      "pluginId": "cordova-plugin-camera",
+      "clobbers": [
+        "CameraPopoverHandle"
+      ]
+    },
+    {
       "id": "cordova-plugin-device.device",
       "file": "plugins/cordova-plugin-device/www/device.js",
       "pluginId": "cordova-plugin-device",
@@ -437,17 +404,19 @@
       ]
     },
     {
-      "id": "es6-promise-plugin.Promise",
-      "file": "plugins/es6-promise-plugin/www/promise.js",
-      "pluginId": "es6-promise-plugin",
-      "runs": true
+      "id": "cordova-plugin-dialogs.notification",
+      "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+      "pluginId": "cordova-plugin-dialogs",
+      "merges": [
+        "navigator.notification"
+      ]
     },
     {
-      "id": "cordova-plugin-screen-orientation.screenorientation",
-      "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
-      "pluginId": "cordova-plugin-screen-orientation",
-      "clobbers": [
-        "cordova.plugins.screenorientation"
+      "id": "cordova-plugin-dialogs.notification_android",
+      "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
+      "pluginId": "cordova-plugin-dialogs",
+      "merges": [
+        "navigator.notification"
       ]
     },
     {
@@ -463,18 +432,49 @@
       "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
       "pluginId": "cordova-plugin-geolocation",
       "runs": true
+    },
+    {
+      "id": "cordova-plugin-network-information.network",
+      "file": "plugins/cordova-plugin-network-information/www/network.js",
+      "pluginId": "cordova-plugin-network-information",
+      "clobbers": [
+        "navigator.connection",
+        "navigator.network.connection"
+      ]
+    },
+    {
+      "id": "cordova-plugin-network-information.Connection",
+      "file": "plugins/cordova-plugin-network-information/www/Connection.js",
+      "pluginId": "cordova-plugin-network-information",
+      "clobbers": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "es6-promise-plugin.Promise",
+      "file": "plugins/es6-promise-plugin/www/promise.js",
+      "pluginId": "es6-promise-plugin",
+      "runs": true
+    },
+    {
+      "id": "cordova-plugin-screen-orientation.screenorientation",
+      "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
+      "pluginId": "cordova-plugin-screen-orientation",
+      "clobbers": [
+        "cordova.plugins.screenorientation"
+      ]
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-whitelist": "1.3.4",
-    "cordova-plugin-dialogs": "2.0.2",
-    "cordova-plugin-network-information": "2.0.2",
-    "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-file": "6.0.2",
     "cordova-plugin-advanced-http": "2.2.0",
+    "cordova-plugin-camera": "4.1.0",
     "cordova-plugin-device": "2.0.3",
+    "cordova-plugin-dialogs": "2.0.2",
+    "cordova-plugin-geolocation": "4.0.2",
+    "cordova-plugin-network-information": "2.0.2",
     "es6-promise-plugin": "4.2.2",
     "cordova-plugin-screen-orientation": "3.0.2",
-    "cordova-plugin-geolocation": "4.0.2"
+    "cordova-plugin-whitelist": "1.3.4"
   }
 }

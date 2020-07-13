@@ -124,19 +124,25 @@
             <ons-icon badge="7" style="color:#80232b" icon="fa-user-secret"></ons-icon> Adquirir Membresia
           </span>
         </ons-list-item>
-        <ons-list-item id="membresia_user_dash" style="display: none;" modifier="nodivider" ripple>
-          <span class="list-item__title" onclick="cargar_membresia_user()">
+        <ons-list-item id="membresia_user_dash" style="display: none;" modifier="nodivider" ripple
+          onclick="cargar_membresia_user()">
+          <span class="list-item__title">
             <ons-icon badge="7" style="color:#80232b" icon="fa-user-secret"></ons-icon> Membresia
           </span>
         </ons-list-item>
-        <ons-list-item modifier="nodivider" ripple>
-          <span onclick="mis_anuncios()" class="list-item__title">
+        <ons-list-item modifier="nodivider" ripple onclick="mis_anuncios()">
+          <span class="list-item__title">
             <ons-icon badge="7" style="color:#80232b" icon="fa-briefcase"></ons-icon> Mis anuncios
           </span>
         </ons-list-item>
-        <ons-list-item modifier="nodivider" ripple>
+        <ons-list-item modifier="nodivider" ripple onclick="mis_subastas()">
           <span class="list-item__title">
             <ons-icon style="color:#80232b" icon="fa-trophy"></ons-icon> Mis subastas
+          </span>
+        </ons-list-item>
+        <ons-list-item modifier="nodivider" ripple onclick="cargar_historial()">
+          <span class="list-item__title">
+            <ons-icon style="color:#80232b" icon="fa-line-chart"></ons-icon> Historial de pagos
           </span>
         </ons-list-item>
       </ons-list>
@@ -848,6 +854,43 @@
       </ons-fab>
     </ons-page>
   </template>
+  <template id="mis_pagos.html">
+    <ons-page id="page_mis_paggos">
+      <ons-toolbar style="background: #80232b;">
+        <div class="left">
+          <ons-back-button style="color:#fff !important"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-pull-hook id="pull-hook">
+        Cargando...
+      </ons-pull-hook>
+      <ons-list id="header_lista_pagos">
+      </ons-list>
+    </ons-page>
+  </template>
+  <template id="mis_subastas.html">
+    <ons-page id="page_mis_subastas">
+      <ons-toolbar style="background: #80232b;">
+        <div class="left">
+          <ons-back-button style="color:#fff !important"></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-pull-hook id="pull-hook">
+        Cargando...
+      </ons-pull-hook>
+      <ons-row id="area_mis_subastas" class="" style="margin:0px !important">
+
+      </ons-row>
+    </ons-page>
+  </template>
   <ons-modal id="modal_loading" direction="up">
     <div style="text-align: center">
       <p>
@@ -939,6 +982,8 @@
           modifier="quiet">
           Aceptar</ons-button>
         <ons-button id="btn_notificacion_aceptar" onclick="llamar_anuncios()" style="color:#80232b" modifier="quiet">
+          Aceptar</ons-button>
+        <ons-button id="btn_notificacion_desctacar" onclick="mis_anuncios()" style="color:#80232b" modifier="quiet">
           Aceptar</ons-button>
       </p>
     </ons-card>
@@ -1114,6 +1159,7 @@
   var valida_mis_anuncios = false;
   var ads_id = null;
   var ads_objet = null;
+  var comienza_mis_subastas =0;
   ons.ready(function () {
     ons.createElement('action-sheet.html', {
         append: true
@@ -1124,6 +1170,79 @@
       });
 
   });
+
+  function cargar_historial() {
+    pushPage('#appNavigator', 'mis_pagos.html', '');
+    modal.show();
+    $('#body_modal').text("Cargando historial de pagos...");
+    var item_auth = get_data_local();
+    setTimeout(function () {
+      var url = base_url + 'rest_payment/mis_pagos';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        anuncio_id: ads_id
+      };
+      send_data_server(url, data_to_server, success_cargar_pagos,
+        error);
+    }, 1000);
+  }
+
+  function success_cargar_pagos(response) {
+    var status = response.status;
+    var lista_pagos = response.pagos;
+    if (status == 200) {
+      cargar_pagos(lista_pagos);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'No tiene pagos realizados.', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+
+  }
+
+  function cargar_pagos(lista_pagos) {
+  
+    $('#header_lista_pagos').empty();
+    var cadena_pagos = "<ons-list-header>Historial de pagos</ons-list-header>";
+    for (let i = 0; i < lista_pagos.length; i++) {
+      var estado_pago = "";
+      if (lista_pagos[i].status == 0) {
+        estado_pago = "Nuevo pago";
+      } else if (lista_pagos[i].status == 1) {
+        estado_pago = "Aprobado";
+      } else if (lista_pagos[i].status == 2) {
+        estado_pago = "Cancelada por el cliente ó rechazada";
+      } else if (lista_pagos[i].status == 3) {
+        estado_pago = "Pendiente por aprobar";
+      } else {
+        estado_pago = "Reverso";
+      }
+
+      cadena_pagos = cadena_pagos + "<ons-list-item expandable>Referencia: " + lista_pagos[i].reference + " valor: $" +
+        parseFloat(lista_pagos[i].monto).toFixed(2) +
+        "<div class='expandable-content'><p style='text-align:center'>Estado: " + estado_pago +
+        "</p><p style='text-align:center'>Detalle: " + lista_pagos[i].detalle +
+        "</p><p style='text-align:center'>Fecha: " + lista_pagos[i].date + "</p></div></ons-list-item>";
+
+    }
+    $('#header_lista_pagos').append(cadena_pagos);
+    modal.hide();
+  }
 
   function acciones_anuncios(obj) {
     obj = atob(obj);
@@ -1386,6 +1505,11 @@
     if (page.id == "page_mis_anuncios") {
       page.onInfiniteScroll = function (done) {
         infinito_mis_anuncio();
+      }
+    }
+    if (page.id == "page_mis_subastas") {
+      page.onInfiniteScroll = function (done) {
+       // infinito_mis_anuncio();
       }
     }
     var prev = function () {
@@ -1764,6 +1888,11 @@
         $('#referencia_notificacion').html(data.reference);
         modal_notificacion.show();
       } else if (estado_payment == 1 && detalle_payment.tipo == 2) {
+        $('#btn_notificacion_membresia').hide();
+        $('#btn_notificacion_inversa').hide();
+        $('#btn_notificacion_piso').hide();
+        $('#btn_notificacion_aceptar').hide();
+        valida_mis_anuncios = true;
         //anuncio destacado
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -1916,7 +2045,11 @@
   };
   //funcion que ejecuta el modal de confirmacion
   function pagar_subasta_inversa() {
+    if (app) {
+      app.hideFromTemplate();
+    }
     modal.show();
+    $('#body_modal').text("Cargando ...");
     $('#btn_pagar_confirmacion').hide();
     setTimeout(function () {
       var url = base_url + 'rest_payment/payments_user';
@@ -1939,50 +2072,98 @@
     $('#btn_pagar_all').show();
     let status = response.status;
     if (status == 200) {
-      $('#body_mensaje_confirmacion').empty();
-      let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
-        "</h5><h5  class='text-center'>$" + parseFloat(precio_payment).toFixed(2) + "</h5>";
-      $('#body_mensaje_confirmacion').append(cadena);
-      $('#title_confirmacion').text("Subasta");
-      $('#transaccion_pendiente').html(
-        "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p>");
-      $('#transaccion_pendiente').show();
-      id_confirmacion = subasta_activa_pay;
-      valor_confirmacion = precio_payment;
-      detalle_confirmacion = detalle_inicial_subasta;
-      $('#btn_pagar_all').hide();
-      $('#body_condiciones').hide();
-      modal_confirmacion.show();
+      if (ads_objet) {
+        $('#body_mensaje_confirmacion').empty();
+        let cadena = "<h5  class='text-center'> Anuncio:" + ads_objet.titulo +
+          "</h5><h5  class='text-center'>$3.99</h5>";
+        $('#body_mensaje_confirmacion').append(cadena);
+        $('#title_confirmacion').text("Destacar");
+        $('#transaccion_pendiente').html(
+          "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p>");
+        $('#transaccion_pendiente').show();
+        id_confirmacion = ads_objet.anuncio_id;
+        valor_confirmacion = 3.99;
+        detalle_confirmacion = ads_objet.titulo;
+        $('#btn_pagar_all').hide();
+        $('#body_condiciones').hide();
+        modal_confirmacion.show();
+      } else {
+        $('#body_mensaje_confirmacion').empty();
+        let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
+          "</h5><h5  class='text-center'>$" + parseFloat(precio_payment).toFixed(2) + "</h5>";
+        $('#body_mensaje_confirmacion').append(cadena);
+        $('#title_confirmacion').text("Subasta");
+        $('#transaccion_pendiente').html(
+          "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p>");
+        $('#transaccion_pendiente').show();
+        id_confirmacion = subasta_activa_pay;
+        valor_confirmacion = precio_payment;
+        detalle_confirmacion = detalle_inicial_subasta;
+        $('#btn_pagar_all').hide();
+        $('#body_condiciones').hide();
+        modal_confirmacion.show();
+      }
+
     }
     if (status == 404) {
-
-      if (response.membresia_user) {
-        var membresia_qty_subastas = parseInt(response.membresia_user.qty_subastas);
-        var membresia_descuento = parseFloat(response.membresia_user.descuento);
-        var membresia_user_id = response.membresia_user.membre_user_id;
-        if (membresia_qty_subastas > 0) {
-          $('#body_mensaje_confirmacion').empty();
-          let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
-            "</h5><h5  class='text-center'>Antes <span  class='badge badge-danger strikethrough'>$" + parseFloat(
-              precio_payment).toFixed(2) + "</span> Ahora <span  class='badge badge-success'>$0.00</span</h5>";
-          $('#body_mensaje_confirmacion').append(cadena);
-          $('#title_confirmacion').text("Subasta");
-          id_confirmacion = subasta_activa_pay;
-          valor_confirmacion = precio_payment;
-          detalle_confirmacion = detalle_inicial_subasta;
-          $('#btn_pagar_gratis').show();
-          $('#btn_pagar_all').hide();
-          $('#body_condiciones').show();
-          modal_confirmacion.show();
+      if (ads_objet) {
+        $('#body_mensaje_confirmacion').empty();
+        let cadena = "<h5  class='text-center'> Anuncio:" + ads_objet.titulo +
+          "</h5><h5  class='text-center'>$3.99</h5>";
+        $('#body_mensaje_confirmacion').append(cadena);
+        $('#title_confirmacion').text("Destacar");
+        $('#transaccion_pendiente').html(
+          "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p>");
+        $('#transaccion_pendiente').hide();
+        id_confirmacion = ads_objet.anuncio_id;
+        valor_confirmacion = 3.99;
+        detalle_confirmacion = ads_objet.titulo;
+        tipo_inicial_subasta = 2;
+        $('#btn_pagar_gratis').hide();
+        $('#btn_pagar_all').show();
+        $('#body_condiciones').show();
+        modal_confirmacion.show();
+      } else {
+        if (response.membresia_user) {
+          var membresia_qty_subastas = parseInt(response.membresia_user.qty_subastas);
+          var membresia_descuento = parseFloat(response.membresia_user.descuento);
+          var membresia_user_id = response.membresia_user.membre_user_id;
+          if (membresia_qty_subastas > 0) {
+            $('#body_mensaje_confirmacion').empty();
+            let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
+              "</h5><h5  class='text-center'>Antes <span  class='badge badge-danger strikethrough'>$" + parseFloat(
+                precio_payment).toFixed(2) + "</span> Ahora <span  class='badge badge-success'>$0.00</span</h5>";
+            $('#body_mensaje_confirmacion').append(cadena);
+            $('#title_confirmacion').text("Subasta");
+            id_confirmacion = subasta_activa_pay;
+            valor_confirmacion = precio_payment;
+            detalle_confirmacion = detalle_inicial_subasta;
+            $('#btn_pagar_gratis').show();
+            $('#btn_pagar_all').hide();
+            $('#body_condiciones').show();
+            modal_confirmacion.show();
+          } else {
+            var descuento_new = (membresia_descuento / 100) + 1;
+            precio_payment_old = precio_payment;
+            precio_payment = parseFloat(parseFloat(precio_payment).toFixed(2)) / descuento_new;
+            $('#body_mensaje_confirmacion').empty();
+            let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
+              "</h5><h5  class='text-center'>Antes <span  class='badge badge-danger strikethrough'>$" + parseFloat(
+                precio_payment_old).toFixed(2) + "</span> Ahora <span  class='badge badge-success'>$" + parseFloat(
+                precio_payment).toFixed(2) + "</span</h5>";
+            $('#body_mensaje_confirmacion').append(cadena);
+            $('#title_confirmacion').text("Subasta");
+            id_confirmacion = subasta_activa_pay;
+            valor_confirmacion = precio_payment;
+            detalle_confirmacion = detalle_inicial_subasta;
+            $('#btn_pagar_all').show();
+            $('#body_condiciones').show();
+            modal_confirmacion.show();
+          }
         } else {
-          var descuento_new = (membresia_descuento / 100) + 1;
-          precio_payment_old = precio_payment;
-          precio_payment = parseFloat(parseFloat(precio_payment).toFixed(2)) / descuento_new;
           $('#body_mensaje_confirmacion').empty();
           let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
-            "</h5><h5  class='text-center'>Antes <span  class='badge badge-danger strikethrough'>$" + parseFloat(
-              precio_payment_old).toFixed(2) + "</span> Ahora <span  class='badge badge-success'>$" + parseFloat(
-              precio_payment).toFixed(2) + "</span</h5>";
+            "</h5><h5  class='text-center'>$" + parseFloat(precio_payment).toFixed(2) + "</h5>";
           $('#body_mensaje_confirmacion').append(cadena);
           $('#title_confirmacion').text("Subasta");
           id_confirmacion = subasta_activa_pay;
@@ -1992,18 +2173,6 @@
           $('#body_condiciones').show();
           modal_confirmacion.show();
         }
-      } else {
-        $('#body_mensaje_confirmacion').empty();
-        let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
-          "</h5><h5  class='text-center'>$" + parseFloat(precio_payment).toFixed(2) + "</h5>";
-        $('#body_mensaje_confirmacion').append(cadena);
-        $('#title_confirmacion').text("Subasta");
-        id_confirmacion = subasta_activa_pay;
-        valor_confirmacion = precio_payment;
-        detalle_confirmacion = detalle_inicial_subasta;
-        $('#btn_pagar_all').show();
-        $('#body_condiciones').show();
-        modal_confirmacion.show();
       }
 
     }
@@ -4733,6 +4902,7 @@
     if (!valida_mis_anuncios) {
       pushPage('#appNavigator', 'mis_anuncios.html', '');
     } else {
+      modal_notificacion.hide();
       document.querySelector('ons-navigator').bringPageTop('mis_anuncios.html');
     }
     $('#body_modal').text("Cargando mis anuncios...");
@@ -4757,7 +4927,8 @@
     }, 1000);
 
 
-  } //funcion de respuesta al cargar los anuncios del cliente
+  } 
+  //funcion de respuesta al cargar los anuncios del cliente
   function success_mis_anuncios(response) {
     // Reset the whole stack instead of popping 1 page
     // document.querySelector('ons-navigator').resetToPage('dash.html');
@@ -5011,6 +5182,126 @@
     }
   }
 
+   //funcion de carga los anuncios del cliente
+   function mis_subastas() {
+      pushPage('#appNavigator', 'mis_subastas.html', '');
+      modal.show();
+    $('#body_modal').text("Cargando mis subastas...");
+    $('#area_mis_subastas').empty();
+    var item_auth = get_data_local();
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/cargar_mis_subastas';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      comienza_mis_subastas = 0;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        comienza: comienza_mis_subastas,
+      };
+      send_data_server(url, data_to_server, success_mis_subastas,
+        error);
+    }, 1000);
+
+  } 
+
+  function success_mis_subastas(response) {
+    var status = response.status;
+    if (status == 200) {
+    var  lista_subastas = response.lista;
+      cargar_mis_subastas(lista_subastas);
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'No tiene acceso a la plataforma', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 404 && !response.infinito) {
+      navigator.notification.alert(
+        'No hay subastas disponible', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+function cargar_mis_subastas(lista) {
+  modal.hide();
+  var cadena = "";
+    if (lista.length > 0) {
+      for (var i = 0; i < lista.length; i++) {
+        var img = base_url + lista[i].photo;
+        var tipo_subasta = "";
+        var precio_subasta = 0
+        var tipo_subasta_lista = null;
+        if (lista[i].tipo_subasta == 1) {
+          var cadena_nueva ="";
+          var cadena_win = null;
+          if (lista[i].user_win) {
+            cadena_win =
+              "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-user'></i> <span style='font-size:10px !important;'>" +
+              lista[i].user_win.name + " " + lista[i].user_win.surname +
+              "</span> <span style='background: #00bb2d !important;font-size:10px !important;' class='badge badge-danger'>$" +
+              parseFloat(lista[i].puja_win.valor).toFixed(2) +
+              "</span> <i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i>";
+          }
+          if (cadena_win) {
+             cadena_nueva = "<br><span id='name_win_portada_" + lista[i].subasta_id + "'>" + cadena_win +
+              "</span><br><span style='font-size:10px !important;><i style='color:#80232b !important;' class='fa fa-map-marker'></i> " +
+              lista[i].ciudad.name_ciudad + "</span>";
+          } else {
+             cadena_nueva =
+              "<br><span style='font-size:10px !important;><i style='color:#80232b !important;' class='fa fa-map-marker'></i> " +
+              lista[i].ciudad.name_ciudad + "</span>";
+          }
+          tipo_subasta_lista = 1;
+          tipo_subasta =
+            "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100; color:#fff !important' class='badge badge-danger'> Directa</span>";
+          precio_subasta = parseFloat(lista[i].valor_inicial).toFixed(2);
+          cadena = cadena +
+          "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas_" +
+          lista[i].subasta_id +
+          "' onclick=detalle_subasta('"+lista[i].subasta_id+"')><div class='row'><div class='col-12'><h4 id='desc_" +
+          lista[i].subasta_id +
+          "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
+          lista[i].nombre_espa +
+          " </strong></h4> </div><div class='col-12'>" + tipo_subasta +
+          "<img style='width:100%; position:relative' class='rounded' src='" +
+          img +
+          "' alt='Card image cap'><p id='body_footer_" + lista[i].subasta_id +
+          "' style='font-size:10px !important; text-align:center !important;' class='text-center'>Precio inicial <span style='margin-top:0px !important;margin-bottom:0px !important;  background: #80232b !important' class='badge badge-danger'>$" +
+          precio_subasta +
+          "</span>"+cadena_nueva+"</p></div></div></ons-card></ons-col>";
+        } else {
+          tipo_subasta_lista = 2;
+          tipo_subasta =
+            "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Inversa</span>";
+          precio_subasta = parseFloat(lista[i].intervalo.valor).toFixed(2);
+          cadena = cadena +
+          "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas_" +
+          lista[i].subasta_id +
+          "' onclick=''><div class='row'><div class='col-12'><h4 id='desc_" +
+          lista[i].subasta_id +
+          "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
+          lista[i].nombre_espa +
+          " </strong></h4> </div><div class='col-12'>" + tipo_subasta +
+          "<img style='width:100%; position:relative' class='rounded' src='" +
+          img +
+          "' alt='Card image cap'><p id='body_footer_" + lista[i].subasta_id +
+          "' style='font-size:10px !important; text-align:center !important;' class='text-center'>Adquirida <span style='margin-top:0px !important;margin-bottom:0px !important;  background: #80232b !important' class='badge badge-danger'>$" +
+          precio_subasta +
+          "</span><br><span style='font-size:10px !important;><i style='color:#80232b !important;' class='fa fa-map-marker'></i> " +
+            lista[i].ciudad.name_ciudad + "</span></p></div></div></ons-card></ons-col>";
+        }
+    
+      }
+      $('#area_mis_subastas').append(cadena);
+    }
+   
+}
   //funcion de la respuesta de pujar
   function success_pujar_user(response) {
     modal.hide();
@@ -5064,6 +5355,42 @@
     }
   }
   let y = setInterval(function () {
+  
+    if ($('#area_mis_subastas').is(':visible')) {
+      var url = base_url + 'rest_subasta/all_subastas';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token
+      };
+      send_data_server(url, data_to_server, success_all_directas,
+        error);
+
+      function success_all_directas(response) {
+        var status = response.status;
+        var lista = response.lista;
+        if (status == 200) {
+          for (let k = 0; k < lista.length; k++) {
+            var cadena_win = null;
+            if (lista[k].user_win) {
+              cadena_win =
+                "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-user'></i> <span style='font-size:10px !important;'>" +
+                lista[k].user_win.name + " " + lista[k].user_win.surname +
+                "</span> <span style='background: #00bb2d !important;font-size:10px !important;' class='badge badge-danger'>$" +
+                parseFloat(lista[k].puja_win.valor).toFixed(2) +
+                "</span> <i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i>";
+              if (cadena_win) {
+                $('#name_win_portada_' + lista[k].subasta_id).empty();
+                $('#name_win_portada_' + lista[k].subasta_id).append(cadena_win)
+              }
+            }
+          }
+        }
+
+      }
+}
+
     if (document.querySelector('ons-tabbar').getActiveTabIndex() == 0) {
       var url = base_url + 'rest_subasta/all_subastas';
       var user_id = item_auth.user_id;
