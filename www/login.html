@@ -166,20 +166,30 @@
                     </div>
 
                     <div class="text-center">
-                        <button onclick="template_terminos();" id="btn_terminos_condiciones"
-                            style="width: 100% !important; border-color: #2a3681 !important; color: #2a3681 !important;"
-                            type="button" class="btn btn-outline-primary waves-effect">Ver los términos y
-                            condiciones</button>
-                        <br /><br />
+                        <ons-row id="body_condiciones" style="margin-top: 10%;">
+                            <ons-col width="10%">
+                                <div class="custom-control custom-checkbox text-center">
+                                    <input type="checkbox" class="custom-control-input" id="selected_tc" checked />
+                                    <label class="custom-control-label" for="selected_tc"></label>
+                                </div>
+                            </ons-col>
+                            <ons-col width="90%">
+                                <ons-button onclick="abrir_terminos()"
+                                    style="color:#80232b; font-size: 12px !important; margin-top:8px !important"
+                                    modifier="quiet">
+                                    Acepto los términos y
+                                    condiciones</ons-button>
+                            </ons-col>
+                        </ons-row>
 
                     </div>
 
                     <!-- Default checked -->
-                    <div class="custom-control custom-checkbox text-center">
+                    <!--  <div class="custom-control custom-checkbox text-center">
                         <input type="checkbox" class="custom-control-input" id="selected_tc" checked />
                         <label class="custom-control-label" for="selected_tc">Acepto los términos y
                             condiciones</label>
-                    </div>
+                    </div> -->
                     <div class="text-center py-4 mt-3">
                         <button style="width: 100% !important; background-color: #80232b !important;"
                             onclick="registrar_nuevo_cliente();" id="btn-registrar" class="btn btn-cyan"
@@ -193,7 +203,7 @@
         </ons-page>
     </template>
 
-    <template id="terminos.html">
+    <template id="faqs.html">
         <ons-page>
             <ons-toolbar style="height: 60px !important;">
                 <div class="left">
@@ -204,10 +214,84 @@
                         src="images/logo_subasta.png" alt="">
                 </div>
             </ons-toolbar>
-            <div style="text-align: center;" class="title">
-                <p class="h4 text-center py-4">Términos y condiciones</p>
-            </div>
-            <p>...</p>
+            <ons-card>
+                <div style="text-align: center;" class="title">
+                    <h3 class="h4 text-center py-4">¿Pagos electrónicos?</h3>
+                </div>
+                <h5>1. ¿Qué es PlacetoPay?</h5>
+                <p>
+                    PlacetoPay es la plataforma de pagos electrónicos que usa Subastanuncios.com para procesar en línea
+                    las
+                    transacciones generadas en la tienda virtual con las formas de pago habilitadas para tal fin.
+                </p>
+                <h5>2. ¿Cómo puedo pagar?</h5>
+                <p>
+                    En la tienda virtual de Subastanuncios.com usted podrá realizar su pago con los medios habilitados
+                    para
+                    tal fin. Usted, de acuerdo a las opciones de pago escogidas por el comercio, podrá pagar a través
+                    (Diners, Discover, Visa y MasterCard); de todos los bancos con pago corriente y en los diferido,
+                    únicamente las tarjetas emitidas por Banco Pichincha, Diners, Loja, BGR y Manabí.
+                </p>
+                <h5>3. ¿Es seguro ingresar mis datos bancarios en este sitio web?</h5>
+                <p>
+                    Para proteger tus datos Subastanuncios.com delega en PlacetoPay la captura de la información
+                    sensible.
+                    Nuestra plataforma de pagos cumple con los más altos estándares exigidos por la norma internacional
+                    PCI
+                    DSS de seguridad en transacciones con tarjeta de crédito. Además tiene certificado de seguridad SSL
+                    expedido por GeoTrust una compañía Verisign, el cual garantiza comunicaciones seguras mediante la
+                    encriptación de todos los datos hacia y desde el sitio; de esta manera, te podrás sentir seguro a la
+                    hora de ingresar la información de su tarjeta.
+                </p>
+                <p>
+                    Durante el proceso de pago, en el navegador se muestra el nombre de la organización autenticada, la
+                    autoridad que lo certifica y la barra de dirección cambia a color verde. Estas características son
+                    visibles de inmediato y dan garantía y confianza para completar la transacción en PlacetoPay.
+                </p>
+                <p> PlacetoPay también cuenta con el monitoreo constante de McAfee Secure y la firma de mensajes
+                    electrónicos con Certicámara.</p>
+                <p> PlacetoPay es una marca de la empresa colombiana EGM Ingeniería Sin Fronteras S.A.S.</p>
+                <h5>4. PlacetoPay es una marca de la empresa colombiana EGM Ingeniería Sin Fronteras S.A.S.</h5>
+                <p>Sí, en Subastanuncios.com podrás realizar tus compras en línea los 7 días de la semana, las 24 horas
+                    del
+                    día a sólo un clic de distancia. </p>
+                <h5>5. ¿Puedo cambiar la forma de pago?</h5>
+                <p>Si aún no has finalizado tu pago, podrás volver al paso inicial y elegir la forma de pago que
+                    prefieras.
+                    Una vez finalizada la compra no es posible cambiar la forma de pago.</p>
+                <h5>6. ¿Pagar electrónicamente tiene algún valor para mí como comprador? </h5>
+                <p>No, los pagos electrónicos realizados a través de PlacetoPay no generan costos adicionales para el
+                    comprador. </p>
+                <h5>7. ¿Qué debo hacer si mi transacción no concluyó?</h5>
+                <p>En primera instancia deberás revisar si llegó un mail de confirmación del pago en tu cuenta de correo
+                    electrónico (la inscrita en el momento de realizar el pago), en caso de no haberlo recibido, deberás
+                    contactar a <a href="info@subastanuncios.com ">info@subastanuncios.com </a> para confirmar el estado
+                    de
+                    la transacción.</p>
+                <p>En caso que tu transacción haya declinado, debes verificar si la información de la cuenta es válida,
+                    está
+                    habilitada para compras no presenciales y si tienes cupo o saldo disponible. Si después de esto
+                    continua
+                    con la declinación debes comunicarte con <a href="info@subastanuncios.com ">info@subastanuncios.com
+                    </a>. En última instancia, puedes remitir tu solicitud a <a
+                        href="servicioposventa@placetopay.ec">servicioposventa@placetopay.ec</a>. </p>
+                <h5>8. ¿Qué debo hacer si no recibí el comprobante de pago?</h5>
+                <p>Por cada transacción aprobada a través de PlacetoPay, recibirás un comprobante del pago con la
+                    referencia
+                    de compra en la dirección de correo electrónico que indicaste al momento de pagar. Si no lo recibes,
+                    podrás contactar a la línea +(593) 967133720 o al correo electrónico <a
+                        href="info@subastanuncios.com ">info@subastanuncios.com </a>, para solicitar el reenvío del
+                    comprobante a la misma dirección de correo electrónico registrada al momento de pagar. En última
+                    instancia, puedes remitir tu solicitud a <a
+                        href="servicioposventa@placetopay.ec">servicioposventa@placetopay.ec</a> . </p>
+                <h5>9. No me llegó el producto que compré ¿qué hago?</h5>
+                <p>Debes verificar si la transacción fue exitosa en tu extracto bancario. En caso de ser así, debes
+                    revisar
+                    nuestras políticas de envío en el sitio web <a
+                        href="https://subastanuncios.com/">https://subastanuncios.com/</a> para identificar los tiempos
+                    de
+                    entrega.</p>
+            </ons-card>
         </ons-page>
     </template>
     <template id="recuperar.html">
@@ -316,7 +400,204 @@
             <p id="body_modal"></p>
         </div>
     </ons-modal>
-
+    <ons-modal id="modal_condiciones" direction="up">
+        <ons-card style="margin-left:6% !important; margin-right:6% !important;">
+            <ons-page style="overflow: hidden! Important; position: fixed! Important;padding:15px 15px !important">
+                <div style="text-align:center;margin-left:5px;margin-right:5px;">
+                    <h5>Términos y Condiciones para el Uso de la Aplicación <b>“APP”</b></h5>
+                </div>
+                <h5 style="text-align:left;">PRODUCTOS</h5>
+                <p style="text-align:justify;">SUBASTANUNCIOS se dedica a la publicación y promoción de anuncios y
+                    subastas
+                    sobre
+                    productos y/o servicios propiedad de terceros (Clientes Registrados) en Jacinto Egas #1459 y Río
+                    Morona,
+                    Ibarra, Ecuador. Desde la aplicación móvil “SUBASTANUNCIOS” bajo ninguna circunstancia se llevará a
+                    cabo la
+                    venta o promoción de productos o servicios ajenos a nuestro modelo de negocio, sobre todo aquellos
+                    productos
+                    que sean de venta prohibida por la legislación ecuatoriana. </p>
+                <h5 class="text-left">FINALIDAD DEL PORTAL <a href="https://subastanuncios.com/portada">WWW.
+                        SUBASTANUNCIOS.COM</a> Y APP MÓVIL
+                </h5>
+                <p style="text-align:justify;">En nuestra página web y aplicaciones móviles damos información sobre todo
+                    aquello
+                    que
+                    puede interesar al cliente: promociones y ofertas de productos, anuncios, subastas directas e
+                    inversas,
+                    horarios y fechas, eventos, ubicación de comercios anunciantes, etc.</p>
+                <h5 style="text-align:left;">CONDICIONES DE ACCESO Y UTILIZACIÓN</h5>
+                <p style="text-align:justify;">El efectuar un acceso a la web y a aplicaciones móviles, e interactuar
+                    con los
+                    contenidos e información que en ellas se exponen, es responsabilidad exclusiva de los usuarios, y
+                    supone
+                    aceptar y conocer las advertencias legales, condiciones y términos de uso contenidos en ella. La
+                    Administración de SUBASTANUNCIOS no garantiza que los artículos, productos y/o servicios
+                    comercializados,
+                    estén disponibles en cualquier momento que se realice una compra. Si se diera el caso en que un
+                    cliente
+                    realizara la compra de un artículo en subasta, acepta que en caso de no proceder con la posterior
+                    compra
+                    (pago por el mismo) podría ser penalizado por SUBASTANUNCIOS.</p>
+                <h5 style="text-align:left;">PAGOS</h5>
+                <p style="text-align:justify;">El comprador podrá realizar los pagos por Transferencia Bancaria, o pago
+                    en línea
+                    con
+                    tarjetas de crédito o débito, para lo cual se emplea una pasarela de pago que realice operaciones
+                    dentro de
+                    Ecuador. De igual forma el usuario podrá utilizar PayPal, a la hora de realizar una compra. Para
+                    lograr
+                    estos fines, el usuario/cliente acepta que el prestador obtenga datos para efecto de la
+                    correspondiente
+                    autenticación de los controles de acceso. Todo proceso de contratación o que conlleve la
+                    introducción de
+                    datos personales, serán siempre transmitidos mediante protocolo de comunicación segura (HTTPS://) de
+                    tal
+                    forma que ningún tercero tenga acceso a la información transmitida vía electrónica. </p>
+                <h5 style="text-align:left;">CALIDAD DE LOS DATOS </h5>
+                <p style="text-align:justify;">Los usuarios deberán garantizar la veracidad, exactitud, autenticidad y
+                    vigencia
+                    de
+                    los datos de carácter personal que les hayan sido recogidos.</p>
+                <h5 style="text-align:left;">PROTECCIÓN DE MENORES </h5>
+                <p style="text-align:justify;">No recogemos datos personales ni aceptamos compras de menores. Es
+                    responsabilidad
+                    del
+                    padre/madre/tutor legal velar por la privacidad de los menores, haciendo todo lo posible para
+                    asegurar que
+                    han autorizado la recogida y el uso de los datos personales del menor.</p>
+                <h5 style="text-align:left;">CONDICIONES DE COMPRA </h5>
+                <p style="text-align:justify;">Los precios y condiciones de venta tienen un carácter meramente
+                    informativo y
+                    pueden
+                    ser modificados en atención a las fluctuaciones del mercado. No obstante, la realización del pedido
+                    (puja)
+                    en una subasta se confirmará una vez terminado el plazo de la misma. El castellano será la lengua
+                    utilizada
+                    para formalizar el contrato (en caso de requerirlo la operación). El documento electrónico en que se
+                    formalice el contrato se archivará y el usuario tendrá acceso a él por los diferentes medios de
+                    contacto.
+                </p>
+                <h5 style="text-align:left;">ENVÍO DE NOTIFICACIONES </h5>
+                <p style="text-align:justify;">Los plazos de envío para una notificación antes el término de una subasta
+                    o
+                    evento de
+                    premios, oscilan entre las 72 horas y los 15 días. No podemos garantizar con exactitud la
+                    materialización de
+                    un plazo especifico pues depende en gran parte de la ubicación geográfica donde se encuentre el
+                    usuario a la
+                    cual se le hará llegar en formato físico las descripciones del procedimiento de subasta para
+                    proceder con la
+                    materialización de la compra-venta. </p>
+                <h5 style="text-align:left;">DEVOLUCIONES </h5>
+                <p style="text-align:justify;">SUBASTANUNCIOS no se responsabiliza por la calidad de los productos o
+                    servicios
+                    adquiridos mediante su plataforma, una vez que el cliente acepte que tiene la responsabilidad de
+                    garantizar
+                    y evaluar la calidad de los mismos durante el proceso de compra. </p>
+                <h5 style="text-align:left;">CANCELACIONES DE PEDIDOS </h5>
+                <p style="text-align:justify;">En aquellas cancelaciones de pedidos que impliquen una devolución de los
+                    derechos
+                    de
+                    compra por parte del usuario al cliente y que sean aceptadas por SUBASTANUNCIOS, se notificará vía
+                    correo
+                    electrónico al Usuario el hecho de que SUBASTANUNCIOS dispondrá de un plazo máximo de 30 días por
+                    trámites
+                    administrativos, si bien intentamos que el plazo no sea superior a 7 días.</p>
+                <h5 style="text-align:left;">RESPONSABILIDADES DEL CLIENTE</h5>
+                <p style="text-align:justify;">El Cliente se obliga a realizar un uso lícito de los servicios brindados
+                    en la
+                    aplicación, sin contravenir la legislación vigente, ni lesionar los derechos e intereses de terceras
+                    personas.
+                    El Cliente garantiza la veracidad y exactitud de los datos facilitados al cumplimentar los
+                    formularios de
+                    contratación, evitando que por su causa ocurran perjuicios en contra de los intereses de
+                    SUBASTANUNCIOS,
+                    especialmente como consecuencia de la incorrección de los mismos.
+                    El incumplimiento de cualquiera de las Condiciones de Uso podrá dar lugar a la retirada o
+                    cancelación de los
+                    servicios por parte de SUBASTANUNCIOS, sin necesidad de previo aviso al Cliente y sin que ello dé
+                    derecho a
+                    indemnización alguna (incluyendo cancelación de Perfiles de Usuario).
+                </p>
+                <h5 style="text-align:left;">SERVICIOS POSTVENTA</h5>
+                <p style="text-align:justify;">Para cualquier consulta, incidencia, queja o reclamación tras la
+                    adquisición de
+                    los
+                    productos o servicios, SUBASTANUNCIOS pone a disposición del Cliente un Servicio de Atención al
+                    Cliente en
+                    el correo electrónico <a href="info@subastanuncios.com">info@subastanuncios.com</a> y el teléfono
+                    +(593)
+                    967133720.</p>
+                <h5 style="text-align:left;">PROPIEDAD INDUSTRIAL E INTELECTUAL</h5>
+                <p style="text-align:justify;">Los derechos de propiedad intelectual e industrial sobre las obras,
+                    marcas,
+                    logos, y
+                    cualquier otro susceptible de protección, contenidos en la Plataforma SUBASTANUNCIOS, propiedad de
+                    SUBASTANUNCIOS corresponden en exclusiva a SUBASTANUNCIOS (o a terceros autorizantes), a quien
+                    corresponde
+                    el ejercicio exclusivo de los derechos de explotación de los mismos en cualquier forma y, en
+                    especial, con
+                    carácter enunciativo y no limitativo, los derechos de reproducción, copia, distribución,
+                    transformación,
+                    comercialización, y comunicación pública. La reproducción, distribución, comercialización o
+                    transformación
+                    no autorizadas de tales obras, marcas, logos, etc., constituye una infracción de los derechos de
+                    propiedad
+                    intelectual e industrial de SUBASTANUNCIOS o del titular de los mismos, y podrá dar lugar al
+                    ejercicio de
+                    cuantas acciones judiciales o extrajudiciales les pudieran corresponder en el ejercicio de sus
+                    derechos.</p>
+                <p style="text-align:justify;">Mediante la aceptación de las presentes Condiciones Generales de
+                    Contratación, el
+                    Cliente se compromete a respetar los derechos de Propiedad Industrial e Intelectual titularidad de
+                    SUBASTANUNCIOS y de terceros.</p>
+                <h5 style="text-align:left;">JURISDICCIÓN Y LEY APLICABLE</h5>
+                <p style="text-align:justify;">En el supuesto de que surja cualquier conflicto o discrepancia en la
+                    interpretación o
+                    aplicación de las presentes condiciones contractuales, los Juzgados y Tribunales que, en su caso,
+                    conocerán
+                    del asunto, serán los que disponga la normativa legal aplicable en materia de jurisdicción
+                    competente, en la
+                    que se atiende, tratándose de consumidores finales, al lugar del cumplimiento de la obligación o al
+                    del
+                    domicilio de la parte compradora.</p>
+                <h5 style="text-align:left;">Nivel del Servicio</h5>
+                <p style="text-align:justify;">SUBASTANUNCIOS realizará los esfuerzos necesarios para mantener el
+                    Servicio de
+                    Subastas y Anuncios se encuentre operativo en todo momento. Sin embargo, problemas técnicos pueden
+                    provocar
+                    interrupciones esporádicamente. Hay que tener en cuenta que la disponibilidad y la calidad del
+                    Servicio
+                    pueden variar en función de diversos factores, como pueden ser el dispositivo que se utilice, la
+                    ubicación
+                    geográfica del usuario, el ancho de banda disponible y/o la velocidad de la conexión a Internet, por
+                    lo que
+                    será responsabilidad del usuario asegurar que los sistemas e infraestructuras de los que dispone son
+                    los
+                    adecuados y necesarios para la correcta recepción del Servicio, así como la configuración de los
+                    mismos.
+                    SUBASTANUNCIOS no será responsable por las deficiencias o falta de disponibilidad del Servicio
+                    causadas por
+                    el usuario, por las deficiencias en el acceso a Internet o por cualquier otra causa fuera del
+                    control de
+                    SUBASTANUNCIOS</p>
+                <p style="text-align:justify;">SUBASTANUNCIOS realizará de forma esporádica actualizaciones y tareas de
+                    mantenimiento
+                    del Servicio, durante las cuales es posible que el Servicio no esté disponible. SUBASTANUNCIOS
+                    intentará
+                    establecer las actualizaciones y tareas de mantenimiento fuera de las horas punta, nunca superior a
+                    30
+                    minutos y no más de dos veces al mes. La falta de disponibilidad debido a actualizaciones y tareas
+                    de
+                    mantenimiento no dan derecho al usuario a ningún tipo de reembolso o compensación.</p>
+                <br>
+                <p style="text-align: right">
+                    <ons-button onclick="cerrar_terminos()" style="color:#80232b" modifier="quiet">Cerrar</ons-button>
+                </p>
+            </ons-page>
+        </ons-card>
+    </ons-modal>
 </body>
 
 </html>
@@ -359,6 +640,19 @@
     var email_verificacion = null;
     var response_user_object = null;
     var modal = document.querySelector('ons-modal');
+    var modal_condiciones = $('#modal_condiciones');
+
+    function cerrar_terminos() {
+        modal_condiciones.hide();
+    }
+
+    function abrir_terminos() {
+        //   pushPage('#appNavigator', 'terminos.html', '');
+        ///  validar_terminos_condiciones = true;
+        //modal_confirmacion.hide();
+        modal_condiciones.show();
+
+    }
 
     function alertDismissed1() {
         // do something

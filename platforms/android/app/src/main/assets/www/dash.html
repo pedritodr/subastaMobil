@@ -145,6 +145,12 @@
             <ons-icon style="color:#80232b" icon="fa-line-chart"></ons-icon> Historial de pagos
           </span>
         </ons-list-item>
+        <ons-list-item modifier="nodivider" ripple onclick="abrir_faqs()">
+          <span class="list-item__title">
+            <ons-icon style="color:#80232b" icon="fa-question-circle-o"></ons-icon> Faqs
+          </span>
+        </ons-list-item>
+
       </ons-list>
       <ons-bottom-toolbar>
         <ons-toolbar>
@@ -229,24 +235,19 @@
         <ons-icon style="color: #ffffff !important" icon="md-plus"></ons-icon>
       </ons-fab>
       <ons-bottom-toolbar>
-        <ons-toolbar style="background-color: #ebebeb !important;">
-          <div style="background-color: #ebebeb !important; margin-bottom: 2px !important;"
-            class="tabbar tabbar--top tabbar--material">
-            <label class="tabbar__item tabbar--material__item">
-              <button onclick="buscar_anuncio();" class="tabbar__button tabbar--material__button">
-                <i style="color: #80232b !important" class="tabbar__icon tabbar--material__icon zmdi zmdi-search"></i>
-                <div style="color: #2a3681 !important" class="tabbar__label tabbar--material__label">Buscar anuncios
-                </div>
-              </button>
-            </label>
-            <label class="tabbar__item tabbar--material__item">
-              <button onclick="cargar_categorias_anuncios();" class="tabbar__button tabbar--material__button">
-                <i style="color: #80232b !important" class="tabbar__icon tabbar--material__icon zmdi zmdi-apps"></i>
-                <div style="color: #2a3681 !important" class="tabbar__label tabbar--material__label">Categorias</div>
-              </button>
-            </label>
-          </div>
-        </ons-toolbar>
+        <ons-row>
+          <ons-col width="33%">
+            <p style="text-align: center">
+              <ons-button onclick="buscar_anuncio();" id="btn_filtros_subasta" style="color:#2a3681" modifier="quiet">
+                <ons-icon icon="fa-filter"></ons-icon> Filtros
+              </ons-button>
+            </p>
+          </ons-col>
+          <ons-col width="33%">
+          </ons-col>
+          <ons-col width="33%">
+          </ons-col>
+        </ons-row>
       </ons-bottom-toolbar>
     </ons-page>
   </template>
@@ -277,8 +278,8 @@
             </ons-select>
           </p>
         </ons-col>
-        <ons-col width="100%"> 
-          <p style="text-align: center;"> 
+        <ons-col width="100%">
+          <p style="text-align: center;">
             <ons-button onclick="mostrar_ciudades_subasta();" style="background:#2a3681;font-size: 12px;">
               <ons-icon icon="fa-map-marker"></ons-icon>
               Ciudades
@@ -292,15 +293,16 @@
               Subcategorias
             </ons-button>
           </p>
-       <!--    <ons-icon style="color:#80232b" icon="fa-map-marker"></ons-icon> <span id="span_ubicacion_subasta"
+          <!--    <ons-icon style="color:#80232b" icon="fa-map-marker"></ons-icon> <span id="span_ubicacion_subasta"
           style="color:#80232b"> Ciudades</span> -->
         </ons-col>
         <ons-col>
-          <p style="text-align: center;"> 
-          <ons-button onclick="buscar_palabra()" style="width: 98%;background:#80232b" modifier="large">Aplicar filtros</ons-button>     
-        </p>   
+          <p style="text-align: center;">
+            <ons-button onclick="buscar_palabra()" style="width: 98%;background:#80232b" modifier="large">Aplicar
+              filtros</ons-button>
+          </p>
         </ons-col>
-    <!--     <div onclick="buscar_lista_ciudades()" class="center">
+        <!--     <div onclick="buscar_lista_ciudades()" class="center">
           <ons-icon style="color:#fff" icon="fa-map-marker"></ons-icon> <span id="span_ubicacion_subasta"
             style="color:#fff"> Tu ubicación</span>
         </div> -->
@@ -324,26 +326,65 @@
     </ons-page>
   </template>
   <template id="buscar_anuncio.html">
-    <ons-page id="page_anuncio">
-      <ons-toolbar style="background: #8c1822;">
+    <ons-page id="page_buscar_anuncio">
+      <ons-toolbar style="background: #80232b;">
         <div class="left">
-          <ons-back-button style="color:#80232b"></ons-back-button>
+          <ons-back-button></ons-back-button>
         </div>
         <div class="center">
-          <p style="text-align: center; margin-top: 15px;">
-            <input style="background-color: #ebebeb !important; width: 100% !important;" id="autocomplete2"
-              type="search" value="" onkeyup="buscar_palabra_anuncio();" placeholder="Buscar anuncio"
-              class="search-input">
-          </p>
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
         </div>
       </ons-toolbar>
-      <div class="center">
-        <p id="cargando" style="display: none; text-align: center;">
-          <ons-progress-circular indeterminate></ons-progress-circular>
-        </p>
-      </div>
-      <div id="area_autocomplete_anuncio" style="margin:0px !important">
-      </div>
+      <ons-row id="body_buscador_anuncio">
+        <ons-col width="100%">
+          <p style="text-align: center; margin-top: 15px;">
+            <input style="background-color: #fff !important; width:100% !important;" id="autocomplete2" type="search"
+              value="" placeholder="Buscar anuncio" class="search-input">
+          </p>
+        </ons-col>
+        <ons-col width="100%">
+          <p style="text-align: center;">
+            <ons-button onclick="mostrar_ciudades_anuncio();" style="background:#2a3681;font-size: 12px;">
+              <ons-icon icon="fa-map-marker"></ons-icon>
+              Ciudades
+            </ons-button>
+            <ons-button onclick="mostrar_categorias_anuncio()" style="background:#2a3681;font-size: 12px;">
+              <ons-icon icon="fa-caret-right"></ons-icon>
+              Categorias
+            </ons-button>
+            <ons-button onclick="mostrar_subcategorias_anuncio()" style="background:#2a3681;font-size: 12px;">
+              <ons-icon icon="fa-caret-right"></ons-icon>
+              Subcategorias
+            </ons-button>
+          </p>
+          <!--    <ons-icon style="color:#80232b" icon="fa-map-marker"></ons-icon> <span id="span_ubicacion_subasta"
+          style="color:#80232b"> Ciudades</span> -->
+        </ons-col>
+        <ons-col>
+          <p style="text-align: center;">
+            <ons-button onclick="buscar_palabra_anuncio()" style="width: 98%;background:#80232b" modifier="large">
+              Aplicar
+              filtros</ons-button>
+          </p>
+        </ons-col>
+        <!--     <div onclick="buscar_lista_ciudades()" class="center">
+          <ons-icon style="color:#fff" icon="fa-map-marker"></ons-icon> <span id="span_ubicacion_subasta"
+            style="color:#fff"> Tu ubicación</span>
+        </div> -->
+      </ons-row>
+
+      <ons-list id="lista_ciudades_anuncio" style="display: none;">
+
+      </ons-list>
+      <ons-list id="lista_categorias_anuncio" style="display: none;">
+
+      </ons-list>
+      <ons-list id="lista_subcategorias_anuncio" style="display: none;">
+
+      </ons-list>
+      <ons-row id="area_autocomplete_anuncio" style="margin:0px !important">
+      </ons-row>
     </ons-page>
   </template>
   <template id="perfil_cliente.html">
@@ -821,32 +862,6 @@
       </ons-card>
     </ons-page>
   </template>
-  <template id="pujar.html">
-    <ons-page id="page_piujar">
-      <ons-toolbar>
-        <div class="left">
-          <ons-back-button style="color:#80232b !important;"></ons-back-button>
-        </div>
-        <div class="center">
-          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
-            src="images/logo_subasta.png" alt="">
-        </div>
-      </ons-toolbar>
-      <h4 style="text-align: center;">Pujar</h4>
-      <ons-card>
-        <section style="padding: 8px">
-          <div id="valor_inicial_entrada">
-          </div>
-        </section>
-        <section style="padding: 8px">
-          <ons-button id="" onclick="pagar_entrada()" style="width:100%; background-color: #80232b !important;"
-            modifier="large">
-            <ons-icon icon="md-check"></ons-icon> Pagar Entrada
-          </ons-button>
-        </section>
-      </ons-card>
-    </ons-page>
-  </template>
   <template id="adquirir_membresia.html">
     <ons-page id="page_adquirir_membresia">
       <ons-toolbar style="background: #80232b;">
@@ -906,7 +921,6 @@
         Cargando...
       </ons-pull-hook>
       <ons-row id="area_mis_anuncios" class="" style="margin:0px !important">
-
       </ons-row>
       <ons-fab onclick="publicar_anuncio(null);" style="background-color: #2a3681 !important;" position="bottom right">
         <ons-icon style="color: #ffffff !important" icon="md-plus"></ons-icon>
@@ -928,6 +942,7 @@
         Cargando...
       </ons-pull-hook>
       <ons-list id="header_lista_pagos">
+
       </ons-list>
     </ons-page>
   </template>
@@ -935,7 +950,10 @@
     <ons-page id="page_mis_subastas">
       <ons-toolbar style="background: #80232b;">
         <div class="left">
-          <ons-back-button style="color:#fff !important"></ons-back-button>
+          <ons-icon id="btn_atras_subasta" onclick="llamar_anuncios()"
+            style="color:#fff !important;margin-left: 15% !important;font-size:24px;display:none" icon="md-arrow-back">
+          </ons-icon>
+          <ons-back-button id="btn_back_subasta" style="color:#fff !important"></ons-back-button>
         </div>
         <div class="center">
           <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
@@ -977,13 +995,31 @@
                 src="images/Logo_PlacetoPay.png" alt=""></a></ons-col>
           <ons-col width="25%"></ons-col>
         </ons-row>
-        <ons-row id="body_condiciones" style="margin-top: 10%;">
-          <ons-col width="100%">
+        <!--       <ons-row id="body_condiciones" style="margin-top: 10%;">
+          <ons-col width="10%">
             <div class="custom-control custom-checkbox text-center">
               <input type="checkbox" class="custom-control-input" id="selected_tc" checked />
-              <label class="custom-control-label" for="selected_tc">Acepto los términos y
-                condiciones</label>
+              <label for="selected_tc-id">hola</label>
             </div>
+          </ons-col>
+            <ons-col width="90%">
+            <ons-button onclick="abrir_terminos()" style="color:#80232b; font-size: 10px !important;" modifier="quiet">
+              Acepto los términos y
+              condiciones</ons-button>
+          </ons-col>
+        </ons-row> -->
+        <ons-row id="body_condiciones" style="margin-top: 10%;">
+          <ons-col width="10%">
+            <div class="custom-control custom-checkbox text-center">
+              <input type="checkbox" class="custom-control-input" id="selected_tc" checked />
+              <label class="custom-control-label" for="selected_tc"></label>
+            </div>
+          </ons-col>
+          <ons-col width="90%">
+            <ons-button onclick="abrir_terminos()"
+              style="color:#80232b; font-size: 12px !important; margin-top:8px !important" modifier="quiet">
+              Acepto los términos y
+              condiciones</ons-button>
           </ons-col>
         </ons-row>
         <ons-row style="margin-top: 10%;">
@@ -993,7 +1029,8 @@
       </div>
       <br>
       <p style="text-align: right">
-        <ons-button id="btn_pagar_confirmacion" onclick="adquirir_confimacion()" style="color:#80232b" modifier="quiet">
+        <ons-button id="btn_pagar_confirmacion" onclick="adquirir_confimacion()" style="color:#80232b; display: none"
+          modifier="quiet">
           Pagar</ons-button>
         <ons-button id="btn_pagar_all" onclick="adquirir_subasta()" style="color:#80232b; display: none;"
           modifier="quiet">
@@ -1033,7 +1070,7 @@
       </div>
       <br>
       <p style="text-align: right">
-        <ons-button id="btn_notificacion_inversa" onclick="llamar_anuncios()" style="color:#80232b" modifier="quiet">
+        <ons-button id="btn_notificacion_inversa" onclick="mis_subastas()" style="color:#80232b" modifier="quiet">
           Aceptar</ons-button>
         <ons-button id="btn_notificacion_membresia" onclick="llamar_anuncios()" style="color:#80232b" modifier="quiet">
           Aceptar</ons-button>
@@ -1139,6 +1176,231 @@
       </p>
     </ons-card>
   </ons-modal>
+  <ons-modal id="modal_condiciones" direction="up">
+    <ons-card style="margin-left:6% !important; margin-right:6% !important;">
+      <ons-page style="overflow: hidden! Important; position: fixed! Important;padding:15px 15px !important">
+        <div style="text-align:center;margin-left:5px;margin-right:5px;">
+          <h5>Términos y Condiciones para el Uso de la Aplicación <b>“APP”</b></h5>
+        </div>
+        <h5 style="text-align:left;">PRODUCTOS</h5>
+        <p style="text-align:justify;">SUBASTANUNCIOS se dedica a la publicación y promoción de anuncios y subastas
+          sobre
+          productos y/o servicios propiedad de terceros (Clientes Registrados) en Jacinto Egas #1459 y Río Morona,
+          Ibarra, Ecuador. Desde la aplicación móvil “SUBASTANUNCIOS” bajo ninguna circunstancia se llevará a cabo la
+          venta o promoción de productos o servicios ajenos a nuestro modelo de negocio, sobre todo aquellos productos
+          que sean de venta prohibida por la legislación ecuatoriana. </p>
+        <h5 class="text-left">FINALIDAD DEL PORTAL <a href="https://subastanuncios.com/portada">WWW.
+            SUBASTANUNCIOS.COM</a> Y APP MÓVIL
+        </h5>
+        <p style="text-align:justify;">En nuestra página web y aplicaciones móviles damos información sobre todo aquello
+          que
+          puede interesar al cliente: promociones y ofertas de productos, anuncios, subastas directas e inversas,
+          horarios y fechas, eventos, ubicación de comercios anunciantes, etc.</p>
+        <h5 style="text-align:left;">CONDICIONES DE ACCESO Y UTILIZACIÓN</h5>
+        <p style="text-align:justify;">El efectuar un acceso a la web y a aplicaciones móviles, e interactuar con los
+          contenidos e información que en ellas se exponen, es responsabilidad exclusiva de los usuarios, y supone
+          aceptar y conocer las advertencias legales, condiciones y términos de uso contenidos en ella. La
+          Administración de SUBASTANUNCIOS no garantiza que los artículos, productos y/o servicios comercializados,
+          estén disponibles en cualquier momento que se realice una compra. Si se diera el caso en que un cliente
+          realizara la compra de un artículo en subasta, acepta que en caso de no proceder con la posterior compra
+          (pago por el mismo) podría ser penalizado por SUBASTANUNCIOS.</p>
+        <h5 style="text-align:left;">PAGOS</h5>
+        <p style="text-align:justify;">El comprador podrá realizar los pagos por Transferencia Bancaria, o pago en línea
+          con
+          tarjetas de crédito o débito, para lo cual se emplea una pasarela de pago que realice operaciones dentro de
+          Ecuador. De igual forma el usuario podrá utilizar PayPal, a la hora de realizar una compra. Para lograr
+          estos fines, el usuario/cliente acepta que el prestador obtenga datos para efecto de la correspondiente
+          autenticación de los controles de acceso. Todo proceso de contratación o que conlleve la introducción de
+          datos personales, serán siempre transmitidos mediante protocolo de comunicación segura (HTTPS://) de tal
+          forma que ningún tercero tenga acceso a la información transmitida vía electrónica. </p>
+        <h5 style="text-align:left;">CALIDAD DE LOS DATOS </h5>
+        <p style="text-align:justify;">Los usuarios deberán garantizar la veracidad, exactitud, autenticidad y vigencia
+          de
+          los datos de carácter personal que les hayan sido recogidos.</p>
+        <h5 style="text-align:left;">PROTECCIÓN DE MENORES </h5>
+        <p style="text-align:justify;">No recogemos datos personales ni aceptamos compras de menores. Es responsabilidad
+          del
+          padre/madre/tutor legal velar por la privacidad de los menores, haciendo todo lo posible para asegurar que
+          han autorizado la recogida y el uso de los datos personales del menor.</p>
+        <h5 style="text-align:left;">CONDICIONES DE COMPRA </h5>
+        <p style="text-align:justify;">Los precios y condiciones de venta tienen un carácter meramente informativo y
+          pueden
+          ser modificados en atención a las fluctuaciones del mercado. No obstante, la realización del pedido (puja)
+          en una subasta se confirmará una vez terminado el plazo de la misma. El castellano será la lengua utilizada
+          para formalizar el contrato (en caso de requerirlo la operación). El documento electrónico en que se
+          formalice el contrato se archivará y el usuario tendrá acceso a él por los diferentes medios de contacto.
+        </p>
+        <h5 style="text-align:left;">ENVÍO DE NOTIFICACIONES </h5>
+        <p style="text-align:justify;">Los plazos de envío para una notificación antes el término de una subasta o
+          evento de
+          premios, oscilan entre las 72 horas y los 15 días. No podemos garantizar con exactitud la materialización de
+          un plazo especifico pues depende en gran parte de la ubicación geográfica donde se encuentre el usuario a la
+          cual se le hará llegar en formato físico las descripciones del procedimiento de subasta para proceder con la
+          materialización de la compra-venta. </p>
+        <h5 style="text-align:left;">DEVOLUCIONES </h5>
+        <p style="text-align:justify;">SUBASTANUNCIOS no se responsabiliza por la calidad de los productos o servicios
+          adquiridos mediante su plataforma, una vez que el cliente acepte que tiene la responsabilidad de garantizar
+          y evaluar la calidad de los mismos durante el proceso de compra. </p>
+        <h5 style="text-align:left;">CANCELACIONES DE PEDIDOS </h5>
+        <p style="text-align:justify;">En aquellas cancelaciones de pedidos que impliquen una devolución de los derechos
+          de
+          compra por parte del usuario al cliente y que sean aceptadas por SUBASTANUNCIOS, se notificará vía correo
+          electrónico al Usuario el hecho de que SUBASTANUNCIOS dispondrá de un plazo máximo de 30 días por trámites
+          administrativos, si bien intentamos que el plazo no sea superior a 7 días.</p>
+        <h5 style="text-align:left;">RESPONSABILIDADES DEL CLIENTE</h5>
+        <p style="text-align:justify;">El Cliente se obliga a realizar un uso lícito de los servicios brindados en la
+          aplicación, sin contravenir la legislación vigente, ni lesionar los derechos e intereses de terceras
+          personas.
+          El Cliente garantiza la veracidad y exactitud de los datos facilitados al cumplimentar los formularios de
+          contratación, evitando que por su causa ocurran perjuicios en contra de los intereses de SUBASTANUNCIOS,
+          especialmente como consecuencia de la incorrección de los mismos.
+          El incumplimiento de cualquiera de las Condiciones de Uso podrá dar lugar a la retirada o cancelación de los
+          servicios por parte de SUBASTANUNCIOS, sin necesidad de previo aviso al Cliente y sin que ello dé derecho a
+          indemnización alguna (incluyendo cancelación de Perfiles de Usuario).
+        </p>
+        <h5 style="text-align:left;">SERVICIOS POSTVENTA</h5>
+        <p style="text-align:justify;">Para cualquier consulta, incidencia, queja o reclamación tras la adquisición de
+          los
+          productos o servicios, SUBASTANUNCIOS pone a disposición del Cliente un Servicio de Atención al Cliente en
+          el correo electrónico <a href="info@subastanuncios.com">info@subastanuncios.com</a> y el teléfono +(593)
+          967133720.</p>
+        <h5 style="text-align:left;">PROPIEDAD INDUSTRIAL E INTELECTUAL</h5>
+        <p style="text-align:justify;">Los derechos de propiedad intelectual e industrial sobre las obras, marcas,
+          logos, y
+          cualquier otro susceptible de protección, contenidos en la Plataforma SUBASTANUNCIOS, propiedad de
+          SUBASTANUNCIOS corresponden en exclusiva a SUBASTANUNCIOS (o a terceros autorizantes), a quien corresponde
+          el ejercicio exclusivo de los derechos de explotación de los mismos en cualquier forma y, en especial, con
+          carácter enunciativo y no limitativo, los derechos de reproducción, copia, distribución, transformación,
+          comercialización, y comunicación pública. La reproducción, distribución, comercialización o transformación
+          no autorizadas de tales obras, marcas, logos, etc., constituye una infracción de los derechos de propiedad
+          intelectual e industrial de SUBASTANUNCIOS o del titular de los mismos, y podrá dar lugar al ejercicio de
+          cuantas acciones judiciales o extrajudiciales les pudieran corresponder en el ejercicio de sus derechos.</p>
+        <p style="text-align:justify;">Mediante la aceptación de las presentes Condiciones Generales de Contratación, el
+          Cliente se compromete a respetar los derechos de Propiedad Industrial e Intelectual titularidad de
+          SUBASTANUNCIOS y de terceros.</p>
+        <h5 style="text-align:left;">JURISDICCIÓN Y LEY APLICABLE</h5>
+        <p style="text-align:justify;">En el supuesto de que surja cualquier conflicto o discrepancia en la
+          interpretación o
+          aplicación de las presentes condiciones contractuales, los Juzgados y Tribunales que, en su caso, conocerán
+          del asunto, serán los que disponga la normativa legal aplicable en materia de jurisdicción competente, en la
+          que se atiende, tratándose de consumidores finales, al lugar del cumplimiento de la obligación o al del
+          domicilio de la parte compradora.</p>
+        <h5 style="text-align:left;">Nivel del Servicio</h5>
+        <p style="text-align:justify;">SUBASTANUNCIOS realizará los esfuerzos necesarios para mantener el Servicio de
+          Subastas y Anuncios se encuentre operativo en todo momento. Sin embargo, problemas técnicos pueden provocar
+          interrupciones esporádicamente. Hay que tener en cuenta que la disponibilidad y la calidad del Servicio
+          pueden variar en función de diversos factores, como pueden ser el dispositivo que se utilice, la ubicación
+          geográfica del usuario, el ancho de banda disponible y/o la velocidad de la conexión a Internet, por lo que
+          será responsabilidad del usuario asegurar que los sistemas e infraestructuras de los que dispone son los
+          adecuados y necesarios para la correcta recepción del Servicio, así como la configuración de los mismos.
+          SUBASTANUNCIOS no será responsable por las deficiencias o falta de disponibilidad del Servicio causadas por
+          el usuario, por las deficiencias en el acceso a Internet o por cualquier otra causa fuera del control de
+          SUBASTANUNCIOS</p>
+        <p style="text-align:justify;">SUBASTANUNCIOS realizará de forma esporádica actualizaciones y tareas de
+          mantenimiento
+          del Servicio, durante las cuales es posible que el Servicio no esté disponible. SUBASTANUNCIOS intentará
+          establecer las actualizaciones y tareas de mantenimiento fuera de las horas punta, nunca superior a 30
+          minutos y no más de dos veces al mes. La falta de disponibilidad debido a actualizaciones y tareas de
+          mantenimiento no dan derecho al usuario a ningún tipo de reembolso o compensación.</p>
+        <br>
+        <p style="text-align: right">
+          <ons-button onclick="cerrar_terminos()" style="color:#80232b" modifier="quiet">Cerrar</ons-button>
+        </p>
+      </ons-page>
+    </ons-card>
+  </ons-modal>
+  <template id="faqs.html">
+    <ons-page>
+      <ons-toolbar style="background: #80232b;">
+        <div class="left">
+          <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">
+          <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
+            src="images/logo-subasta-hor.png" alt="">
+        </div>
+      </ons-toolbar>
+      <ons-card>
+        <div style="text-align: center;" class="title">
+          <h3 class="h4 text-center py-4">¿Pagos electrónicos?</h3>
+        </div>
+        <h5>1. ¿Qué es PlacetoPay?</h5>
+        <p>
+          PlacetoPay es la plataforma de pagos electrónicos que usa Subastanuncios.com para procesar en línea
+          las
+          transacciones generadas en la tienda virtual con las formas de pago habilitadas para tal fin.
+        </p>
+        <h5>2. ¿Cómo puedo pagar?</h5>
+        <p>
+          En la tienda virtual de Subastanuncios.com usted podrá realizar su pago con los medios habilitados
+          para
+          tal fin. Usted, de acuerdo a las opciones de pago escogidas por el comercio, podrá pagar a través
+          (Diners, Discover, Visa y MasterCard); de todos los bancos con pago corriente y en los diferido,
+          únicamente las tarjetas emitidas por Banco Pichincha, Diners, Loja, BGR y Manabí.
+        </p>
+        <h5>3. ¿Es seguro ingresar mis datos bancarios en este sitio web?</h5>
+        <p>
+          Para proteger tus datos Subastanuncios.com delega en PlacetoPay la captura de la información
+          sensible.
+          Nuestra plataforma de pagos cumple con los más altos estándares exigidos por la norma internacional
+          PCI
+          DSS de seguridad en transacciones con tarjeta de crédito. Además tiene certificado de seguridad SSL
+          expedido por GeoTrust una compañía Verisign, el cual garantiza comunicaciones seguras mediante la
+          encriptación de todos los datos hacia y desde el sitio; de esta manera, te podrás sentir seguro a la
+          hora de ingresar la información de su tarjeta.
+        </p>
+        <p>
+          Durante el proceso de pago, en el navegador se muestra el nombre de la organización autenticada, la
+          autoridad que lo certifica y la barra de dirección cambia a color verde. Estas características son
+          visibles de inmediato y dan garantía y confianza para completar la transacción en PlacetoPay.
+        </p>
+        <p> PlacetoPay también cuenta con el monitoreo constante de McAfee Secure y la firma de mensajes
+          electrónicos con Certicámara.</p>
+        <p> PlacetoPay es una marca de la empresa colombiana EGM Ingeniería Sin Fronteras S.A.S.</p>
+        <h5>4. PlacetoPay es una marca de la empresa colombiana EGM Ingeniería Sin Fronteras S.A.S.</h5>
+        <p>Sí, en Subastanuncios.com podrás realizar tus compras en línea los 7 días de la semana, las 24 horas
+          del
+          día a sólo un clic de distancia. </p>
+        <h5>5. ¿Puedo cambiar la forma de pago?</h5>
+        <p>Si aún no has finalizado tu pago, podrás volver al paso inicial y elegir la forma de pago que
+          prefieras.
+          Una vez finalizada la compra no es posible cambiar la forma de pago.</p>
+        <h5>6. ¿Pagar electrónicamente tiene algún valor para mí como comprador? </h5>
+        <p>No, los pagos electrónicos realizados a través de PlacetoPay no generan costos adicionales para el
+          comprador. </p>
+        <h5>7. ¿Qué debo hacer si mi transacción no concluyó?</h5>
+        <p>En primera instancia deberás revisar si llegó un mail de confirmación del pago en tu cuenta de correo
+          electrónico (la inscrita en el momento de realizar el pago), en caso de no haberlo recibido, deberás
+          contactar a <a href="info@subastanuncios.com ">info@subastanuncios.com </a> para confirmar el estado
+          de
+          la transacción.</p>
+        <p>En caso que tu transacción haya declinado, debes verificar si la información de la cuenta es válida,
+          está
+          habilitada para compras no presenciales y si tienes cupo o saldo disponible. Si después de esto
+          continua
+          con la declinación debes comunicarte con <a href="info@subastanuncios.com ">info@subastanuncios.com
+          </a>. En última instancia, puedes remitir tu solicitud a <a
+            href="servicioposventa@placetopay.ec">servicioposventa@placetopay.ec</a>. </p>
+        <h5>8. ¿Qué debo hacer si no recibí el comprobante de pago?</h5>
+        <p>Por cada transacción aprobada a través de PlacetoPay, recibirás un comprobante del pago con la
+          referencia
+          de compra en la dirección de correo electrónico que indicaste al momento de pagar. Si no lo recibes,
+          podrás contactar a la línea +(593) 967133720 o al correo electrónico <a
+            href="info@subastanuncios.com ">info@subastanuncios.com </a>, para solicitar el reenvío del
+          comprobante a la misma dirección de correo electrónico registrada al momento de pagar. En última
+          instancia, puedes remitir tu solicitud a <a
+            href="servicioposventa@placetopay.ec">servicioposventa@placetopay.ec</a> . </p>
+        <h5>9. No me llegó el producto que compré ¿qué hago?</h5>
+        <p>Debes verificar si la transacción fue exitosa en tu extracto bancario. En caso de ser así, debes
+          revisar
+          nuestras políticas de envío en el sitio web <a
+            href="https://subastanuncios.com/">https://subastanuncios.com/</a> para identificar los tiempos
+          de
+          entrega.</p>
+      </ons-card>
+    </ons-page>
+  </template>
+
 </body>
 <!-- SCRIPTS -->
 <!-- JQuery -->
@@ -1176,6 +1438,7 @@
   var modal_puja_directa = $('#modal_puja');
   var modal_activar_ads = $('#modal_activar_ads');
   var modal_desactivar_ads = $('#modal_desactivar_ads');
+  var modal_condiciones = $('#modal_condiciones');
   var page;
   var lat;
   var lng;
@@ -1229,10 +1492,18 @@
   var ubicacion_cargada_inicial = null;
   var tipo_subasta_init = 1;
   var valida_infinito_anuncio = false;
-  var categoria_filter_subasta =0;
-  var subcategoria_filter_subasta= 0;
-  var ciudad_filter_subasta=0;
-  var ubicacion_filter_subasta=null;
+  var categoria_filter_subasta = 0;
+  var subcategoria_filter_subasta = 0;
+  var ciudad_filter_subasta = 0;
+  var ubicacion_filter_subasta = null;
+  var categoria_filter_anuncio = 0;
+  var subcategoria_filter_anuncio = 0;
+  var ciudad_filter_anuncio = 0;
+  var ubicacion_filter_anuncio = null;
+  var ubicacion_anuncio = null;
+  var comienza_buscar_anuncio = 0;
+  var valido_mis_subastas = false;
+  var validar_terminos_condiciones = false;
   ons.ready(function () {
     ons.createElement('action-sheet.html', {
         append: true
@@ -1244,6 +1515,22 @@
 
 
   });
+
+  function cerrar_terminos() {
+    modal_condiciones.hide();
+  }
+
+  function abrir_terminos() {
+    //   pushPage('#appNavigator', 'terminos.html', '');
+    ///  validar_terminos_condiciones = true;
+    //modal_confirmacion.hide();
+    modal_condiciones.show();
+
+  }
+
+  function abrir_faqs() {
+    pushPage('#appNavigator', 'faqs.html', '');
+  }
 
   function buscar_subastas_tipo(tipo) {
     if (tipo == 1) {
@@ -1279,18 +1566,36 @@
     $('#lista_ciudades_subasta').hide();
     $('#body_buscador_subasta').show();
     $('.filter_ciudad').removeClass('ciudad_filter_subasta');
-  $('#mi_ubicacion_subasta_inicial').addClass('ciudad_filter_subasta');
-  $('#area_autocomplete').show();
-  ubicacion_filter_subasta =ubicacion_subasta;
+    $('#mi_ubicacion_subasta_inicial').addClass('ciudad_filter_subasta');
+    $('#area_autocomplete').show();
+    ubicacion_filter_subasta = ubicacion_subasta;
+  }
+
+  function mi_ubicacion_ads() {
+    $('#lista_ciudades_anuncio').hide();
+    $('#body_buscador_anuncio').show();
+    $('.filter_ciudad_ads').removeClass('ciudad_filter_anuncio');
+    $('#mi_ubicacion_ads_inicial').addClass('ciudad_filter_anuncio');
+    $('#area_autocomplete_anuncio').show();
+    ubicacion_filter_anuncio = ubicacion_anuncio;
   }
 
   function seleccion_ciudad(ciudad) {
-    ciudad_filter_subasta=ciudad;
+    ciudad_filter_subasta = ciudad;
     $('.filter_ciudad').removeClass('ciudad_filter_subasta');
-    $('#ciudad_subasta_'+ciudad).addClass('ciudad_filter_subasta');
+    $('#ciudad_subasta_' + ciudad).addClass('ciudad_filter_subasta');
     $('#lista_ciudades_subasta').hide();
     $('#body_buscador_subasta').show();
     $('#area_autocomplete').show();
+  }
+
+  function seleccion_ciudad_anuncio(ciudad) {
+    ciudad_filter_anuncio = ciudad;
+    $('.filter_ciudad_ads').removeClass('ciudad_filter_anuncio');
+    $('#ciudad_anuncio_' + ciudad).addClass('ciudad_filter_anuncio');
+    $('#lista_ciudades_anuncio').hide();
+    $('#body_buscador_anuncio').show();
+    $('#area_autocomplete_anuncio').show();
   }
 
   function buscar_lista_ciudades() {
@@ -1370,6 +1675,7 @@
       cargar_pagos(lista_pagos);
     }
     if (status == 500) {
+      modal.hide();
       navigator.notification.alert(
         'No tiene acceso a la plataforma', // message
         cerrar_push, // callback
@@ -1378,6 +1684,10 @@
       );
     }
     if (status == 404) {
+      modal.hide();
+      $('#header_lista_pagos').empty();
+      $('#header_lista_pagos').html("<h3 style='text-align: center;'>No tiene pagos realizados</h3>");
+
       navigator.notification.alert(
         'No tiene pagos realizados.', // message
         cerrar_push, // callback
@@ -1716,15 +2026,15 @@
         }, 1000);
       }
     }
-    /*     if (page.id == "page_mis_anuncios") {
-          page.onInfiniteScroll = function (done) {
-            setTimeout(() => {
-              infinito_mis_anuncio();
-              done();
-            }, 1000);
+    if (page.id == "page_buscar_anuncio") {
+      page.onInfiniteScroll = function (done) {
+        setTimeout(() => {
+          infinito_buscar_palabra_anuncio();
+          done();
+        }, 1000);
 
-          }
-        } */
+      }
+    }
     if (page.id == "page_mis_subastas") {
       page.onInfiniteScroll = function (done) {
         setTimeout(() => {
@@ -1737,7 +2047,7 @@
     if (page.id == "page4") {
       page.onInfiniteScroll = function (done) {
         setTimeout(() => {
-            infinito_buscar_palabra();
+          infinito_buscar_palabra();
           done();
         }, 1000);
       }
@@ -1867,6 +2177,7 @@
       $('#btn_notificacion_inversa').hide();
       $('#btn_notificacion_piso').show();
       $('#btn_notificacion_aceptar').hide();
+      $('#btn_notificacion_desctacar').hide();
       //piso de subasta
       $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
       $('#status_notificacion').text("Transacción Aprobada");
@@ -2067,6 +2378,7 @@
   }
   //regreso al comercio luego de pagar
   P.on('response', function (data) {
+    console.log(data);
     response_payment = data;
     // console.log(response_payment);
     let requestId = data.requestId;
@@ -2079,6 +2391,7 @@
     } else if (data.status.status == "PENDING") {
       estado_payment = 3;
     }
+    console.log(estado_payment);
     if (estado_payment > 1) {
       var url = base_url + 'rest_payment/update_request';
       var user_id = item_auth.user_id;
@@ -2099,6 +2412,7 @@
         $('#btn_notificacion_inversa').hide();
         $('#btn_notificacion_piso').hide();
         $('#btn_notificacion_aceptar').hide();
+        $('#btn_notificacion_desctacar').hide();
         //compra de membresia
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -2111,6 +2425,7 @@
         $('#btn_notificacion_inversa').hide();
         $('#btn_notificacion_piso').show();
         $('#btn_notificacion_aceptar').hide();
+        $('#btn_notificacion_desctacar').hide();
         //piso de subasta
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -2123,6 +2438,7 @@
         $('#btn_notificacion_inversa').hide();
         $('#btn_notificacion_piso').hide();
         $('#btn_notificacion_aceptar').hide();
+        $('#btn_notificacion_desctacar').show();
         valida_mis_anuncios = true;
         //anuncio destacado
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
@@ -2136,6 +2452,8 @@
         $('#btn_notificacion_inversa').show();
         $('#btn_notificacion_piso').hide();
         $('#btn_notificacion_aceptar').hide();
+        $('#btn_notificacion_desctacar').hide();
+        valido_mis_subastas = true;
         //compra de inversa
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -2154,7 +2472,7 @@
   function success_update_payment(response) {
     var result = response.payment;
     var status = response.status;
-    // let membresias = response.membresia_user;
+    // let membresias = response.membresia_user;+
     if (status == 200) {
       modal.hide();
       if (result.status == 1 && result.tipo == 0) {
@@ -2163,6 +2481,7 @@
         $('#btn_notificacion_inversa').hide();
         $('#btn_notificacion_piso').hide();
         $('#btn_notificacion_aceptar').hide();
+        $('#btn_notificacion_desctacar').hide();
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
         $('#product_adquirido').html("<strong>Membresia adquirida : </strong>" + result.detalle);
@@ -2174,6 +2493,7 @@
         $('#btn_notificacion_inversa').hide();
         $('#btn_notificacion_piso').show();
         $('#btn_notificacion_aceptar').hide();
+        $('#btn_notificacion_desctacar').hide();
         //piso de subasta
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -2182,6 +2502,11 @@
         $('#referencia_notificacion').html(result.reference);
         modal_notificacion.show();
       } else if (result.status == 1 && result.tipo == 2) {
+        $('#btn_notificacion_membresia').hide();
+        $('#btn_notificacion_inversa').hide();
+        $('#btn_notificacion_piso').hide();
+        $('#btn_notificacion_aceptar').hide();
+        $('#btn_notificacion_desctacar').show();
         //anuncio destacado
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -2191,10 +2516,12 @@
         modal_notificacion.show();
       } else if (result.status == 1 && result.tipo == 3) {
         //compra de inversa
+        valido_mis_subastas = true;
         $('#btn_notificacion_membresia').hide();
         $('#btn_notificacion_inversa').show();
         $('#btn_notificacion_piso').hide();
         $('#btn_notificacion_aceptar').hide();
+        $('#btn_notificacion_desctacar').hide();
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
         $('#product_adquirido').html("<strong>Subasta adquirida : </strong>" + result.detalle);
@@ -2207,6 +2534,7 @@
         $('#btn_notificacion_inversa').hide();
         $('#btn_notificacion_piso').hide();
         $('#btn_notificacion_aceptar').show();
+        $('#btn_notificacion_desctacar').hide();
         $('#icono_notificacion').html("<i class='fa fa-times-circle-o'></i>");
         $('#status_notificacion').text("El pago ha sido rechazado");
         $('#mensaje_notificacion').text(response_payment.status.message);
@@ -2217,6 +2545,7 @@
         $('#btn_notificacion_inversa').hide();
         $('#btn_notificacion_piso').hide();
         $('#btn_notificacion_aceptar').show();
+        $('#btn_notificacion_desctacar').hide();
         $('#icono_notificacion').html("<i class='fa fa-question-circle-o'></i>");
         $('#status_notificacion').text("El proceso de pago está pendiente");
         $('#mensaje_notificacion').text(response_payment.status.message);
@@ -2300,6 +2629,7 @@
     $('#body_condiciones').hide();
     $('#transaccion_pendiente').hide();
     $('#btn_pagar_confirmacion').hide();
+    $('#btn_pagar_gratis').hide();
     $('#btn_pagar_all').show();
     let status = response.status;
     if (status == 200) {
@@ -2310,12 +2640,14 @@
         $('#body_mensaje_confirmacion').append(cadena);
         $('#title_confirmacion').text("Destacar");
         $('#transaccion_pendiente').html(
-          "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p>");
+          "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p><p style='text-align:center'>Referencia: #" +
+          response.obj[0].reference + "<p>");
         $('#transaccion_pendiente').show();
         id_confirmacion = ads_objet.anuncio_id;
         valor_confirmacion = 3.99;
         detalle_confirmacion = ads_objet.titulo;
         $('#btn_pagar_all').hide();
+        $('#btn_pagar_gratis').hide();
         $('#body_condiciones').hide();
         modal_confirmacion.show();
       } else {
@@ -2325,13 +2657,15 @@
         $('#body_mensaje_confirmacion').append(cadena);
         $('#title_confirmacion').text("Subasta");
         $('#transaccion_pendiente').html(
-          "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p>");
+          "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p><p style='text-align:center'>Referencia: #" +
+          response.obj[0].reference + "<p>");
         $('#transaccion_pendiente').show();
         id_confirmacion = subasta_activa_pay;
         valor_confirmacion = precio_payment;
         detalle_confirmacion = detalle_inicial_subasta;
         $('#btn_pagar_all').hide();
         $('#body_condiciones').hide();
+        $('#btn_pagar_gratis').hide();
         modal_confirmacion.show();
       }
 
@@ -2355,39 +2689,55 @@
         $('#body_condiciones').show();
         modal_confirmacion.show();
       } else {
-        if (response.membresia_user) {
-          var membresia_qty_subastas = parseInt(response.membresia_user.qty_subastas);
-          var membresia_descuento = parseFloat(response.membresia_user.descuento);
-          var membresia_user_id = response.membresia_user.membre_user_id;
-          if (membresia_qty_subastas > 0) {
-            $('#body_mensaje_confirmacion').empty();
-            let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
-              "</h5><h5  class='text-center'>Antes <span  class='badge badge-danger strikethrough'>$" + parseFloat(
-                precio_payment).toFixed(2) + "</span> Ahora <span  class='badge badge-success'>$0.00</span</h5>";
-            $('#body_mensaje_confirmacion').append(cadena);
-            $('#title_confirmacion').text("Subasta");
-            id_confirmacion = subasta_activa_pay;
-            valor_confirmacion = precio_payment;
-            detalle_confirmacion = detalle_inicial_subasta;
-            $('#btn_pagar_gratis').show();
-            $('#btn_pagar_all').hide();
-            $('#body_condiciones').show();
-            modal_confirmacion.show();
+        if (tipo_inicial_subasta == 1) {
+          if (response.membresia_user) {
+            var membresia_qty_subastas = parseInt(response.membresia_user.qty_subastas);
+            var membresia_descuento = parseFloat(response.membresia_user.descuento);
+            var membresia_user_id = response.membresia_user.membre_user_id;
+            if (membresia_qty_subastas > 0) {
+              $('#body_mensaje_confirmacion').empty();
+              let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
+                "</h5><h5  class='text-center'>Antes <span  class='badge badge-danger strikethrough'>$" + parseFloat(
+                  precio_payment).toFixed(2) + "</span> Ahora <span  class='badge badge-success'>$0.00</span</h5>";
+              $('#body_mensaje_confirmacion').append(cadena);
+              $('#title_confirmacion').text("Subasta");
+              id_confirmacion = subasta_activa_pay;
+              valor_confirmacion = precio_payment;
+              detalle_confirmacion = detalle_inicial_subasta;
+              $('#btn_pagar_gratis').show();
+              $('#btn_pagar_all').hide();
+              $('#body_condiciones').show();
+              modal_confirmacion.show();
+            } else {
+              var descuento_new = (membresia_descuento / 100) + 1;
+              precio_payment_old = precio_payment;
+              precio_payment = parseFloat(parseFloat(precio_payment).toFixed(2)) / descuento_new;
+              $('#body_mensaje_confirmacion').empty();
+              let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
+                "</h5><h5  class='text-center'>Antes <span  class='badge badge-danger strikethrough'>$" + parseFloat(
+                  precio_payment_old).toFixed(2) + "</span> Ahora <span  class='badge badge-success'>$" + parseFloat(
+                  precio_payment).toFixed(2) + "</span</h5>";
+              $('#body_mensaje_confirmacion').append(cadena);
+              $('#title_confirmacion').text("Subasta");
+              id_confirmacion = subasta_activa_pay;
+              valor_confirmacion = precio_payment;
+              detalle_confirmacion = detalle_inicial_subasta;
+              $('#btn_pagar_gratis').hide();
+              $('#btn_pagar_all').show();
+              $('#body_condiciones').show();
+              modal_confirmacion.show();
+            }
           } else {
-            var descuento_new = (membresia_descuento / 100) + 1;
-            precio_payment_old = precio_payment;
-            precio_payment = parseFloat(parseFloat(precio_payment).toFixed(2)) / descuento_new;
             $('#body_mensaje_confirmacion').empty();
             let cadena = "<h5  class='text-center'>" + detalle_inicial_subasta +
-              "</h5><h5  class='text-center'>Antes <span  class='badge badge-danger strikethrough'>$" + parseFloat(
-                precio_payment_old).toFixed(2) + "</span> Ahora <span  class='badge badge-success'>$" + parseFloat(
-                precio_payment).toFixed(2) + "</span</h5>";
+              "</h5><h5  class='text-center'>$" + parseFloat(precio_payment).toFixed(2) + "</h5>";
             $('#body_mensaje_confirmacion').append(cadena);
             $('#title_confirmacion').text("Subasta");
             id_confirmacion = subasta_activa_pay;
             valor_confirmacion = precio_payment;
             detalle_confirmacion = detalle_inicial_subasta;
             $('#btn_pagar_all').show();
+            $('#btn_pagar_gratis').hide();
             $('#body_condiciones').show();
             modal_confirmacion.show();
           }
@@ -2401,11 +2751,11 @@
           valor_confirmacion = precio_payment;
           detalle_confirmacion = detalle_inicial_subasta;
           $('#btn_pagar_all').show();
+          $('#btn_pagar_gratis').hide();
           $('#body_condiciones').show();
           modal_confirmacion.show();
         }
       }
-
     }
     if (status == 500) {
       navigator.notification.alert(
@@ -2429,7 +2779,8 @@
       $('#body_mensaje_confirmacion').append(cadena);
       $('#title_confirmacion').text("Membresia");
       $('#transaccion_pendiente').html(
-        "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p>");
+        "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p><p style='text-align:center'>Referencia: #" +
+        response.obj[0].reference + "<p>");
       $('#transaccion_pendiente').show();
       id_confirmacion = detalle_pago.membresia_id;
       valor_confirmacion = detalle_pago.precio;
@@ -2749,7 +3100,7 @@
       send_data_server(url, data_to_server, success_filtros_subasta,
         error);
     }, 1000);
-   
+
   }
   var on_ubicacion = function (position) {
     var promise = new Promise(function (resolve, reject) {
@@ -2806,9 +3157,9 @@
       modal.hide();
     })
   }
- 
- function success_filtros_subasta(response) {
-  var status = response.status;
+
+  function success_filtros_subasta(response) {
+    var status = response.status;
     var lista_ciudades = response.lista;
     var lista_categorias = response.categorias;
     $('#lista_ciudades_subasta').empty();
@@ -2816,18 +3167,21 @@
       var cadena_ciudades =
         "<ons-list-item><div class='left'>Ciudades</div><div class='center'></div><div class='right'><ons-icon onclick='cerrar_lista_ciudades_subasta()' style='font-size:18px;color:#8c1822' icon='md-close'></ons-icon></div></ons-list-item><ons-list-item id='mi_ubicacion_subasta_inicial' class='filter_ciudad' onclick=mi_ubicacion() modifier='chevron' tappable> <ons-icon icon='fa-street-view'></ons-icon> Tu ubicación</ons-list-item><ons-list-item id='ciudades_subasta_inicial' class='filter_ciudad' onclick=todas_ciudades_subasta() modifier='chevron' tappable>Todas las ciudades</ons-list-item>";
       lista_ciudades.forEach(element => {
-        cadena_ciudades += "<ons-list-item id='ciudad_subasta_"+element.ciudad_id+"' class='filter_ciudad' onclick=seleccion_ciudad('" + element.ciudad_id +
+        cadena_ciudades += "<ons-list-item id='ciudad_subasta_" + element.ciudad_id +
+          "' class='filter_ciudad' onclick=seleccion_ciudad('" + element.ciudad_id +
           "') modifier='chevron' tappable>" + element.name_ciudad + "</ons-list-item>"
       });
       $('#lista_ciudades_subasta').append(cadena_ciudades);
-      var cadena_categorias = "<ons-list-item><div class='left'>Categoria</div><div class='center'></div><div class='right'><ons-icon onclick='cerrar_lista_cat_subasta()' style='font-size:18px;color:#8c1822' icon='md-close'></ons-icon></div></ons-list-item><ons-list-item id='cat_filter_subasta_0' class='filter_cat'  onclick=seleccion_categoria_subasta('0') modifier='chevron' tappable>Todas las categorias</ons-list-item>";
+      var cadena_categorias =
+        "<ons-list-item><div class='left'>Categoria</div><div class='center'></div><div class='right'><ons-icon onclick='cerrar_lista_cat_subasta()' style='font-size:18px;color:#8c1822' icon='md-close'></ons-icon></div></ons-list-item><ons-list-item id='cat_filter_subasta_0' class='filter_cat'  onclick=seleccion_categoria_subasta('0') modifier='chevron' tappable>Todas las categorias</ons-list-item>";
       lista_categorias.forEach(element => {
-        cadena_categorias += "<ons-list-item id='cat_filter_subasta_"+element.categoria_id+"' class='filter_cat'  onclick=seleccion_categoria('" + btoa(JSON.stringify(element.subcategorias)) +
-          "','"+element.categoria_id+"') modifier='chevron' tappable>" + element.name_espa + "</ons-list-item>"
+        cadena_categorias += "<ons-list-item id='cat_filter_subasta_" + element.categoria_id +
+          "' class='filter_cat'  onclick=seleccion_categoria('" + btoa(JSON.stringify(element.subcategorias)) +
+          "','" + element.categoria_id + "') modifier='chevron' tappable>" + element.name_espa + "</ons-list-item>"
       });
       $('#lista_categorias_subasta').append(cadena_categorias);
       $('#lista_ciudades_subasta').hide();
-     // $('#body_buscador_subasta').hide();
+      // $('#body_buscador_subasta').hide();
       navigator.geolocation.getCurrentPosition(on_ubicacion, onError);
     }
     if (status == 404) {
@@ -2838,96 +3192,309 @@
         'Aceptar' // buttonName
       );
     }
- }
-function todas_ciudades_subasta() {
-  ciudad_filter_subasta=0;
-  $('.filter_ciudad').removeClass('ciudad_filter_subasta');
-  $('#ciudades_subasta_inicial').addClass('ciudad_filter_subasta');
-  $('#lista_ciudades_subasta').hide();
+  }
+
+  function todas_ciudades_subasta() {
+    ciudad_filter_subasta = 0;
+    $('.filter_ciudad').removeClass('ciudad_filter_subasta');
+    $('#ciudades_subasta_inicial').addClass('ciudad_filter_subasta');
+    $('#lista_ciudades_subasta').hide();
     $('#body_buscador_subasta').show();
     $('#area_autocomplete').show();
 
-}
+  }
 
- function seleccion_categoria_subasta(params) {
-  $('.filter_cat').removeClass('subcat_filter_subasta');
-  $('#cat_filter_subasta_0').addClass('subcat_filter_subasta');
-  categoria_filter_subasta =params;
-  $('#body_buscador_subasta').show();
-  $('#lista_categorias_subasta').hide();
-  $('#area_autocomplete').show();
- }
+  function seleccion_categoria_subasta(params) {
+    $('.filter_cat').removeClass('subcat_filter_subasta');
+    $('#cat_filter_subasta_0').addClass('subcat_filter_subasta');
+    categoria_filter_subasta = params;
+    $('#body_buscador_subasta').show();
+    $('#lista_categorias_subasta').hide();
+    $('#area_autocomplete').show();
+  }
 
-function seleccion_categoria(params,id) {
-  $('.filter_cat').removeClass('subcat_filter_subasta');
-  $('#cat_filter_subasta_'+id).addClass('subcat_filter_subasta');
-  categoria_filter_subasta =id;
-  $('#lista_categorias_subasta').hide();
-  $('#body_buscador_subasta').show();
-  $('#area_autocomplete').show();
-  params = atob(params);
-  params = JSON.parse(params);
-  $('#lista_subcategorias_subasta').empty();
-  var cadena_categorias = "<ons-list-item><div class='left'>Subcategoria</div><div class='center'></div><div class='right'><ons-icon onclick='cerrar_lista_sub_subasta()' style='font-size:18px;color:#8c1822' icon='md-close'></ons-icon></div></ons-list-item><ons-list-item style='margin-top:-2px !important;' id='filter_sub_0' class='filter_sub' onclick=seleccion_subcategoria('0') modifier='chevron' tappable>Todas las subcategorias</ons-list-item>";
-  params.forEach(element => {
-        cadena_categorias += "<ons-list-item id='filter_sub_"+ element.subcat_id+"' class='filter_sub'  onclick=seleccion_subcategoria('" + element.subcat_id +
-          "') modifier='chevron' tappable>" + element.nombre + "</ons-list-item>"
-      });
-      $('#lista_subcategorias_subasta').append(cadena_categorias);
-      $('#lista_subcategorias_subasta').hide();
-}
-function cerrar_lista_sub_subasta() {
-  $('#lista_subcategorias_subasta').hide();
-  $('#body_buscador_subasta').show();
-  $('#area_autocomplete').show();
-}
-function cerrar_lista_cat_subasta() {
-  $('#lista_categorias_subasta').hide();
-  $('#body_buscador_subasta').show();
-  $('#area_autocomplete').show();
-}
-function cerrar_lista_ciudades_subasta() {
-  $('#lista_ciudades_subasta').hide();
-  $('#body_buscador_subasta').show();
-  $('#area_autocomplete').show();
-}
-function seleccion_subcategoria(params) {
-  $('.filter_sub').removeClass('cat_filter_subasta');
-  $('#filter_sub_'+params).addClass('cat_filter_subasta');
-  subcategoria_filter_subasta = params;
-  $('#lista_subcategorias_subasta').hide();
-  $('#body_buscador_subasta').show();
-  $('#area_autocomplete').show();
-}
-function mostrar_ciudades_subasta() {
-  $('#lista_ciudades_subasta').show();
-  $('#body_buscador_subasta').hide();
-  $('#area_autocomplete').hide();
-}
-function mostrar_categorias_subasta() {
-  $('#lista_categorias_subasta').show();
-  $('#body_buscador_subasta').hide();
-  $('#area_autocomplete').hide();
-}
-function mostrar_subcategorias_subasta() {
-  if(categoria_filter_subasta>0){
-    $('#lista_subcategorias_subasta').show();
-  $('#body_buscador_subasta').hide();
-  $('#area_autocomplete').hide();
-  }else{
-    navigator.notification.alert(
+  function seleccion_categoria(params, id) {
+    $('.filter_cat').removeClass('subcat_filter_subasta');
+    $('#cat_filter_subasta_' + id).addClass('subcat_filter_subasta');
+    categoria_filter_subasta = id;
+    $('#lista_categorias_subasta').hide();
+    $('#body_buscador_subasta').show();
+    $('#area_autocomplete').show();
+    params = atob(params);
+    params = JSON.parse(params);
+    $('#lista_subcategorias_subasta').empty();
+    var cadena_categorias =
+      "<ons-list-item><div class='left'>Subcategoria</div><div class='center'></div><div class='right'><ons-icon onclick='cerrar_lista_sub_subasta()' style='font-size:18px;color:#8c1822' icon='md-close'></ons-icon></div></ons-list-item><ons-list-item style='margin-top:-2px !important;' id='filter_sub_0' class='filter_sub' onclick=seleccion_subcategoria('0') modifier='chevron' tappable>Todas las subcategorias</ons-list-item>";
+    params.forEach(element => {
+      cadena_categorias += "<ons-list-item id='filter_sub_" + element.subcat_id +
+        "' class='filter_sub'  onclick=seleccion_subcategoria('" + element.subcat_id +
+        "') modifier='chevron' tappable>" + element.nombre + "</ons-list-item>"
+    });
+    $('#lista_subcategorias_subasta').append(cadena_categorias);
+    $('#lista_subcategorias_subasta').hide();
+  }
+
+  function cerrar_lista_sub_subasta() {
+    $('#lista_subcategorias_subasta').hide();
+    $('#body_buscador_subasta').show();
+    $('#area_autocomplete').show();
+  }
+
+  function cerrar_lista_cat_subasta() {
+    $('#lista_categorias_subasta').hide();
+    $('#body_buscador_subasta').show();
+    $('#area_autocomplete').show();
+  }
+
+  function cerrar_lista_ciudades_subasta() {
+    $('#lista_ciudades_subasta').hide();
+    $('#body_buscador_subasta').show();
+    $('#area_autocomplete').show();
+  }
+
+  function seleccion_subcategoria(params) {
+    $('.filter_sub').removeClass('cat_filter_subasta');
+    $('#filter_sub_' + params).addClass('cat_filter_subasta');
+    subcategoria_filter_subasta = params;
+    $('#lista_subcategorias_subasta').hide();
+    $('#body_buscador_subasta').show();
+    $('#area_autocomplete').show();
+  }
+
+  function mostrar_ciudades_subasta() {
+    $('#lista_ciudades_subasta').show();
+    $('#body_buscador_subasta').hide();
+    $('#area_autocomplete').hide();
+  }
+
+  function mostrar_categorias_subasta() {
+    $('#lista_categorias_subasta').show();
+    $('#body_buscador_subasta').hide();
+    $('#area_autocomplete').hide();
+  }
+
+  function mostrar_subcategorias_subasta() {
+    if (categoria_filter_subasta > 0) {
+      $('#lista_subcategorias_subasta').show();
+      $('#body_buscador_subasta').hide();
+      $('#area_autocomplete').hide();
+    } else {
+      navigator.notification.alert(
         'Seleccione una categoria', // message
         cerrar_push, // callback
         'Notificación', // title
         'Aceptar' // buttonName
       );
       $('#area_autocomplete').show();
+    }
+
   }
 
-}
+  function success_filtros_anuncio(response) {
+    var status = response.status;
+    var lista_ciudades = response.lista;
+    var lista_categorias = response.categorias;
+    $('#lista_ciudades_anuncio').empty();
+    if (status == 200) {
+      var cadena_ciudades =
+        "<ons-list-item><div class='left'>Ciudades</div><div class='center'></div><div class='right'><ons-icon onclick='cerrar_lista_ciudades_anuncio()' style='font-size:18px;color:#8c1822' icon='md-close'></ons-icon></div></ons-list-item><ons-list-item id='mi_ubicacion_ads_inicial' class='filter_ciudad_ads' onclick=mi_ubicacion_ads() modifier='chevron' tappable> <ons-icon icon='fa-street-view'></ons-icon> Tu ubicación</ons-list-item><ons-list-item id='ciudades_anuncio_inicial' class='filter_ciudad_ads' onclick=todas_ciudades_anuncio() modifier='chevron' tappable>Todas las ciudades</ons-list-item>";
+      lista_ciudades.forEach(element => {
+        cadena_ciudades += "<ons-list-item id='ciudad_anuncio_" + element.ciudad_id +
+          "' class='filter_ciudad_ads' onclick=seleccion_ciudad_anuncio('" + element.ciudad_id +
+          "') modifier='chevron' tappable>" + element.name_ciudad + "</ons-list-item>"
+      });
+      $('#lista_ciudades_anuncio').append(cadena_ciudades);
+      var cadena_categorias =
+        "<ons-list-item><div class='left'>Categoria</div><div class='center'></div><div class='right'><ons-icon onclick='cerrar_lista_cat_anuncio()' style='font-size:18px;color:#8c1822' icon='md-close'></ons-icon></div></ons-list-item><ons-list-item id='cat_filter_anuncio_0' class='filter_cat_ads'  onclick=seleccion_categoria_anuncio_unico() modifier='chevron' tappable>Todas las categorias</ons-list-item>";
+      lista_categorias.forEach(element => {
+        cadena_categorias += "<ons-list-item id='cat_filter_anuncio_" + element.cate_anuncio_id +
+          "' class='filter_cat_ads'  onclick=seleccion_categoria_anuncio('" + btoa(JSON.stringify(element
+            .subcategorias)) +
+          "','" + element.cate_anuncio_id + "') modifier='chevron' tappable>" + element.nombre + "</ons-list-item>"
+      });
+      $('#lista_categorias_anuncio').append(cadena_categorias);
+      $('#lista_ciudades_anuncio').hide();
+      // $('#body_buscador_subasta').hide();
+      navigator.geolocation.getCurrentPosition(on_ubicacion_ads, onError);
+    }
+    if (status == 404) {
+      navigator.notification.alert(
+        'Ocurrió un problema.', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
+  var on_ubicacion_ads = function (position) {
+    var promise = new Promise(function (resolve, reject) {
+      latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      new google.maps.Geocoder().geocode({
+        'latLng': latlng
+      }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[1]) {
+            var country = null,
+              countryCode = null,
+              city = null,
+              cityAlt = null;
+            var c, lc, component;
+            for (var r = 0, rl = results.length; r < rl; r += 1) {
+              var result = results[r];
+
+              if (!city && result.types[0] === 'locality') {
+                for (c = 0, lc = result.address_components.length; c < lc; c += 1) {
+                  component = result.address_components[c];
+
+                  if (component.types[0] === 'locality') {
+                    city = component.long_name;
+                    break;
+                  }
+                }
+              } else if (!city && !cityAlt && result.types[0] ===
+                'administrative_area_level_1') {
+                for (c = 0, lc = result.address_components.length; c < lc; c += 1) {
+                  component = result.address_components[c];
+                  if (component.types[0] === 'administrative_area_level_1') {
+                    cityAlt = component.long_name;
+                    break;
+                  }
+                }
+              } else if (!country && result.types[0] === 'country') {
+                country = result.address_components[0].long_name;
+                countryCode = result.address_components[0].short_name;
+              }
+              if (city && country) {
+                break;
+              }
+            }
+            $("#city_main").val(city);
+            ubicacion_anuncio = city
+            resolve(ubicacion_anuncio);
+          }
+        }
+      });
+
+    })
+    promise.then(function (result) {
+      // $('#span_ubicacion_subasta').text(ubicacion_subasta);
+      modal.hide();
+    })
+  }
+
+  function todas_ciudades_anuncio() {
+    ciudad_filter_anuncio = 0;
+    $('.filter_ciudad_ads').removeClass('ciudad_filter_anuncio');
+    $('#ciudades_anuncio_inicial').addClass('ciudad_filter_anuncio');
+    $('#lista_ciudades_anuncio').hide();
+    $('#body_buscador_anuncio').show();
+    $('#area_autocomplete_anuncio').show();
+
+  }
+
+  function seleccion_categoria_anuncio_unico() {
+    $('.filter_cat_ads').removeClass('subcat_filter_anuncio');
+    $('#cat_filter_anuncio_0').addClass('subcat_filter_anuncio');
+    categoria_filter_anuncio = 0;
+    $('#body_buscador_anuncio').show();
+    $('#lista_categorias_anuncio').hide();
+    $('#area_autocomplete_anuncio').show();
+  }
+
+  function seleccion_categoria_anuncio(params, id) {
+    $('.filter_cat_ads').removeClass('subcat_filter_anuncio');
+    $('#cat_filter_anuncio_' + id).addClass('subcat_filter_anuncio');
+    categoria_filter_anuncio = id;
+    $('#lista_categorias_anuncio').hide();
+    $('#body_buscador_anuncio').show();
+    $('#area_autocomplete_anuncio').show();
+    params = atob(params);
+    params = JSON.parse(params);
+    $('#lista_subcategorias_anuncio').empty();
+    var cadena_categorias =
+      "<ons-list-item><div class='left'>Subcategoria</div><div class='center'></div><div class='right'><ons-icon onclick='cerrar_lista_sub_anuncio()' style='font-size:18px;color:#8c1822' icon='md-close'></ons-icon></div></ons-list-item><ons-list-item style='margin-top:-2px !important;' id='filter_ads_sub_0' class='filter_ads_sub' onclick=seleccion_subcategoria_anuncio('0') modifier='chevron' tappable>Todas las subcategorias</ons-list-item>";
+    params.forEach(element => {
+      cadena_categorias += "<ons-list-item id='filter_ads_sub_" + element.subcate_id +
+        "' class='filter_ads_sub'  onclick=seleccion_subcategoria_anuncio('" + element.subcate_id +
+        "') modifier='chevron' tappable>" + element.nombre + "</ons-list-item>"
+    });
+    $('#lista_subcategorias_anuncio').append(cadena_categorias);
+    $('#lista_subcategorias_anuncio').hide();
+  }
+
+  function cerrar_lista_sub_anuncio() {
+    $('#lista_subcategorias_anuncio').hide();
+    $('#body_buscador_anuncio').show();
+    $('#area_autocomplete_anuncio').show();
+  }
+
+  function cerrar_lista_cat_anuncio() {
+    $('#lista_categorias_anuncio').hide();
+    $('#body_buscador_anuncio').show();
+    $('#area_autocomplete_anuncio').show();
+  }
+
+  function cerrar_lista_ciudades_anuncio() {
+    $('#lista_ciudades_anuncio').hide();
+    $('#body_buscador_anuncio').show();
+    $('#area_autocomplete_anuncio').show();
+  }
+
+  function seleccion_subcategoria_anuncio(params) {
+    $('.filter_ads_sub').removeClass('cat_filter_anuncio');
+    $('#filter_ads_sub_' + params).addClass('cat_filter_anuncio');
+    subcategoria_filter_anuncio = params;
+    $('#lista_subcategorias_anuncio').hide();
+    $('#body_buscador_anuncio').show();
+    $('#area_autocomplete_anuncio').show();
+  }
+
+  function mostrar_ciudades_anuncio() {
+    $('#lista_ciudades_anuncio').show();
+    $('#body_buscador_anuncio').hide();
+    $('#area_autocomplete_anuncio').hide();
+  }
+
+  function mostrar_categorias_anuncio() {
+    $('#lista_categorias_anuncio').show();
+    $('#body_buscador_anuncio').hide();
+    $('#area_autocomplete_anuncio').hide();
+  }
+
+  function mostrar_subcategorias_anuncio() {
+    if (categoria_filter_anuncio > 0) {
+      $('#lista_subcategorias_anuncio').show();
+      $('#body_buscador_anuncio').hide();
+      $('#area_autocomplete_anuncio').hide();
+    } else {
+      navigator.notification.alert(
+        'Seleccione una categoria', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+      $('#area_autocomplete').show();
+    }
+
+  }
   //carga la ventana para buscar anuncios
   function buscar_anuncio() {
-    pushPage('#appNavigator', 'buscar_anuncio.html', 'Buscar anuncio');
+    comienza_buscar_anuncio = 0;
+    modal.show();
+    $('#body_modal').text("Cargando ...");
+    pushPage('#appNavigator', 'buscar_anuncio.html', 'Buscar subasta');
+    var item_auth = get_data_local();
+    setTimeout(function () {
+      var url = base_url + 'rest_anuncio/filtros';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+      };
+      send_data_server(url, data_to_server, success_filtros_anuncio,
+        error);
+    }, 1000);
   }
   //funcion que se ejecuta para buscar la membresia del cliente
   function buscar_membresia_user() {
@@ -3071,7 +3638,7 @@ function mostrar_subcategorias_subasta() {
           tipo_subasta =
             "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Inversa</span>";
           precio_subasta = parseFloat(lista[i].intervalo[0].valor).toFixed(2);
-          cadena_qty = lista[i].intervalo[0].cantidad;
+          cadena_qty = lista[i].intervalo[lista[i].intervalo.length - 1].cantidad;
         }
         cadena = cadena +
           "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas_" +
@@ -3096,11 +3663,11 @@ function mostrar_subcategorias_subasta() {
           var cadena_win = null;
           if (lista[k].user_win) {
             cadena_win =
-              "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-user'></i> <span style='font-size:10px !important;'>" +
+              "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i> <span style='font-size:10px !important;'>" +
               lista[k].user_win.name + " " + lista[k].user_win.surname +
               "</span> <span style='background: #00bb2d !important;font-size:10px !important;' class='badge badge-danger'>$" +
               parseFloat(lista[k].puja_win.valor).toFixed(2) +
-              "</span> <i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i>";
+              "</span>";
           }
           if (cadena_win) {
             var cadena_nueva = "<br><span id='name_win_portada_" + lista[k].subasta_id + "'>" + cadena_win +
@@ -3115,7 +3682,7 @@ function mostrar_subcategorias_subasta() {
           }
 
         } else {
-          var cadena_qty = lista[k].intervalo[0].cantidad;
+          var cadena_qty = lista[k].intervalo[lista[k].intervalo.length - 1].cantidad;
           var cadena_nueva_inversa = "<br><span> Cantidad disponible: " +
             cadena_qty +
             "</span><br><span style='font-size:10px !important;><i style='color:#80232b !important;' class='fa fa-map-marker'></i> " +
@@ -3245,11 +3812,11 @@ function mostrar_subcategorias_subasta() {
           var cadena_win = null;
           if (lista[k].user_win) {
             cadena_win =
-              "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-user'></i> <span style='font-size:10px !important;'>" +
+              "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i> <span style='font-size:10px !important;'>" +
               lista[k].user_win.name + " " + lista[k].user_win.surname +
               "</span> <span style='background: #00bb2d !important;font-size:10px !important;' class='badge badge-danger'>$" +
               parseFloat(lista[k].puja_win.valor).toFixed(2) +
-              "</span> <i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i>";
+              "</span>";
           }
           if (cadena_win) {
             var cadena_nueva = "<br><span id='name_win_portada_buscar" + lista[k].subasta_id + "'>" + cadena_win +
@@ -3340,73 +3907,100 @@ function mostrar_subcategorias_subasta() {
     var tipo_seleccionada = $('#select_tipo_subasta').val();
     modal.show();
     $('#body_modal').text("Buscando subastas...");
-          setTimeout(function () {
-            var url = base_url + 'rest_subasta/buscar_subastas';
-            var user_id = item_auth.user_id;
-            var security_token = item_auth.security_token;
-            comienza_buscar_subastas = 0;
-            $('#area_autocomplete').empty();
-            data_to_server = {
-              user_id: user_id,
-              security_token: security_token,
-              buscar: compara,
-              tipo: tipo_seleccionada,
-              ubicacion: ubicacion_filter_subasta,
-              comienza: comienza_buscar_subastas,
-              ciudad:ciudad_filter_subasta,
-              categoria:categoria_filter_subasta,
-              subcategoria:subcategoria_filter_subasta
-            };
-            send_data_server(url, data_to_server, success_buscadas,
-              error);
-          }, 1000);
- 
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/buscar_subastas';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      comienza_buscar_subastas = 0;
+      $('#area_autocomplete').empty();
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        buscar: compara,
+        tipo: tipo_seleccionada,
+        ubicacion: ubicacion_filter_subasta,
+        comienza: comienza_buscar_subastas,
+        ciudad: ciudad_filter_subasta,
+        categoria: categoria_filter_subasta,
+        subcategoria: subcategoria_filter_subasta
+      };
+      send_data_server(url, data_to_server, success_buscadas,
+        error);
+    }, 1000);
+
 
   }
   //infinito para subasta
   function infinito_buscar_palabra() {
     comienza_buscar_subastas = comienza_buscar_subastas + 11;
-    console.log(comienza_buscar_subastas);
     var compara = $("#autocomplete").val().trim();
     var tipo_seleccionada = $('#select_tipo_subasta').val();
     setTimeout(function () {
-            var url = base_url + 'rest_subasta/buscar_subastas';
-            var user_id = item_auth.user_id;
-            var security_token = item_auth.security_token;
-            data_to_server = {
-              user_id: user_id,
-              security_token: security_token,
-              buscar: compara,
-              tipo: tipo_seleccionada,
-              ubicacion: ubicacion_filter_subasta,
-              comienza: comienza_buscar_subastas,
-              ciudad:ciudad_filter_subasta,
-              categoria:categoria_filter_subasta,
-              subcategoria:subcategoria_filter_subasta
-            };
-            send_data_server(url, data_to_server, success_buscadas,
-              error);
-          }, 1000);
+      var url = base_url + 'rest_subasta/buscar_subastas';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        buscar: compara,
+        tipo: tipo_seleccionada,
+        ubicacion: ubicacion_filter_subasta,
+        comienza: comienza_buscar_subastas,
+        ciudad: ciudad_filter_subasta,
+        categoria: categoria_filter_subasta,
+        subcategoria: subcategoria_filter_subasta
+      };
+      send_data_server(url, data_to_server, success_buscadas,
+        error);
+    }, 1000);
   }
+
+  function infinito_buscar_palabra_anuncio() {
+    comienza_buscar_anuncio = comienza_buscar_anuncio + 11;
+    var compara = $("#autocomplete2").val().trim();
+    setTimeout(function () {
+      var url = base_url + 'rest_anuncio/buscar_anuncios';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        buscar: compara,
+        ubicacion: ubicacion_filter_anuncio,
+        comienza: comienza_buscar_anuncio,
+        ciudad: ciudad_filter_anuncio,
+        categoria: categoria_filter_anuncio,
+        subcategoria: subcategoria_filter_anuncio
+      };
+      send_data_server(url, data_to_server, success_anuncios_buscados,
+        error);
+    }, 1000);
+  }
+
   //funcion que busca los anuncios por palabra
   function buscar_palabra_anuncio() {
-    var compara = $("#autocomplete2").val();
-    if (compara.length > 4) {
-      $('#cargando').show();
-      setTimeout(function () {
-        var url = base_url + 'rest_anuncio/buscar_anuncios';
-        var user_id = item_auth.user_id;
-        var security_token = item_auth.security_token;
+    var compara = $("#autocomplete2").val().trim();
+    modal.show();
+    setTimeout(function () {
+      var url = base_url + 'rest_anuncio/buscar_anuncios';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      comienza_buscar_anuncio = 0;
+      $('#area_autocomplete_anuncio').empty();
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        buscar: compara,
+        ubicacion: ubicacion_filter_anuncio,
+        comienza: comienza_buscar_anuncio,
+        ciudad: ciudad_filter_anuncio,
+        categoria: categoria_filter_anuncio,
+        subcategoria: subcategoria_filter_anuncio
+      };
+      send_data_server(url, data_to_server, success_anuncios_buscados,
+        error);
+    }, 1000);
 
-        data_to_server = {
-          user_id: user_id,
-          security_token: security_token,
-          buscar: compara
-        };
-        send_data_server(url, data_to_server, success_anuncios_buscados,
-          error);
-      }, 1000);
-    }
   }
   //funcion que realiza la busqueda por categorias de la subastas
   function buscar_subastas(id) {
@@ -3453,10 +4047,10 @@ function mostrar_subcategorias_subasta() {
 
     var status = response.status;
     if (status == 200) {
-        cargar_subastas_buscadas(response.lista);
-      }
+      cargar_subastas_buscadas(response.lista);
+    }
     if (status == 500) {
-     modal.hide();
+      modal.hide();
       navigator.notification.alert(
         'No tiene acceso a la plataforma', // message
         cerrar_push, // callback
@@ -3479,11 +4073,10 @@ function mostrar_subcategorias_subasta() {
     var status = response.status;
     if (status == 200) {
       lista = response.lista;
-      $('#area_autocomplete_anuncio').empty();
-      $('#cargando').hide();
       cargar_anuncios_buscados(lista);
     }
     if (status == 500) {
+      modal.hide();
       navigator.notification.alert(
         'No tiene acceso a la plataforma', // message
         cerrar_push, // callback
@@ -3491,7 +4084,8 @@ function mostrar_subcategorias_subasta() {
         'Aceptar' // buttonName
       );
     }
-    if (status == 404) {
+    if (status == 404 && !response.infinito) {
+      modal.hide();
       navigator.notification.alert(
         '"No hay resultados en la busqueda.', // message
         cerrar_push, // callback
@@ -3525,6 +4119,7 @@ function mostrar_subcategorias_subasta() {
   //funcion de la respuesta del detalle de subasta
   function success_detalle_subasta(response) {
     modal.hide();
+    $('#name_win').empty();
     // response = JSON.parse(response.data);
     var status = response.status;
     if (status == 200) {
@@ -3550,7 +4145,6 @@ function mostrar_subcategorias_subasta() {
         stock_inversa = response.detalle.intervalo.cantidad;
         var tipo_subasta_name =
           "<span style='background: #00bb2d !important;font-size:10px !important; position:absolute; top:2%;z-index:100;' class='badge badge-danger'> Inversa</span>";
-        $('#pagar_subasta_directa').show();
       }
       var fecha_actual = new Date();
       var fecha_cierre = new Date(fecha_cierre_subasta);
@@ -3621,20 +4215,20 @@ function mostrar_subcategorias_subasta() {
             if (!response.user_win) {
               $('#name_win').empty();
               var cadena_win =
-                "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> Subasta anuncio <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+                "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> Subasta anuncio <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
                 parseFloat(response.detalle.valor_inicial).toFixed(2) +
-                "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                "</span>";
               $('#name_win').append(cadena_win);
               $('#win_subasta').show();
             } else {
               if (response.user_win) {
                 $('#name_win').empty();
                 var cadena_win =
-                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> " +
                   response.user_win.name + " " + response.user_win.surname +
                   " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
                   parseFloat(response.puja_win.valor).toFixed(2) +
-                  "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                  "</span>";
                 $('#name_win').append(cadena_win);
                 $('#win_subasta').show();
               }
@@ -3644,11 +4238,11 @@ function mostrar_subcategorias_subasta() {
             if (response.user_win) {
               $('#name_win').empty();
               var cadena_win =
-                "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> " +
                 response.user_win.name + " " + response.user_win.surname +
                 " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
                 parseFloat(response.puja_win.valor).toFixed(2) +
-                "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                "</span>";
               $('#name_win').append(cadena_win);
               $('#win_subasta').show();
             }
@@ -3659,16 +4253,28 @@ function mostrar_subcategorias_subasta() {
             }
 
           }
+        } else {
+          if (response.user_win) {
+            $('#name_win').empty();
+            var cadena_win =
+              "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> " +
+              response.user_win.name + " " + response.user_win.surname +
+              " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+              parseFloat(response.puja_win.valor).toFixed(2) +
+              "</span>";
+            $('#name_win').append(cadena_win);
+            $('#win_subasta').show();
+          }
         }
       } else {
         if (response.user_win) {
           $('#name_win').empty();
           var cadena_win =
-            "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+            "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> " +
             response.user_win.name + " " + response.user_win.surname +
             " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
             parseFloat(response.puja_win.valor).toFixed(2) +
-            "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+            "</span>";
           $('#name_win').append(cadena_win);
           $('#win_subasta').show();
         }
@@ -3676,7 +4282,7 @@ function mostrar_subcategorias_subasta() {
 
       if (resultado) {
         var x = setInterval(function () {
-          var fecha = response.detalle.fecha_cierre;
+          var fecha = fecha_cierre_subasta;
           var deadline = new Date(fecha).getTime();
           var currentTime = new Date().getTime();
           var t = deadline - currentTime;
@@ -3710,6 +4316,9 @@ function mostrar_subcategorias_subasta() {
           $('#subasta_user_id').val(response.subasta_user.subasta_user_id);
           //  $('#pujar_subasta').show();
         }
+      }
+      if (stock_inversa > 0 && response.detalle.tipo_subasta == 2) {
+        $('#pagar_subasta_directa').show();
       }
       if (response.puja) {
         monto = response.puja.valor;
@@ -4225,40 +4834,38 @@ function mostrar_subcategorias_subasta() {
         } else {
           img = lista[i].anuncio_photo;
         }
+        var ads_destacado = ""
+        if (lista[i].destacado == 1) {
+          ads_destacado =
+            "<span style='background: #00bb2d !important;font-size:10px !important ;position:absolute; top:2%;z-index:100; color:#fff !important; class='badge badge-danger'><strong> Destacado</strong></span>";
+        } else {
+          ads_destacado = "";
+        }
         cadena = cadena +
-          "<ons-card id='ver_mas2_anuncio" +
+          "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas3_" +
           lista[i].anuncio_id +
-          "' onclick=''><div class='row'><div class='col-4'><img style='width:100%' class='rounded' src='" +
+          "' onclick=''><div class='row'><div class='col-12'><h4 id='titulo_anuncio_" +
+          lista[i].anuncio_id +
+          "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
+          lista[i].titulo +
+          " </strong></h4> </div><div class='col-12'>" + ads_destacado +
+          "<img style='width:100%; position:relative' class='rounded' src='" +
           img +
-          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important; background: #80232b !important' class='badge badge-danger'>$" +
+          "' alt='Card image cap'> <p class='text-center'><span style='margin-left:10% !important;margin-top:0px !important; background: #80232b !important' class='badge badge-danger'>$" +
           parseFloat(lista[i]
             .precio).toFixed(2) +
-          "</span></p></div><div class='col-8' style='padding: 1px 1px 1px 1px !important;'><h4 id='titulo_anuncio_buscado" +
-          lista[i].anuncio_id +
-          "' style='font-size:16px !important; color:#80232b !important; line-height:1.5px !important; margin-top:15px !important;' class='card-title'><strong>" +
-          lista[i].titulo +
-          "</strong></h4> <p style='font-size:10px !important; line-height:1.5px !important;' class='card-text'><span><i class='fa fa-tag' aria-hidden='true'></i> " +
-          lista[i].categoria +
-          "/" + lista[i].subcategoria + "</span>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
+          "</span></p></div><div class='col-12' style='padding: 1px 1px 1px 1px !important;'><p style='font-size:10px !important; line-height:1.5px !important; margin-bottom:2px !important;text-align:center !important' class='card-text'>&nbsp<span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
           lista[i].ciudad +
-          "</span></p><p style='font-size:12px !important;' class='card-text'>" + lista[i]
-          .corta +
-          "<span><i class='fa fa-whatsapp' aria-hidden='true'></i> " +
-          lista[i]
-          .whatsapp +
-          " </span></p></div></div></ons-card>";
+          "</span></p></div></div></ons-card></ons-col>";
       }
       $('#area_autocomplete_anuncio').append(cadena);
+      $('#area_autocomplete_anuncio').show();
+      modal.hide();
       for (let k = 0; k < lista.length; k++) {
-        $('#ver_mas2_anuncio' + lista[k].anuncio_id).attr('onclick', 'detalle_anuncio("' + lista[k].anuncio_id +
-          '")');
-        var myP = $('#titulo_anuncio_buscado' + lista[k].anuncio_id);
-        if (myP.text().length > 27) {
-          myP.text(myP.text().substring(0, 24));
-          $('#titulo_anuncio_buscado' + lista[k].anuncio_id).html(myP.text() + "...");
-        }
+        $('#ver_mas3_' + lista[k].anuncio_id).attr('onclick', 'detalle_anuncio("' + lista[k].anuncio_id + '")');
       }
     }
+
   }
   //funcion que se ejecuta para ver el detalle del anuncio
   function detalle_anuncio(id) {
@@ -5442,6 +6049,7 @@ function mostrar_subcategorias_subasta() {
       // $('#area_mis_anuncios').show();
     }
     if (status == 500) {
+      modal.hide();
       navigator.notification.alert(
         'No tiene acceso a la plataforma', // message
         cerrar_push, // callback
@@ -5450,6 +6058,9 @@ function mostrar_subcategorias_subasta() {
       );
     }
     if (status == 404 && !response.infinito) {
+      modal.hide();
+      $('#area_mis_anuncios').empty();
+      $('#area_mis_anuncios').html("<ons-col><h3 style='text-align: center;'>No tiene anuncios creados</h3></ons-col>");
       navigator.notification.alert(
         'No hay anuncios disponible', // message
         cerrar_push, // callback
@@ -5645,12 +6256,14 @@ function mostrar_subcategorias_subasta() {
   }
 
   function confirmar_puja() {
+
     modal.show();
     $('#body_modal').text("Cargando...");
     var valor_puja_directa = $('#valor_puja_directa').val().trim();
     valor_puja_directa = parseFloat(parseFloat(valor_puja_directa).toFixed(2));
     puja_mayor = parseFloat(parseFloat(puja_mayor).toFixed(2));
     if (puja_mayor > valor_puja_directa) {
+      modal.hide();
       navigator.notification.alert(
         'El valor a pujar es menor a la puja mayor', // message
         cerrar_modal_load, // callback
@@ -5658,6 +6271,7 @@ function mostrar_subcategorias_subasta() {
         'Aceptar' // buttonName
       );
     } else {
+      modal_puja_directa.hide();
       // modal.show();
       setTimeout(function () {
         var url = base_url + 'rest_subasta/pujar_user';
@@ -5685,11 +6299,23 @@ function mostrar_subcategorias_subasta() {
     if (valida_mis_anuncios) {
       llamar_anuncios();
     }
+    if (valido_mis_subastas) {
+      llamar_anuncios();
+    }
+    if (validar_terminos_condiciones) {
+      modal_confirmacion.hide();
+    }
   }
 
   //funcion de carga los anuncios del cliente
   function mis_subastas() {
-    pushPage('#appNavigator', 'mis_subastas.html', '');
+    if (!valido_mis_subastas) {
+      pushPage('#appNavigator', 'mis_subastas.html', '');
+    } else {
+      modal_notificacion.hide();
+      document.querySelector('ons-navigator').bringPageTop('mis_subastas.html');
+    }
+
     modal.show();
     $('#body_modal').text("Cargando mis subastas...");
     $('#area_mis_subastas').empty();
@@ -5718,6 +6344,7 @@ function mostrar_subcategorias_subasta() {
       cargar_mis_subastas(lista_subastas);
     }
     if (status == 500) {
+      modal.hide();
       navigator.notification.alert(
         'No tiene acceso a la plataforma', // message
         cerrar_push, // callback
@@ -5726,6 +6353,9 @@ function mostrar_subcategorias_subasta() {
       );
     }
     if (status == 404 && !response.infinito) {
+      $('#area_mis_subastas').empty();
+      $('#area_mis_subastas').html("<ons-col><h3 style='text-align: center;'>No tiene subasta</h3></ons-col>");
+      modal.hide();
       navigator.notification.alert(
         'No hay subastas disponible', // message
         cerrar_push, // callback
@@ -5749,11 +6379,11 @@ function mostrar_subcategorias_subasta() {
           var cadena_win = null;
           if (lista[i].user_win) {
             cadena_win =
-              "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-user'></i> <span style='font-size:10px !important;'>" +
+              "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i> <span style='font-size:10px !important;'>" +
               lista[i].user_win.name + " " + lista[i].user_win.surname +
               "</span> <span style='background: #00bb2d !important;font-size:10px !important;' class='badge badge-danger'>$" +
               parseFloat(lista[i].puja_win.valor).toFixed(2) +
-              "</span> <i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i>";
+              "</span>";
           }
           if (cadena_win) {
             cadena_nueva = "<br><span id='name_win_portada_" + lista[i].subasta_id + "'>" + cadena_win +
@@ -5808,28 +6438,32 @@ function mostrar_subcategorias_subasta() {
 
       }
       $('#area_mis_subastas').append(cadena);
+      if (valido_mis_subastas) {
+        $('#btn_atras_subasta').show();
+        $('#btn_back_subasta').hide();
+      } else {
+        $('#btn_atras_subasta').hide();
+        $('#btn_back_subasta').show();
+      }
     }
 
   }
 
   function infinito_mis_subastas() {
-    if (limite_mis_subastas >= 11) {
-      comienza_mis_subastas = limite_mis_subastas;
-      limite_mis_subastas = comienza_mis_subastas + 11;
-      setTimeout(function () {
-        var url = base_url + 'rest_anuncio/cargar_mis_subastas';
-        var user_id = item_auth.user_id;
-        var security_token = item_auth.security_token;
-        data_to_server = {
-          user_id: user_id,
-          security_token: security_token,
-          comienza: comienza_mis_subastas,
-        };
-        send_data_server(url, data_to_server, success_mis_subastas,
-          error);
-      }, 1000);
 
-    }
+    comienza_mis_subastas = comienza_mis_subastas + 11;
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/cargar_mis_subastas';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        comienza: comienza_mis_subastas,
+      };
+      send_data_server(url, data_to_server, success_mis_subastas,
+        error);
+    }, 1000);
   }
 
   //funcion de la respuesta de pujar
@@ -5844,7 +6478,6 @@ function mostrar_subcategorias_subasta() {
         'Aceptar' // buttonName
       );
       $('#pujar_subasta').hide();
-      modal_puja_directa.hide();
       valida_modal_open = false;
       $('#name_win').empty();
       var cadena_win =
@@ -5905,11 +6538,11 @@ function mostrar_subcategorias_subasta() {
             var cadena_win = null;
             if (lista[k].user_win) {
               cadena_win =
-                "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-user'></i> <span style='font-size:10px !important;'>" +
+                "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i> <span style='font-size:10px !important;'>" +
                 lista[k].user_win.name + " " + lista[k].user_win.surname +
                 "</span> <span style='background: #00bb2d !important;font-size:10px !important;' class='badge badge-danger'>$" +
                 parseFloat(lista[k].puja_win.valor).toFixed(2) +
-                "</span> <i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i>";
+                "</span>";
               if (cadena_win) {
                 $('#name_win_portada_' + lista[k].subasta_id).empty();
                 $('#name_win_portada_' + lista[k].subasta_id).append(cadena_win)
@@ -5939,11 +6572,11 @@ function mostrar_subcategorias_subasta() {
             var cadena_win = null;
             if (lista[k].user_win) {
               cadena_win =
-                "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-user'></i> <span style='font-size:10px !important;'>" +
+                "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i> <span style='font-size:10px !important;'>" +
                 lista[k].user_win.name + " " + lista[k].user_win.surname +
                 "</span> <span style='background: #00bb2d !important;font-size:10px !important;' class='badge badge-danger'>$" +
                 parseFloat(lista[k].puja_win.valor).toFixed(2) +
-                "</span> <i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i>";
+                "</span>";
               if (cadena_win) {
                 $('#name_win_portada_buscar' + lista[k].subasta_id).empty();
                 $('#name_win_portada_buscar' + lista[k].subasta_id).append(cadena_win)
@@ -5973,11 +6606,11 @@ function mostrar_subcategorias_subasta() {
             var cadena_win = null;
             if (lista[k].user_win) {
               cadena_win =
-                "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-user'></i> <span style='font-size:10px !important;'>" +
+                "<i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i> <span style='font-size:10px !important;'>" +
                 lista[k].user_win.name + " " + lista[k].user_win.surname +
                 "</span> <span style='background: #00bb2d !important;font-size:10px !important;' class='badge badge-danger'>$" +
                 parseFloat(lista[k].puja_win.valor).toFixed(2) +
-                "</span> <i style='color:#80232b !important;font-size:10px !important;' class='fa fa-trophy'></i>";
+                "</span>";
               if (cadena_win) {
                 $('#name_win_portada_' + lista[k].subasta_id).empty();
                 $('#name_win_portada_' + lista[k].subasta_id).append(cadena_win)
@@ -6008,9 +6641,9 @@ function mostrar_subcategorias_subasta() {
               if (!response.user_win) {
                 $('#name_win').empty();
                 var cadena_win =
-                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> Subasta anuncio <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> Subasta anuncio <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
                   parseFloat(response.subasta.valor_inicial).toFixed(2) +
-                  "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                  "</span>";
                 $('#name_win').append(cadena_win);
                 $('#win_subasta').show();
                 puja_mayor = parseFloat(response.subasta.valor_inicial).toFixed(2);
@@ -6018,11 +6651,11 @@ function mostrar_subcategorias_subasta() {
                 if (response.user_win) {
                   $('#name_win').empty();
                   var cadena_win =
-                    "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                    "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> " +
                     response.user_win.name + " " + response.user_win.surname +
                     " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
                     parseFloat(response.puja_win.valor).toFixed(2) +
-                    "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                    "</span>";
                   $('#name_win').append(cadena_win);
                   $('#win_subasta').show();
                   puja_mayor = parseFloat(response.puja_win.valor).toFixed(2);
@@ -6032,11 +6665,11 @@ function mostrar_subcategorias_subasta() {
               if (response.user_win) {
                 $('#name_win').empty();
                 var cadena_win =
-                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> " +
                   response.user_win.name + " " + response.user_win.surname +
                   " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
                   parseFloat(response.puja_win.valor).toFixed(2) +
-                  "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                  "</span>";
                 $('#name_win').append(cadena_win);
                 puja_mayor = parseFloat(response.puja_win.valor).toFixed(2);
                 $('#win_subasta').show();
@@ -6074,20 +6707,20 @@ function mostrar_subcategorias_subasta() {
               if (!response.user_win) {
                 $('#name_win_puja').empty();
                 var cadena_win =
-                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> Subasta anuncio <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
+                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> Subasta anuncio <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
                   parseFloat(response.subasta.valor_inicial).toFixed(2) +
-                  "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                  "</span>";
                 $('#name_win_puja').append(cadena_win);
                 puja_mayor = parseFloat(response.subasta.valor_inicial).toFixed(2);
               } else {
                 if (response.user_win) {
                   $('#name_win_puja').empty();
                   var cadena_win =
-                    "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                    "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> " +
                     response.user_win.name + " " + response.user_win.surname +
                     " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
                     parseFloat(response.puja_win.valor).toFixed(2) +
-                    "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                    "</span>";
                   $('#name_win_puja').append(cadena_win);
                   puja_mayor = parseFloat(response.puja_win.valor).toFixed(2);
                 }
@@ -6096,11 +6729,11 @@ function mostrar_subcategorias_subasta() {
               if (response.user_win) {
                 $('#name_win_puja').empty();
                 var cadena_win =
-                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-user'></i> " +
+                  "<i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i> " +
                   response.user_win.name + " " + response.user_win.surname +
                   " <span style='background: #00bb2d !important;font-size:14px !important;' class='badge badge-danger'>$" +
                   parseFloat(response.puja_win.valor).toFixed(2) +
-                  "</span> <i style='color:#80232b !important;font-size:20px !important;' class='fa fa-trophy'></i>";
+                  "</span>";
                 $('#name_win_puja').append(cadena_win);
                 puja_mayor = parseFloat(response.puja_win.valor).toFixed(2);
 
@@ -6119,15 +6752,31 @@ function mostrar_subcategorias_subasta() {
   #input_id::placeholder {
     color: white;
   }
-.subcat_filter_subasta{
-  color:#80232b
-}
-.cat_filter_subasta{
-  color:#80232b
-}
-.ciudad_filter_subasta{
-  color:#80232b
-}
+
+  .subcat_filter_anuncio {
+    color: #80232b
+  }
+
+  .cat_filter_anuncio {
+    color: #80232b
+  }
+
+  .ciudad_filter_anuncio {
+    color: #80232b
+  }
+
+  .subcat_filter_subasta {
+    color: #80232b
+  }
+
+  .cat_filter_subasta {
+    color: #80232b
+  }
+
+  .ciudad_filter_subasta {
+    color: #80232b
+  }
+
   #map {
     height: 100%;
   }
