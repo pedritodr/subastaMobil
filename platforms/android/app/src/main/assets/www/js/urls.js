@@ -21,7 +21,7 @@ const showToast = (texto, time) => {
 
 //Apila una vista para ser recuperada posteriormente
 const pushPage = (navigatorId, templatId, data) => {
-    document.querySelector(navigatorId).pushPage(templatId, {
+    document.querySelector(navigatorId).bringPageTop(templatId, {
         data: data
     });
 }

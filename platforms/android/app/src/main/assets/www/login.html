@@ -1125,7 +1125,6 @@
 
     function success_ejecutar_cambio_password(response) {
         modal.hide();
-
         var status = response.status;
         //$("#myModalLoadRecover").modal('hide');
         if (status == 404) { // si existe error de autenticación
@@ -1136,9 +1135,9 @@
                 'Información', // title
                 'Aceptar' // buttonName
             );
-            pushPage('#myNavigator', 'recuperar.html', '');
+            //   pushPage('#myNavigator', 'recuperar.html', '');
         } else {
-
+            document.querySelector('ons-navigator').resetToPage('login.html');
             navigator.notification.alert(
                 'Nueva contraseña enviada a su correo', // message
                 alertDismissed1, // callback

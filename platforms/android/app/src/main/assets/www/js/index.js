@@ -12,16 +12,6 @@
 
 
     function networkonline() {
-        var item_auth = get_data_local();
-        if (item_auth) {
-
-            if (item_auth.role_id == 2) {
-                window.location.href = 'dash.html';
-            }
-        } else {
-            window.location.href = 'login.html';
-        }
-
 
     }
 
@@ -30,6 +20,16 @@
     }
 
     function onDeviceReady() {
+        setTimeout(function () {
+            var item_auth = get_data_local();
+            if (item_auth) {
+                if (item_auth.role_id == 2) {
+                    window.location.href = 'dash.html';
+                }
+            } else {
+                window.location.href = 'login.html';
+            }
+        }, 3000);
         // Controlar la pausa de Cordova y reanudar eventos
         document.addEventListener('pause', onPause.bind(this), false);
         document.addEventListener('resume', onResume.bind(this), false);
