@@ -632,7 +632,7 @@
               class="fa fa-hand-paper-o" aria-hidden="true"></i>
             Pujar</span></button>
         <button style="display: none; width: 95% !important; background-color: #80232b !important;"
-          onclick="pagar_subasta_inversa();" id="pagar_subasta_directa" class="btn btn-cyan" type="button"><span><i
+          onclick="pagar_subasta_inversa_2();" id="pagar_subasta_directa" class="btn btn-cyan" type="button"><span><i
               class="fa fa-money" aria-hidden="true"></i>
             Pagar subasta</span></button>
 
@@ -1482,7 +1482,41 @@
       </ons-card>
     </ons-page>
   </template>
-
+  <ons-modal id="modalComprarInversa" direction="up">
+    <ons-card style="margin-left:6% !important; margin-right:6% !important;">
+      <div style="color:#80232b" class="title text-center">
+        Comprar
+      </div>
+      <div class="content">
+        <ons-row>
+          <ons-col>
+            <h1 style="text-align: center" id="mensajeComprar"></h1>
+           <b><h3 style="text-align: center" id="precioComprar"></h3></b>
+          </ons-col>
+        </ons-row>
+        <ons-row id="body_condiciones" style="margin-top: 10%;">
+          <ons-col width="10%">
+            <div class="custom-control custom-checkbox text-center">
+              <input type="checkbox" class="custom-control-input" id="selected_tc" checked />
+              <label class="custom-control-label" for="selected_tc"></label>
+            </div>
+          </ons-col>
+          <ons-col width="90%">
+            <ons-button onclick="abrir_terminos()"
+              style="color:#80232b; font-size: 12px !important; margin-top:8px !important" modifier="quiet">
+              Acepto los términos y
+              condiciones</ons-button>
+          </ons-col>
+        </ons-row>
+      </div>
+      <br>
+      <p style="text-align: right">
+        <ons-button onclick="comprarInversa()" style="color:#80232b" modifier="quiet">
+          Lo quiero</ons-button>
+        <ons-button onclick="closeComprarInversa()" style="color:#80232b" modifier="quiet">Cancelar</ons-button>
+      </p>
+    </ons-card>
+  </ons-modal>
 </body>
 <!-- SCRIPTS -->
 <!-- JQuery -->
@@ -1522,6 +1556,7 @@
   var modal_desactivar_ads = $('#modal_desactivar_ads');
   var modal_condiciones = $('#modal_condiciones');
   var modal_eliminar_ads = $('#modal_eliminar_ads');
+  var modalComprarInversa = $('#modalComprarInversa');
   var page;
   var lat;
   var lng;
@@ -2083,6 +2118,7 @@
       $('#body_modal').text("Cargando anuncios...");
       $('#area_anuncios').empty();
       var item_auth = get_data_local();
+      console.log("csm ok")
       setTimeout(function () {
         var url = base_url + 'rest_anuncio/cargar_anuncios';
         var user_id = item_auth.user_id;
@@ -2773,6 +2809,54 @@
         error);
     }, 1000);
   };
+  function pagar_subasta_inversa_2() {
+    if (app) {
+      app.hideFromTemplate();
+    }
+ modalComprarInversa.show();
+ $('#mensajeComprar').text(detalle_inicial_subasta);
+ $('#precioComprar').text('$'+parseFloat(precio_payment).toFixed(2));
+  };
+  function comprarInversa() {
+    closeComprarInversa();
+    modal.show();
+    $('#body_modal').text("Generando pedido...");
+    setTimeout(function () {
+      var url = base_url + 'rest_subasta/generar_pedido_inversa';
+      var user_id = item_auth.user_id;
+      var security_token = item_auth.security_token;
+      data_to_server = {
+        user_id: user_id,
+        security_token: security_token,
+        subasta_id:subasta_activa_pay
+      };
+      send_data_server(url, data_to_server, successGenerarInversa,
+        error);
+    }, 1000);
+  }
+  function closeComprarInversa() {
+    modalComprarInversa.hide();
+  }
+  function successGenerarInversa(response) {
+    let status = response.status;
+    modal.hide();
+    if (status == 200) {
+      navigator.notification.alert(
+        'Su pedido está en proceso de verificación, en breves minutos nuestros asistentes de ventas se comunicarán para concretar la compra.', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+    if (status == 500) {
+      navigator.notification.alert(
+        'Disculpe intente mas tarde', // message
+        cerrar_push, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
+  }
   //funcion que se ejecuta para mostrar el mensaje de lo ocurrido con la transaccion y abre el modal de notificacion
   function success_confirmacion_payment_all(response) {
     modal.hide();
@@ -4888,6 +4972,7 @@
   }
   //funcion de respuesta al cargar los anuncios en el home
   function success_all_anuncios(response) {
+    console.log(response)
     var status = response.status;
     //  response = JSON.parse(response.lista);
     // var status = response.status;
@@ -4987,7 +5072,7 @@
           "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
           lista[i].titulo +
           " </strong></h4> </div><div class='col-12'>" + ads_destacado +
-          "<div style='width:129.5px; height:129.5px'><img style='width:100%; position:relative' class='rounded' src='" +
+          "<div style='width:129.5px; height:129.5px'><img style='max-width:129.5px; position:relative; max-height:129.5px' class='rounded' src='" +
           img +
           "' alt='Card image cap'></div> <p class='text-center'><span style='margin-left:10% !important;margin-top:0px !important; background: #80232b !important' class='badge badge-danger'>$" +
           parseFloat(lista[i]
@@ -5071,7 +5156,7 @@
           "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
           lista[i].titulo +
           " </strong></h4> </div><div class='col-12'>" + ads_destacado +
-          "<div style='width:129.5px; height:129.5px'><img style='width:100%; position:relative' class='rounded' src='" +
+          "<div style='width:129.5px; height:129.5px'><img style='max-width:129.5px; position:relative; max-height:129.5px' class='rounded' src='" +
           img +
           "' alt='Card image cap'></div> <p class='text-center'><span style='margin-left:10% !important;margin-top:0px !important; background: #80232b !important' class='badge badge-danger'>$" +
           parseFloat(lista[i]
@@ -5344,6 +5429,7 @@
       $('#body_modal').text("Cargando...");
       $('#galeria_imagen').empty();
       setTimeout(function () {
+        array_fotos=[];
         if (ads_objet) {
           if (array_fotos.length == 0) {
             var img_data = base_url + ads_objet.anuncio_photo;
@@ -5354,17 +5440,22 @@
               "' style='width: 80px; height: 80px;'><ons-button id='" + contador_fotos_id +
               "' onclick='deleteItem(this)' modifier='quiet' ripple style='position: absolute; right:10px'><ons-icon style='color:#80232b; font-size:20px' icon='md-delete'></ons-icon></ons-button></div>";
             $('#galeria_imagen').append(img);
+                var contador_fotos_cargadas = 2;
             array_fotos.push({
               "id": contador_fotos_id,
-              "imagen": img_data,
-              'foto_anuncio_id': ads_objet.anuncio_id
+              "imagen": ads_objet.anuncio_photo,
+              'foto_anuncio_id': ads_objet.anuncio_id,
+              'name':'image_1'
             });
             contador_fotos_id++;
             if (ads_objet.fotos) {
               if (ads_objet.fotos.length > 0) {
                 contador = ads_objet.fotos.length;
+                var contador_fotos_cargadas = 2;
                 for (let i = 0; i < ads_objet.fotos.length; i++) {
                   var img_data = base_url + ads_objet.fotos[i].photo_anuncio;
+                  var id_cargado = contador_fotos_cargadas;
+                     var cadena_name_cargada = "image_" + id_cargado;
                   var img =
                     "<div id='" + contador_fotos_id +
                     "' class='col-4' style='margin-bottom:2px !important;'><img src='" +
@@ -5372,10 +5463,12 @@
                     "' style='width: 80px; height: 80px;'><ons-button id='" + contador_fotos_id +
                     "' onclick='deleteItem(this)' modifier='quiet' ripple style='position: absolute; right:10px'><ons-icon style='color:#80232b; font-size:20px' icon='md-delete'></ons-icon></ons-button></div>";
                   $('#galeria_imagen').append(img);
+                  contador_fotos_cargadas++;
                   array_fotos.push({
                     "id": contador_fotos_id,
-                    "imagen": img_data,
-                    'foto_anuncio_id': ads_objet.fotos[i].photo_anuncio_id
+                    "imagen": ads_objet.fotos[i].photo_anuncio,
+                    'foto_anuncio_id': ads_objet.fotos[i].photo_anuncio_id,
+                    'name':cadena_name_cargada
                   });
                   contador_fotos_id++;
                 }
@@ -5386,6 +5479,7 @@
         }
 
         if (array_fotos.length > 0) {
+          console.log(array_fotos);
           $('#btn_siguiente2').show();
         }
         modal.hide();
@@ -5569,6 +5663,7 @@
   function siguiente2() {
     pushPage('#appNavigator', 'mapa.html', '');
     $('#body_modal').text("Cargando...");
+    console.log(array_fotos);
     modal.show();
     if (ads_objet) {
       setTimeout(function () {
@@ -6433,7 +6528,7 @@
           lista[i].titulo +
           " </strong>" + visble_ads + " </h4></div><div class='col-12'>" +
           ads_destacado +
-          "<div style='width:129.5px; height:129.5px'><img style='width:100%; position:relative' class='rounded' src='" +
+          "<div style='width:129.5px; height:129.5px'><img style='max-width:129.5px; position:relative; max-height:129.5px' class='rounded' src='" +
           img +
           "' alt='Card image cap'></div> <p class='text-center'><span style='margin-left:10% !important;margin-top:0px !important; background: #80232b !important' class='badge badge-danger'>$" +
           parseFloat(lista[i]
@@ -6478,7 +6573,15 @@
   }
   //funcion que muestra el error
   function error(error) {
-    show_error(error);
+    console.log(error)
+    if (error) {
+      navigator.notification.alert(
+        'Su conexión de internet no es suficientemente buena para realizar esta operación.', // message
+        llamar_anuncios, // callback
+        'Notificación', // title
+        'Aceptar' // buttonName
+      );
+    }
   }
   //alertDismissed1
   function alertDismissed1() {

@@ -10,13 +10,12 @@
     document.addEventListener("offline", networkoffline, false);
     document.addEventListener("online", networkonline, false);
 
-
     function networkonline() {
-
+        document.getElementById("mensajeErrorConexion").style.display = "none";
     }
 
     function networkoffline() {
-        show_error("No se conecto");
+        document.getElementById("mensajeErrorConexion").style.display = "block";
     }
 
     function onDeviceReady() {
@@ -25,9 +24,11 @@
             if (item_auth) {
                 if (item_auth.role_id == 2) {
                     window.location.href = 'dash.html';
+                    document.getElementById("mensajeErrorConexion").style.display = "none";
                 }
             } else {
                 window.location.href = 'login.html';
+                document.getElementById("mensajeErrorConexion").style.display = "none";
             }
         }, 3000);
         // Controlar la pausa de Cordova y reanudar eventos
@@ -36,12 +37,12 @@
 
         // TODO: Cordova se ha cargado. Haga aquí las inicializaciones que necesiten Cordova.
         var parentElement = document.getElementById('deviceready');
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
+        if (parentElement) {
+            var listeningElement = parentElement.querySelector('.listening');
+            var receivedElement = parentElement.querySelector('.received');
+            listeningElement.setAttribute('style', 'display:none;');
+            receivedElement.setAttribute('style', 'display:block;');
+        }
 
     }
 

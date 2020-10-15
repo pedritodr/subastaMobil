@@ -34,7 +34,7 @@ function show_error(response) {
     for (var property in response) {
         output += property + ': ' + response[property] + '; ';
     }
-    alert(output);
+    // alert(output);
 }
 
 function send_data_server(url, data_to_server, function_success, function_error) {
