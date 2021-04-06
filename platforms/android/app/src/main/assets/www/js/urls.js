@@ -21,12 +21,12 @@ const showToast = (texto, time) => {
 
 //Apila una vista para ser recuperada posteriormente
 const pushPage = (navigatorId, templatId, data) => {
-    document.querySelector(navigatorId).bringPageTop(templatId, {
-        data: data
-    });
-}
-//screen.orientation.lock('portrait');
-//var myDb = null;
+        document.querySelector(navigatorId).bringPageTop(templatId, {
+            data: data
+        });
+    }
+    //screen.orientation.lock('portrait');
+    //var myDb = null;
 var global_row = null;
 
 function show_error(response) {
@@ -49,7 +49,7 @@ function send_data_server(url, data_to_server, function_success, function_error)
       cordova.plugin.http.sendRequest(url, options, function_success, function_error);*/
     $.ajax({
         url: url,
-        beforeSend: function (xhrObj) {
+        beforeSend: function(xhrObj) {
             xhrObj.setRequestHeader("Authorization", "Basic " + btoa(user_rest + ":" + pass_rest));
         },
         type: "POST",
@@ -223,4 +223,10 @@ function cerrar_session() {
 
 
 
+}
+const encodeB64Utf8 = (str) => {
+    return btoa(unescape(encodeURIComponent(str)));
+}
+const decodeB64Utf8 = (str) => {
+    return decodeURIComponent(escape(atob(str)));
 }

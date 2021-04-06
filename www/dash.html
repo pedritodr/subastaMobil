@@ -21,43 +21,6 @@
   <!-- Your custom styles (optional) -->
   <link href="material_bootstrap/css/style.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <style>
-    .timer {
-      margin: 0 0 4px;
-      font-family: Lato;
-      color: #fff;
-      display: inline-block;
-      font-weight: 100;
-      text-align: center;
-      font-size: 30px;
-    }
-
-    .timer .conte {
-      padding: 1px;
-      border-radius: 3px;
-      background: #8c1822;
-      display: block;
-      font-size: 14px;
-      font-weight: 400;
-      width: auto;
-      opacity: 0.9;
-      margin-left: 4px;
-      margin-right: 4px;
-    }
-
-    .timer .smalltext {
-      border-radius: 3px;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 500;
-      display: block;
-      padding: 1px;
-      background: #2a3681;
-      width: auto;
-      margin-left: 4px;
-      margin-right: 4px;
-    }
-  </style>
   <link rel="stylesheet" href="material/css/onsenui.css">
   <link rel="stylesheet" href="material/css/onsen-css-components.min.css">
   <script src="material/js/onsenui.min.js"></script>
@@ -130,7 +93,7 @@
             <ons-icon badge="7" style="color:#80232b" icon="fa-user-secret"></ons-icon> Membresia
           </span>
         </ons-list-item>
-        <ons-list-item modifier="nodivider" ripple onclick="mis_anuncios()">
+        <ons-list-item modifier="nodivider" ripple onclick="misAnuncios()">
           <span class="list-item__title">
             <ons-icon badge="7" style="color:#80232b" icon="fa-briefcase"></ons-icon> Mis anuncios
           </span>
@@ -140,12 +103,12 @@
             <ons-icon style="color:#80232b" icon="fa-trophy"></ons-icon> Mis subastas
           </span>
         </ons-list-item>
-        <ons-list-item modifier="nodivider" ripple onclick="cargar_historial()">
+        <ons-list-item modifier="nodivider" ripple onclick="cargarHistorial()">
           <span class="list-item__title">
             <ons-icon style="color:#80232b" icon="fa-line-chart"></ons-icon> Historial de pagos
           </span>
         </ons-list-item>
-        <ons-list-item modifier="nodivider" ripple onclick="abrir_faqs()">
+        <ons-list-item modifier="nodivider" ripple onclick="abrirFaqs()">
           <span class="list-item__title">
             <ons-icon style="color:#80232b" icon="fa-question-circle-o"></ons-icon> Faqs
           </span>
@@ -639,8 +602,8 @@
       </ons-card>
     </ons-page>
   </template>
-  <template id="detalle_anuncio.html">
-    <ons-page id="page_detalle_anuncio">
+  <template id="detalleAnuncio.html">
+    <ons-page id="page_detalleAnuncio">
       <ons-toolbar style="background: #8c1822;">
         <div class="left">
           <ons-back-button style="color:#80232b"></ons-back-button>
@@ -653,22 +616,22 @@
       <ons-carousel style="margin:2px 7px 0px 7px !important" swipeable auto-scroll id="carousel_anuncio">
       </ons-carousel>
       <ons-card style="display: none !important; padding-top:1px !important; margin-top: 1px !important;"
-        id="body_detalle_anuncio">
+        id="bodyDetalleAnuncio">
         <div class="card-body card-body-cascade text-center">
           <!-- Title -->
-          <h5 style="color:#80232b !important; margin-top: 0px !important;" id="titulo_detalle_anuncio"
+          <h5 style="color:#80232b !important; margin-top: 0px !important;" id="tituloDetalleAnuncio"
             class="card-title">
             <strong></strong></h5>
           <!-- Subtitle -->
-          <h6 style="font-size:10px !important;" id="categoria_detalle_anuncio"
+          <h6 style="font-size:10px !important;" id="categoriaDetalleAnuncio"
             class="font-weight-bold indigo-text py-2">
           </h6>
           <!-- Text -->
-          <p id="descripcion_detalle_anuncio" class="card-text">
+          <p id="descripcionDetalleAnuncio" class="card-text">
           </p>
-          <p style="background-color:#80232b !important; font-size: 20px !important;" id="precio_anuncio" class="badge">
+          <p style="background-color:#80232b !important; font-size: 20px !important;" id="precioAnuncio" class="badge">
           </p>
-          <a id="number_whatsaap" href="">
+          <a id="numberWhatsaap" href="">
             <p style="color:#00bb2d !important" class="font-weight-bold indigo-text py-2"><span id="whatsapp"></span>
             </p>
           </a>
@@ -796,8 +759,8 @@
       </ons-card>
     </ons-page>
   </template>
-  <template id="formulario_editar.html">
-    <ons-page id="page_formulario_editar">
+  <template id="formularioEditar.html">
+    <ons-page id="page_formularioEditar">
       <ons-toolbar style="background: #8c1822;">
         <div class="left">
           <ons-back-button style="color:#80232b"></ons-back-button>
@@ -813,30 +776,30 @@
         <!-- Material input text -->
         <div class="md-form">
           <p style="margin-left:10%" class="text-left">Subcategoria del anuncio</p>
-          <div id="body_select_sub"></div>
+          <div id="bodySelectSub"></div>
         </div>
         <div class="md-form">
           <i class="fa fa-tags prefix grey-text"></i>
-          <input type="text" id="titulo_publicar_edit" class="form-control">
-          <label id="label_titulo_edit" for="titulo_publicar_edit" class="font-weight-light ">Título del anuncio</label>
+          <input type="text" id="tituloPublicarEdit" class="form-control">
+          <label id="labelTituloEdit" for="tituloPublicarEdit" class="font-weight-light ">Título del anuncio</label>
         </div>
         <!-- Material input text -->
         <div class="md-form">
           <i class="fa fa-info prefix grey-text"></i>
-          <textarea class="form-control" rows="5" id="descripcion_publicar_edit"></textarea>
-          <label id="label_descripcion_edit" for="descripcion_publicar_edit" class="font-weight-light ">Descripción del
+          <textarea class="form-control" rows="5" id="descripcionPublicarEdit"></textarea>
+          <label id="labelDescripcionEdit" for="descripcionPublicarEdit" class="font-weight-light ">Descripción del
             anuncio</label>
         </div>
         <!-- Material input email -->
         <div class="md-form">
           <i class="fa fa-whatsapp prefix grey-text"></i>
-          <input type="number" id="phone_publicar_edit" class="form-control">
-          <label id="label_phone_edit" for="phone_publicar_edit" class="font-weight-light ">Teléfono de contacto</label>
+          <input type="number" id="phonePublicarEdit" class="form-control">
+          <label id="labelPhoneEdit" for="phonePublicarEdit" class="font-weight-light ">Teléfono de contacto</label>
         </div>
         <div class="md-form">
           <i class="fa fa-money prefix grey-text"></i>
-          <input type="number" id="precio_publicar_edit" class="form-control">
-          <label id="label_precio_edit" for="precio_publicar_edit" class="font-weight-light ">Precio</label>
+          <input type="number" id="precioPublicarEdit" class="form-control">
+          <label id="labelPrecioEdit" for="precioPublicarEdit" class="font-weight-light ">Precio</label>
         </div>
         <section style="padding: 8px">
           <ons-button id="btn_siguiente_edit" onclick="siguiente_edit();"
@@ -960,14 +923,14 @@
       </ons-card>
     </ons-page>
   </template>
-  <template id="mis_anuncios.html">
-    <ons-page id="page_mis_anuncios">
+  <template id="misAnuncios.html">
+    <ons-page id="page_misAnuncios">
       <ons-toolbar style="background: #80232b;">
         <div class="left">
-          <ons-icon id="btn_atras_ads_2" onclick="llamar_anuncios()"
+          <ons-icon id="btnAtrasAds_2" onclick="llamar_anuncios()"
             style="color:#fff !important;margin-left: 15% !important;font-size:24px;display:block" icon="md-arrow-back">
           </ons-icon>
-          <!--  <ons-back-button id="btn_back_ads_2" style="color:#fff !important;display:block"></ons-back-button> -->
+          <!--  <ons-back-button id="btnBackAds_2" style="color:#fff !important;display:block"></ons-back-button> -->
         </div>
         <div class="center">
           <img style="height:55px; margin-left:22%; margin-right: 25%; padding-bottom: 5px; padding-top: 5px;"
@@ -977,7 +940,7 @@
       <ons-pull-hook id="pull-hook">
         Cargando...
       </ons-pull-hook>
-      <ons-row id="area_mis_anuncios" class="" style="margin:0px !important">
+      <ons-row id="areaMisAnuncios" class="" style="margin:0px !important">
       </ons-row>
       <ons-button onclick="publicar_anuncio(null);"
         style="background-color: #fff !important;position:fixed;bottom:0px;z-index: 1000;right:0px;color:#2a3681;">
@@ -1000,7 +963,7 @@
       <ons-pull-hook id="pull-hook">
         Cargando...
       </ons-pull-hook>
-      <ons-list id="header_lista_pagos">
+      <ons-list id="headerListaPagos">
 
       </ons-list>
     </ons-page>
@@ -1032,7 +995,7 @@
       <p>
         <ons-progress-circular indeterminate></ons-progress-circular>
       </p>
-      <p id="body_modal"></p>
+      <p id="bodyModal"></p>
     </div>
   </ons-modal>
   <ons-modal id="modal_confirmacion" direction="up">
@@ -1054,19 +1017,6 @@
                 src="images/placetopay-logo.svg" alt=""></a></ons-col>
           <ons-col width="25%"></ons-col>
         </ons-row>
-        <!--       <ons-row id="body_condiciones" style="margin-top: 10%;">
-          <ons-col width="10%">
-            <div class="custom-control custom-checkbox text-center">
-              <input type="checkbox" class="custom-control-input" id="selected_tc" checked />
-              <label for="selected_tc-id">hola</label>
-            </div>
-          </ons-col>
-            <ons-col width="90%">
-            <ons-button onclick="abrir_terminos()" style="color:#80232b; font-size: 10px !important;" modifier="quiet">
-              Acepto los términos y
-              condiciones</ons-button>
-          </ons-col>
-        </ons-row> -->
         <ons-row id="body_condiciones" style="margin-top: 10%;">
           <ons-col width="10%">
             <div class="custom-control custom-checkbox text-center">
@@ -1075,7 +1025,7 @@
             </div>
           </ons-col>
           <ons-col width="90%">
-            <ons-button onclick="abrir_terminos()"
+            <ons-button onclick="abrirTerminos()"
               style="color:#80232b; font-size: 12px !important; margin-top:8px !important" modifier="quiet">
               Acepto los términos y
               condiciones</ons-button>
@@ -1138,7 +1088,7 @@
           Aceptar</ons-button>
         <ons-button id="btn_notificacion_aceptar" onclick="llamar_anuncios()" style="color:#80232b" modifier="quiet">
           Aceptar</ons-button>
-        <ons-button id="btn_notificacion_desctacar" onclick="mis_anuncios()" style="color:#80232b" modifier="quiet">
+        <ons-button id="btn_notificacion_desctacar" onclick="misAnuncios()" style="color:#80232b" modifier="quiet">
           Aceptar</ons-button>
       </p>
     </ons-card>
@@ -1175,22 +1125,22 @@
   </ons-modal>
   <template id="action-sheet.html">
     <ons-action-sheet id="sheet" cancelable title="Acciones">
-      <ons-action-sheet-button style="color:#80232b !important" id="btn_acciones_ver" icon="md-info-outline" onclick="">
+      <ons-action-sheet-button style="color:#80232b !important" id="btnAccionesVer" icon="md-info-outline" onclick="">
         <span style="color:#858585 !important">Ver anuncio</span>
       </ons-action-sheet-button>
-      <ons-action-sheet-button style="color:#80232b !important" id="btn_acciones_update" icon="md-edit" onclick="">
+      <ons-action-sheet-button style="color:#80232b !important" id="btnAccionesUpdate" icon="md-edit" onclick="">
         <span style="color:#858585 !important">Editar anuncio</span>
       </ons-action-sheet-button>
-      <ons-action-sheet-button style="color:#80232b !important" id="btn_acciones_destacar" icon="md-star-outline"
+      <ons-action-sheet-button style="color:#80232b !important" id="btnAccionesDestacar" icon="md-star-outline"
         onclick=""><span style="color:#858585 !important">Destacar anuncio</span>
       </ons-action-sheet-button>
-      <ons-action-sheet-button style="color:#80232b !important" id="btn_acciones_desactivar" icon="md-block" onclick="">
+      <ons-action-sheet-button style="color:#80232b !important" id="btnAccionesDesactivar" icon="md-block" onclick="">
         <span style="color:#858585 !important">Desactivar anuncio</span>
       </ons-action-sheet-button>
-      <ons-action-sheet-button style="color:#80232b !important" id="btn_acciones_activar" icon="md-block" onclick="">
+      <ons-action-sheet-button style="color:#80232b !important" id="btnAccionesActivar" icon="md-block" onclick="">
         <span style="color:#858585 !important">Activar anuncio</span>
       </ons-action-sheet-button>
-      <ons-action-sheet-button style="color:#80232b !important" id="btn_acciones_eliminar" icon="md-delete" onclick="">
+      <ons-action-sheet-button style="color:#80232b !important" id="btnAccionesEliminar" icon="md-delete" onclick="">
         <span style="color:#858585 !important">Eliminar anuncio</span>
       </ons-action-sheet-button>
       <ons-action-sheet-button style="color:#80232b !important" icon="md-close" onclick="app.hideFromTemplate()"><span
@@ -1218,7 +1168,7 @@
       </p>
     </ons-card>
   </ons-modal>
-  <ons-modal id="modal_activar_ads" direction="up">
+  <ons-modal id="modalActivarAds" direction="up">
     <ons-card style="margin-left:6% !important; margin-right:6% !important;">
       <div style="color:#80232b" class="title text-center">
         Confirmación
@@ -1226,19 +1176,19 @@
       <div class="content">
         <ons-row>
           <ons-col>
-            <p style="text-align: center" id="mensaje_activar"></p>
+            <p style="text-align: center" id="mensajeActivar"></p>
           </ons-col>
         </ons-row>
       </div>
       <br>
       <p style="text-align: right">
-        <ons-button onclick="activar_ads()" style="color:#80232b" modifier="quiet">
+        <ons-button onclick="activarAds()" style="color:#80232b" modifier="quiet">
           Activar</ons-button>
-        <ons-button onclick="close_activar_ads()" style="color:#80232b" modifier="quiet">Cancelar</ons-button>
+        <ons-button onclick="closeActivarAds()" style="color:#80232b" modifier="quiet">Cancelar</ons-button>
       </p>
     </ons-card>
   </ons-modal>
-  <ons-modal id="modal_desactivar_ads" direction="up">
+  <ons-modal id="modalDesactivarAds" direction="up">
     <ons-card style="margin-left:6% !important; margin-right:6% !important;">
       <div style="color:#80232b" class="title text-center">
         Confirmación
@@ -1246,48 +1196,50 @@
       <div class="content">
         <ons-row>
           <ons-col>
-            <p style="text-align: center" id="mensaje_desactivar"></p>
+            <p style="text-align: center" id="mensajeDesactivar"></p>
           </ons-col>
         </ons-row>
       </div>
       <br>
       <p style="text-align: right">
-        <ons-button onclick="desactivar_ads()" style="color:#80232b" modifier="quiet">
+        <ons-button onclick="desactivarAds()" style="color:#80232b" modifier="quiet">
           Desactivar</ons-button>
-        <ons-button onclick="close_desactivar_ads()" style="color:#80232b" modifier="quiet">Cancelar</ons-button>
+        <ons-button onclick="closeDesactivarAds()" style="color:#80232b" modifier="quiet">Cancelar</ons-button>
       </p>
     </ons-card>
   </ons-modal>
-  <ons-modal id="modal_condiciones" direction="up">
-    <ons-card style="margin-left:6% !important; margin-right:6% !important;">
-      <ons-page style="overflow: hidden! Important; position: fixed! Important;padding:15px 15px !important">
+  <ons-modal id="modalCondiciones" direction="up">
+    <ons-card style="margin-left:10px !important; margin-right:10px !important;">
+      <ons-page style="overflow: hidden! Important; position: fixed! Important;padding:20px 20px !important">
         <div style="text-align:center;margin-left:5px;margin-right:5px;">
           <h5>Términos y Condiciones para el Uso de la Aplicación <b>“APP”</b></h5>
         </div>
-        <h5 style="text-align:left;">PRODUCTOS</h5>
-        <p style="text-align:justify;">SUBASTANUNCIOS se dedica a la publicación y promoción de anuncios y subastas
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">PRODUCTOS</h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">SUBASTANUNCIOS se dedica a la publicación y promoción de anuncios y subastas
           sobre
           productos y/o servicios propiedad de terceros (Clientes Registrados) en Jacinto Egas #1459 y Río Morona,
           Ibarra, Ecuador. Desde la aplicación móvil “SUBASTANUNCIOS” bajo ninguna circunstancia se llevará a cabo la
           venta o promoción de productos o servicios ajenos a nuestro modelo de negocio, sobre todo aquellos productos
           que sean de venta prohibida por la legislación ecuatoriana. </p>
-        <h5 class="text-left">FINALIDAD DEL PORTAL <a href="https://subastanuncios.com/portada">WWW.
+        <h5 style="text-align:center;margin-left:8px;margin-right:8px;">FINALIDAD DEL PORTAL
+        </h5>
+         <h5 style="text-align:center;margin-left:8px;margin-right:8px;"> <a href="https://subastanuncios.com/portada">WWW.
             SUBASTANUNCIOS.COM</a> Y APP MÓVIL
         </h5>
-        <p style="text-align:justify;">En nuestra página web y aplicaciones móviles damos información sobre todo aquello
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">En nuestra página web y aplicaciones móviles damos información sobre todo aquello
           que
           puede interesar al cliente: promociones y ofertas de productos, anuncios, subastas directas e inversas,
           horarios y fechas, eventos, ubicación de comercios anunciantes, etc.</p>
-        <h5 style="text-align:left;">CONDICIONES DE ACCESO Y UTILIZACIÓN</h5>
-        <p style="text-align:justify;">El efectuar un acceso a la web y a aplicaciones móviles, e interactuar con los
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">CONDICIONES DE ACCESO Y UTILIZACIÓN</h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">El efectuar un acceso a la web y a aplicaciones móviles, e interactuar con los
           contenidos e información que en ellas se exponen, es responsabilidad exclusiva de los usuarios, y supone
           aceptar y conocer las advertencias legales, condiciones y términos de uso contenidos en ella. La
           Administración de SUBASTANUNCIOS no garantiza que los artículos, productos y/o servicios comercializados,
           estén disponibles en cualquier momento que se realice una compra. Si se diera el caso en que un cliente
           realizara la compra de un artículo en subasta, acepta que en caso de no proceder con la posterior compra
           (pago por el mismo) podría ser penalizado por SUBASTANUNCIOS.</p>
-        <h5 style="text-align:left;">PAGOS</h5>
-        <p style="text-align:justify;">El comprador podrá realizar los pagos por Transferencia Bancaria, o pago en línea
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">PAGOS</h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">El comprador podrá realizar los pagos por Transferencia Bancaria, o pago en línea
           con
           tarjetas de crédito o débito, para lo cual se emplea una pasarela de pago que realice operaciones dentro de
           Ecuador. De igual forma el usuario podrá utilizar PayPal, a la hora de realizar una compra. Para lograr
@@ -1295,42 +1247,42 @@
           autenticación de los controles de acceso. Todo proceso de contratación o que conlleve la introducción de
           datos personales, serán siempre transmitidos mediante protocolo de comunicación segura (HTTPS://) de tal
           forma que ningún tercero tenga acceso a la información transmitida vía electrónica. </p>
-        <h5 style="text-align:left;">CALIDAD DE LOS DATOS </h5>
-        <p style="text-align:justify;">Los usuarios deberán garantizar la veracidad, exactitud, autenticidad y vigencia
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">CALIDAD DE LOS DATOS </h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">Los usuarios deberán garantizar la veracidad, exactitud, autenticidad y vigencia
           de
           los datos de carácter personal que les hayan sido recogidos.</p>
-        <h5 style="text-align:left;">PROTECCIÓN DE MENORES </h5>
-        <p style="text-align:justify;">No recogemos datos personales ni aceptamos compras de menores. Es responsabilidad
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">PROTECCIÓN DE MENORES </h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">No recogemos datos personales ni aceptamos compras de menores. Es responsabilidad
           del
           padre/madre/tutor legal velar por la privacidad de los menores, haciendo todo lo posible para asegurar que
           han autorizado la recogida y el uso de los datos personales del menor.</p>
-        <h5 style="text-align:left;">CONDICIONES DE COMPRA </h5>
-        <p style="text-align:justify;">Los precios y condiciones de venta tienen un carácter meramente informativo y
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">CONDICIONES DE COMPRA </h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">Los precios y condiciones de venta tienen un carácter meramente informativo y
           pueden
           ser modificados en atención a las fluctuaciones del mercado. No obstante, la realización del pedido (puja)
           en una subasta se confirmará una vez terminado el plazo de la misma. El castellano será la lengua utilizada
           para formalizar el contrato (en caso de requerirlo la operación). El documento electrónico en que se
           formalice el contrato se archivará y el usuario tendrá acceso a él por los diferentes medios de contacto.
         </p>
-        <h5 style="text-align:left;">ENVÍO DE NOTIFICACIONES </h5>
-        <p style="text-align:justify;">Los plazos de envío para una notificación antes el término de una subasta o
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">ENVÍO DE NOTIFICACIONES </h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">Los plazos de envío para una notificación antes el término de una subasta o
           evento de
           premios, oscilan entre las 72 horas y los 15 días. No podemos garantizar con exactitud la materialización de
           un plazo especifico pues depende en gran parte de la ubicación geográfica donde se encuentre el usuario a la
           cual se le hará llegar en formato físico las descripciones del procedimiento de subasta para proceder con la
           materialización de la compra-venta. </p>
-        <h5 style="text-align:left;">DEVOLUCIONES </h5>
-        <p style="text-align:justify;">SUBASTANUNCIOS no se responsabiliza por la calidad de los productos o servicios
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">DEVOLUCIONES </h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">SUBASTANUNCIOS no se responsabiliza por la calidad de los productos o servicios
           adquiridos mediante su plataforma, una vez que el cliente acepte que tiene la responsabilidad de garantizar
           y evaluar la calidad de los mismos durante el proceso de compra. </p>
-        <h5 style="text-align:left;">CANCELACIONES DE PEDIDOS </h5>
-        <p style="text-align:justify;">En aquellas cancelaciones de pedidos que impliquen una devolución de los derechos
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">CANCELACIONES DE PEDIDOS </h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">En aquellas cancelaciones de pedidos que impliquen una devolución de los derechos
           de
           compra por parte del usuario al cliente y que sean aceptadas por SUBASTANUNCIOS, se notificará vía correo
           electrónico al Usuario el hecho de que SUBASTANUNCIOS dispondrá de un plazo máximo de 30 días por trámites
           administrativos, si bien intentamos que el plazo no sea superior a 7 días.</p>
-        <h5 style="text-align:left;">RESPONSABILIDADES DEL CLIENTE</h5>
-        <p style="text-align:justify;">El Cliente se obliga a realizar un uso lícito de los servicios brindados en la
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">RESPONSABILIDADES DEL CLIENTE</h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">El Cliente se obliga a realizar un uso lícito de los servicios brindados en la
           aplicación, sin contravenir la legislación vigente, ni lesionar los derechos e intereses de terceras
           personas.
           El Cliente garantiza la veracidad y exactitud de los datos facilitados al cumplimentar los formularios de
@@ -1340,14 +1292,14 @@
           servicios por parte de SUBASTANUNCIOS, sin necesidad de previo aviso al Cliente y sin que ello dé derecho a
           indemnización alguna (incluyendo cancelación de Perfiles de Usuario).
         </p>
-        <h5 style="text-align:left;">SERVICIOS POSTVENTA</h5>
-        <p style="text-align:justify;">Para cualquier consulta, incidencia, queja o reclamación tras la adquisición de
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">SERVICIOS POSTVENTA</h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">Para cualquier consulta, incidencia, queja o reclamación tras la adquisición de
           los
           productos o servicios, SUBASTANUNCIOS pone a disposición del Cliente un Servicio de Atención al Cliente en
           el correo electrónico <a href="info@subastanuncios.com">info@subastanuncios.com</a> y el teléfono +(593)
           967133720.</p>
-        <h5 style="text-align:left;">PROPIEDAD INDUSTRIAL E INTELECTUAL</h5>
-        <p style="text-align:justify;">Los derechos de propiedad intelectual e industrial sobre las obras, marcas,
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">PROPIEDAD INDUSTRIAL E INTELECTUAL</h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">Los derechos de propiedad intelectual e industrial sobre las obras, marcas,
           logos, y
           cualquier otro susceptible de protección, contenidos en la Plataforma SUBASTANUNCIOS, propiedad de
           SUBASTANUNCIOS corresponden en exclusiva a SUBASTANUNCIOS (o a terceros autorizantes), a quien corresponde
@@ -1357,18 +1309,18 @@
           no autorizadas de tales obras, marcas, logos, etc., constituye una infracción de los derechos de propiedad
           intelectual e industrial de SUBASTANUNCIOS o del titular de los mismos, y podrá dar lugar al ejercicio de
           cuantas acciones judiciales o extrajudiciales les pudieran corresponder en el ejercicio de sus derechos.</p>
-        <p style="text-align:justify;">Mediante la aceptación de las presentes Condiciones Generales de Contratación, el
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">Mediante la aceptación de las presentes Condiciones Generales de Contratación, el
           Cliente se compromete a respetar los derechos de Propiedad Industrial e Intelectual titularidad de
           SUBASTANUNCIOS y de terceros.</p>
-        <h5 style="text-align:left;">JURISDICCIÓN Y LEY APLICABLE</h5>
-        <p style="text-align:justify;">En el supuesto de que surja cualquier conflicto o discrepancia en la
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">JURISDICCIÓN Y LEY APLICABLE</h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">En el supuesto de que surja cualquier conflicto o discrepancia en la
           interpretación o
           aplicación de las presentes condiciones contractuales, los Juzgados y Tribunales que, en su caso, conocerán
           del asunto, serán los que disponga la normativa legal aplicable en materia de jurisdicción competente, en la
           que se atiende, tratándose de consumidores finales, al lugar del cumplimiento de la obligación o al del
           domicilio de la parte compradora.</p>
-        <h5 style="text-align:left;">Nivel del Servicio</h5>
-        <p style="text-align:justify;">SUBASTANUNCIOS realizará los esfuerzos necesarios para mantener el Servicio de
+        <h5 style="text-align:left;margin-left:8px;margin-right:8px;">Nivel del Servicio</h5>
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">SUBASTANUNCIOS realizará los esfuerzos necesarios para mantener el Servicio de
           Subastas y Anuncios se encuentre operativo en todo momento. Sin embargo, problemas técnicos pueden provocar
           interrupciones esporádicamente. Hay que tener en cuenta que la disponibilidad y la calidad del Servicio
           pueden variar en función de diversos factores, como pueden ser el dispositivo que se utilice, la ubicación
@@ -1378,15 +1330,15 @@
           SUBASTANUNCIOS no será responsable por las deficiencias o falta de disponibilidad del Servicio causadas por
           el usuario, por las deficiencias en el acceso a Internet o por cualquier otra causa fuera del control de
           SUBASTANUNCIOS</p>
-        <p style="text-align:justify;">SUBASTANUNCIOS realizará de forma esporádica actualizaciones y tareas de
+        <p style="text-align:justify;margin-left:8px;margin-right:8px;">SUBASTANUNCIOS realizará de forma esporádica actualizaciones y tareas de
           mantenimiento
           del Servicio, durante las cuales es posible que el Servicio no esté disponible. SUBASTANUNCIOS intentará
           establecer las actualizaciones y tareas de mantenimiento fuera de las horas punta, nunca superior a 30
           minutos y no más de dos veces al mes. La falta de disponibilidad debido a actualizaciones y tareas de
           mantenimiento no dan derecho al usuario a ningún tipo de reembolso o compensación.</p>
         <br>
-        <p style="text-align: right">
-          <ons-button onclick="cerrar_terminos()" style="color:#80232b" modifier="quiet">Cerrar</ons-button>
+        <p style="text-align: right;margin-left:8px;margin-right:8px;">
+          <ons-button onclick="cerrarTerminos()" style="color:#80232b" modifier="quiet">Cerrar</ons-button>
         </p>
       </ons-page>
     </ons-card>
@@ -1502,7 +1454,7 @@
             </div>
           </ons-col>
           <ons-col width="90%">
-            <ons-button onclick="abrir_terminos()"
+            <ons-button onclick="abrirTerminos()"
               style="color:#80232b; font-size: 12px !important; margin-top:8px !important" modifier="quiet">
               Acepto los términos y
               condiciones</ons-button>
@@ -1521,16 +1473,15 @@
 <!-- SCRIPTS -->
 <!-- JQuery -->
 <script type="text/javascript" src="material_bootstrap/js/jquery-3.3.1.min.js"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="material_bootstrap/js/popper.min.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="material_bootstrap/js/bootstrap.min.js"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="material_bootstrap/js/mdb.min.js"></script>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/urls.js"></script>
 <script type="text/javascript" src="js/index_dash.js"></script>
-<script type="text/javascript" src="js/popper.js"></script>
+<script type="text/javascript" src="js/ads.js"></script>
+<script type="text/javascript" src="js/subasta.js"></script>
+<script type="text/javascript" src="js/user.js"></script>
+<script type="text/javascript" src="js/terminos.js"></script>
+<script type="text/javascript" src="js/faqs.js"></script>
+<script type="text/javascript" src="js/historial_pagos.js"></script>
 <script type="text/javascript" src="js/scroll_infinito.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0jIY1DdGJ7yWZrPDmhCiupu_K2En_4HY&libraries=places" async
   defer></script>
@@ -1552,9 +1503,9 @@
   var pullHook = document.getElementById('pull-hook2');
   var modal_confirmacion = $('#modal_confirmacion');
   var modal_puja_directa = $('#modal_puja');
-  var modal_activar_ads = $('#modal_activar_ads');
-  var modal_desactivar_ads = $('#modal_desactivar_ads');
-  var modal_condiciones = $('#modal_condiciones');
+  let modalActivarAds = $('#modalActivarAds');
+  let modalDesactivarAds = $('#modalDesactivarAds');
+  let modalCondiciones = $('#modalCondiciones');
   var modal_eliminar_ads = $('#modal_eliminar_ads');
   var modalComprarInversa = $('#modalComprarInversa');
   var page;
@@ -1588,8 +1539,8 @@
   var page_active = null;
   var puja_mayor = 0;
   var valida_modal_open = false;
-  var comienza_mis_anuncios = null;
-  var limite_mis_anuncios = null;
+  let comienzaMisAnuncios = null;
+  let limiteMisAnuncios = null;
   var app = {};
   var valida_piso_gratis = false;
   var anuncio_objecto = null;
@@ -1597,9 +1548,9 @@
   var subcategoria_update = null;
   var valida_categoria_update = false;
   var contador_fotos_id = 1;
-  var valida_mis_anuncios = false;
-  var ads_id = null;
-  var ads_objet = null;
+  var validaMisAnuncios = false;
+  let adsId = null;
+  var adsObject = null;
   var comienza_mis_subastas = 0;
   var comienza_buscar_subastas = 0;
   var limite_buscar_subastas = 11;
@@ -1630,25 +1581,11 @@
         app.showFromTemplate = sheet.show.bind(sheet);
         app.hideFromTemplate = sheet.hide.bind(sheet);
       });
-
-
   });
 
-  function cerrar_terminos() {
-    modal_condiciones.hide();
-  }
 
-  function abrir_terminos() {
-    //   pushPage('#appNavigator', 'terminos.html', '');
-    ///  validar_terminos_condiciones = true;
-    //modal_confirmacion.hide();
-    modal_condiciones.show();
 
-  }
 
-  function abrir_faqs() {
-    pushPage('#appNavigator', 'faqs.html', '');
-  }
 
   function buscar_subastas_tipo(tipo) {
     if (tipo == 1) {
@@ -1660,7 +1597,7 @@
     }
     tipo_subasta_init = tipo;
     $('#area_subastas').hide();
-    $('#body_modal').text("Cargando subasta...");
+    $('#bodyModal').text("Cargando subasta...");
     modal.show();
     $('#area_subastas').empty();
     setTimeout(function () {
@@ -1718,7 +1655,7 @@
 
   function buscar_lista_ciudades() {
     modal.show();
-    $('#body_modal').text("Cargando ciudades...");
+    $('#bodyModal').text("Cargando ciudades...");
     var item_auth = get_data_local();
     setTimeout(function () {
       var url = base_url + 'rest_subasta/ciudades';
@@ -1767,186 +1704,40 @@
     }
   }
 
-  function cargar_historial() {
-    pushPage('#appNavigator', 'mis_pagos.html', '');
-    modal.show();
-    $('#body_modal').text("Cargando historial de pagos...");
-    var item_auth = get_data_local();
-    setTimeout(function () {
-      var url = base_url + 'rest_payment/mis_pagos';
-      var user_id = item_auth.user_id;
-      var security_token = item_auth.security_token;
-      data_to_server = {
-        user_id: user_id,
-        security_token: security_token,
-        anuncio_id: ads_id
-      };
-      send_data_server(url, data_to_server, success_cargar_pagos,
-        error);
-    }, 1000);
-  }
 
-  function success_cargar_pagos(response) {
-    var status = response.status;
-    var lista_pagos = response.pagos;
-    if (status == 200) {
-      cargar_pagos(lista_pagos);
-    }
-    if (status == 500) {
-      modal.hide();
-      navigator.notification.alert(
-        'No tiene acceso a la plataforma', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-    if (status == 404) {
-      modal.hide();
-      $('#header_lista_pagos').empty();
-      $('#header_lista_pagos').html("<h3 style='text-align: center;'>No tiene pagos realizados</h3>");
 
-      navigator.notification.alert(
-        'No tiene pagos realizados.', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
 
-  }
 
-  function cargar_pagos(lista_pagos) {
 
-    $('#header_lista_pagos').empty();
-    var cadena_pagos = "<ons-list-header>Historial de pagos</ons-list-header>";
-    for (let i = 0; i < lista_pagos.length; i++) {
-      var estado_pago = "";
-      if (lista_pagos[i].status == 0) {
-        estado_pago = "Nuevo pago";
-      } else if (lista_pagos[i].status == 1) {
-        estado_pago = "Aprobado";
-      } else if (lista_pagos[i].status == 2) {
-        estado_pago = "Cancelada por el cliente ó rechazada";
-      } else if (lista_pagos[i].status == 3) {
-        estado_pago = "Pendiente por aprobar";
-      } else {
-        estado_pago = "Reverso";
-      }
 
-      cadena_pagos = cadena_pagos + "<ons-list-item expandable>Referencia: " + lista_pagos[i].reference + " valor: $" +
-        parseFloat(lista_pagos[i].monto).toFixed(2) +
-        "<div class='expandable-content'><p style='text-align:center'>Estado: " + estado_pago +
-        "</p><p style='text-align:center'>Detalle: " + lista_pagos[i].detalle +
-        "</p><p style='text-align:center'>Fecha: " + lista_pagos[i].date + "</p></div></ons-list-item>";
 
-    }
-    $('#header_lista_pagos').append(cadena_pagos);
-    modal.hide();
-  }
 
-  function acciones_anuncios(obj) {
-    obj = atob(obj);
-    obj = JSON.parse(obj);
-    ads_objet = obj;
-    if (obj.is_active == 1 && obj.destacado == 1) {
-      $('#btn_acciones_ver').show();
-      $('#btn_acciones_update').show();
-      $('#btn_acciones_desactivar').show();
-      $('#btn_acciones_destacar').hide();
-      $('#btn_acciones_activar').hide();
-      $('#btn_acciones_eliminar').show();
-    }
-    if (obj.is_active == 1 && obj.destacado == 0) {
-      $('#btn_acciones_ver').show();
-      $('#btn_acciones_update').show();
-      $('#btn_acciones_desactivar').show();
-      $('#btn_acciones_destacar').show();
-      $('#btn_acciones_activar').hide();
-      $('#btn_acciones_eliminar').show();
-    }
-    if (obj.is_active == 0) {
-      $('#btn_acciones_ver').hide();
-      $('#btn_acciones_update').hide();
-      $('#btn_acciones_desactivar').hide();
-      $('#btn_acciones_destacar').hide();
-      $('#btn_acciones_activar').show();
-      $('#btn_acciones_eliminar').show();
-    }
-    $('#btn_acciones_ver').attr('onclick', 'detalle_anuncio("' + obj.anuncio_id + '")');
-    $('#btn_acciones_update').attr('onclick', 'editar_anuncio("' + btoa(JSON.stringify(obj)) + '")');
-    $('#btn_acciones_desactivar').attr('onclick', 'desactivar_anuncio("' + btoa(JSON.stringify(obj)) + '")');
-    $('#btn_acciones_destacar').attr('onclick', 'pagar_subasta_inversa()');
-    $('#btn_acciones_activar').attr('onclick', 'activar_anuncio("' + btoa(JSON.stringify(obj)) + '")');
-    $('#btn_acciones_eliminar').attr('onclick', 'eliminar_anuncio("' + btoa(JSON.stringify(obj)) + '")');
-    app.showFromTemplate();
-  }
 
-  function desactivar_anuncio(obj) {
-    obj = atob(obj);
-    obj = JSON.parse(obj);
-    $('#mensaje_desactivar').html("<p style='text-align:center'>¿Desactivar anuncio?</p><p style='text-align:center'>" +
-      obj.titulo + "</p>");
-    ads_id = obj.anuncio_id;
-    modal_desactivar_ads.show();
-    app.hideFromTemplate();
-  }
 
   function eliminar_anuncio(obj) {
     obj = atob(obj);
     obj = JSON.parse(obj);
     $('#mensaje_eliminar').html("<p style='text-align:center'>Eliminar anuncio?</p><p style='text-align:center'>" +
       obj.titulo + "</p>");
-    ads_id = obj.anuncio_id;
+    adsId = obj.anuncio_id;
     modal_eliminar_ads.show();
     app.hideFromTemplate();
   }
 
-  function close_desactivar_ads() {
-    modal_desactivar_ads.hide();
-  }
+
 
   function close_eliminar_ads() {
     modal_eliminar_ads.hide();
   }
 
-  function activar_anuncio(obj) {
-    obj = atob(obj);
-    obj = JSON.parse(obj);
-    $('#mensaje_activar').html("<p style='text-align:center'>¿Activar anuncio?</p><p style='text-align:center'>" +
-      obj.titulo + "</p>");
-    ads_id = obj.anuncio_id;
-    modal_activar_ads.show();
-    app.hideFromTemplate();
-  }
 
-  function close_activar_ads() {
-    modal_activar_ads.hide();
-  }
 
-  function desactivar_ads() {
-    modal_desactivar_ads.hide();
-    modal.show();
-    $('#body_modal').text("Desactivando anuncio...");
-    var item_auth = get_data_local();
-    setTimeout(function () {
-      var url = base_url + 'rest_anuncio/desactivar_anuncio';
-      var user_id = item_auth.user_id;
-      var security_token = item_auth.security_token;
-      data_to_server = {
-        user_id: user_id,
-        security_token: security_token,
-        anuncio_id: ads_id
-      };
-      send_data_server(url, data_to_server, success_desactivar_ads,
-        error);
-    }, 1000);
-  }
+
 
   function eliminar_ads() {
     modal_eliminar_ads.hide();
     modal.show();
-    $('#body_modal').text("Eliminando anuncio...");
+    $('#bodyModal').text("Eliminando anuncio...");
     var item_auth = get_data_local();
     setTimeout(function () {
       var url = base_url + 'rest_anuncio/delete';
@@ -1955,7 +1746,7 @@
       data_to_server = {
         user_id: user_id,
         security_token: security_token,
-        anuncio_id: ads_id
+        anuncio_id: adsId
       };
       send_data_server(url, data_to_server, success_eliminar_ads,
         error);
@@ -1965,10 +1756,10 @@
   function success_eliminar_ads(response) {
     var status = response.status;
     if (status == 200) {
-      valida_mis_anuncios = true;
+      validaMisAnuncios = true;
       navigator.notification.alert(
         'Anuncio eliminado correctamente', // message
-        mis_anuncios, // callback
+        misAnuncios, // callback
         'Notificación', // title
         'Aceptar' // buttonName
       );
@@ -1992,84 +1783,9 @@
 
   }
 
-  function success_desactivar_ads(response) {
-    var status = response.status;
-    if (status == 200) {
-      valida_mis_anuncios = true;
-      navigator.notification.alert(
-        'Anuncio desactivado correctamente', // message
-        mis_anuncios, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-    if (status == 500) {
-      navigator.notification.alert(
-        'No tiene acceso a la plataforma', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-    if (status == 404) {
-      navigator.notification.alert(
-        'Ocurrio un problema en la actualización del anuncio', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
 
-  }
 
-  function activar_ads() {
-    modal_activar_ads.hide();
-    modal.show();
-    $('#body_modal').text("Activando anuncio...");
-    var item_auth = get_data_local();
-    setTimeout(function () {
-      var url = base_url + 'rest_anuncio/activar_anuncio';
-      var user_id = item_auth.user_id;
-      var security_token = item_auth.security_token;
-      data_to_server = {
-        user_id: user_id,
-        security_token: security_token,
-        anuncio_id: ads_id
-      };
-      send_data_server(url, data_to_server, success_activar_ads,
-        error);
-    }, 1000);
-  }
 
-  function success_activar_ads(response) {
-    var status = response.status;
-    if (status == 200) {
-      valida_mis_anuncios = true;
-      navigator.notification.alert(
-        'Anuncio activado correctamente', // message
-        mis_anuncios, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-    if (status == 500) {
-      navigator.notification.alert(
-        'No tiene acceso a la plataforma', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-    if (status == 404) {
-      navigator.notification.alert(
-        'Ocurrio un problema en la actualización del anuncio', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-
-  }
   //carga cuando se ejecuta antes del cambio
   document.addEventListener('preopen', function (event) {
     buscar_membresia_user();
@@ -2085,7 +1801,7 @@
       comienza2 = 0;
       item_auth = get_data_local();
       $('#area_subastas').hide();
-      $('#body_modal').text("Cargando subastas...");
+      $('#bodyModal').text("Cargando subastas...");
       modal.show();
       $('#area_subastas').empty();
       setTimeout(function () {
@@ -2115,7 +1831,7 @@
       valida_infinito_anuncio = false;
       $('#area_anuncios').hide();
       modal.show();
-      $('#body_modal').text("Cargando anuncios...");
+      $('#bodyModal').text("Cargando anuncios...");
       $('#area_anuncios').empty();
       var item_auth = get_data_local();
       console.log("csm ok")
@@ -2159,7 +1875,7 @@
     if (page.id == "page1") {
       comienza2 = 0;
       $('#area_subastas').empty();
-      $('#body_modal').text("Cargando subastas...");
+      $('#bodyModal').text("Cargando subastas...");
       modal.show();
       setTimeout(function () {
         var url = base_url + 'rest_subasta/cargar_subastas';
@@ -2339,7 +2055,7 @@
   //funcion para las subastas con membresias activas y pisos disponible
   function adquirir_subasta_gratis() {
     modal_confirmacion.hide();
-    $('#body_modal').text("Cargando...")
+    $('#bodyModal').text("Cargando...")
     modal.show();
     setTimeout(function () {
       var url = base_url + 'rest_subasta/pagar_entrada';
@@ -2394,7 +2110,7 @@
   function cargar_membresia_user() {
     pushPage('#appNavigator', 'membresia_detalle.html', '');
     modal.show();
-    $('#body_modal').text("Cargando membresia...")
+    $('#bodyModal').text("Cargando membresia...")
     setTimeout(function () {
       var url = base_url + 'rest_membresia/buscar_membresia_user';
       var user_id = item_auth.user_id;
@@ -2411,7 +2127,7 @@
   function cargar_membresias() {
     pushPage('#appNavigator', 'adquirir_membresia.html', '');
     modal.show();
-    $('#body_modal').text("Cargando membresias...")
+    $('#bodyModal').text("Cargando membresias...")
     setTimeout(function () {
       var url = base_url + 'rest_membresia/listar';
       var user_id = item_auth.user_id;
@@ -2506,7 +2222,7 @@
     if (aceptado_tc) {
       close_confirmacion();
       modal.show();
-      $('#body_modal').text("Cargando ...");
+      $('#bodyModal').text("Cargando ...");
       setTimeout(function () {
         var url = base_url + 'rest_payment/checkout';
         var user_id = item_auth.user_id;
@@ -2537,7 +2253,7 @@
     if (aceptado_tc) {
       close_confirmacion();
       modal.show();
-      $('#body_modal').text("Cargando ...");
+      $('#bodyModal').text("Cargando ...");
       setTimeout(function () {
         var url = base_url + 'rest_payment/checkout';
         var user_id = item_auth.user_id;
@@ -2625,7 +2341,7 @@
         $('#btn_notificacion_piso').hide();
         $('#btn_notificacion_aceptar').hide();
         $('#btn_notificacion_desctacar').show();
-        valida_mis_anuncios = true;
+        validaMisAnuncios = true;
         //anuncio destacado
         $('#icono_notificacion').html("<i class='fa fa-check-circle-o'></i>");
         $('#status_notificacion').text("Transacción Aprobada");
@@ -2795,7 +2511,7 @@
       app.hideFromTemplate();
     }
     modal.show();
-    $('#body_modal').text("Cargando ...");
+    $('#bodyModal').text("Cargando ...");
     $('#btn_pagar_confirmacion').hide();
     setTimeout(function () {
       var url = base_url + 'rest_payment/payments_user';
@@ -2820,7 +2536,7 @@
   function comprarInversa() {
     closeComprarInversa();
     modal.show();
-    $('#body_modal').text("Generando pedido...");
+    $('#bodyModal').text("Generando pedido...");
     setTimeout(function () {
       var url = base_url + 'rest_subasta/generar_pedido_inversa';
       var user_id = item_auth.user_id;
@@ -2867,9 +2583,9 @@
     $('#btn_pagar_all').show();
     let status = response.status;
     if (status == 200) {
-      if (ads_objet) {
+      if (adsObject) {
         $('#body_mensaje_confirmacion').empty();
-        let cadena = "<h5  class='text-center'> Anuncio:" + ads_objet.titulo +
+        let cadena = "<h5  class='text-center'> Anuncio:" + adsObject.titulo +
           "</h5><h5  class='text-center'>$3.99</h5>";
         $('#body_mensaje_confirmacion').append(cadena);
         $('#title_confirmacion').text("Destacar");
@@ -2877,9 +2593,9 @@
           "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p><p style='text-align:center'>Referencia: #" +
           response.obj[0].reference + "<p>");
         $('#transaccion_pendiente').show();
-        id_confirmacion = ads_objet.anuncio_id;
+        id_confirmacion = adsObject.anuncio_id;
         valor_confirmacion = 3.99;
-        detalle_confirmacion = ads_objet.titulo;
+        detalle_confirmacion = adsObject.titulo;
         $('#btn_pagar_all').hide();
         $('#btn_pagar_gratis').hide();
         $('#body_condiciones').hide();
@@ -2905,18 +2621,18 @@
 
     }
     if (status == 404) {
-      if (ads_objet) {
+      if (adsObject) {
         $('#body_mensaje_confirmacion').empty();
-        let cadena = "<h5  class='text-center'> Anuncio:" + ads_objet.titulo +
+        let cadena = "<h5  class='text-center'> Anuncio:" + adsObject.titulo +
           "</h5><h5  class='text-center'>$3.99</h5>";
         $('#body_mensaje_confirmacion').append(cadena);
         $('#title_confirmacion').text("Destacar");
         $('#transaccion_pendiente').html(
           "<p class='text-center'><b>Estimado usuario actualmente tiene una transacción pendiente.</b></p>");
         $('#transaccion_pendiente').hide();
-        id_confirmacion = ads_objet.anuncio_id;
+        id_confirmacion = adsObject.anuncio_id;
         valor_confirmacion = 3.99;
-        detalle_confirmacion = ads_objet.titulo;
+        detalle_confirmacion = adsObject.titulo;
         tipo_inicial_subasta = 2;
         $('#btn_pagar_gratis').hide();
         $('#btn_pagar_all').show();
@@ -3060,7 +2776,7 @@
   function cargar_categorias_subastas() {
     pushPage('#appNavigator', 'categoria_subastas.html', '');
     modal.show();
-    $('#body_modal').text("Cargando categorias...")
+    $('#bodyModal').text("Cargando categorias...")
     setTimeout(function () {
       var url = base_url + 'rest_subasta/subasta_categoria';
       var user_id = item_auth.user_id;
@@ -3081,7 +2797,7 @@
     //  response = JSON.parse(response.data);
     var status = response.status;
     if (status == 200) {
-      ads_objet = null;
+      adsObject = null;
       cargar_categorias_anuncio(lista, count);
     }
     if (status == 500) {
@@ -3110,7 +2826,7 @@
     //  response = JSON.parse(response.data);
     var status = response.status;
     if (status == 200) {
-      ads_objet = null;
+      adsObject = null;
       /*     if (anuncio_objecto) {
             categoria_update = anuncio_objecto.subcategoria.cate_anuncio_id;
             subcategoria_update = anuncio_objecto.subcate_id;
@@ -3163,33 +2879,7 @@
     }
   }
 
-  function success_anuncio_subcategoria2(response) {
-    modal.hide();
-    //  response = JSON.parse(response.data);
-    var status = response.status;
-    if (status == 200) {
-      lista = response.object;
-      count = lista.length;
-      cargarFormEditar(lista);
-      // cargar_subcategorias_anuncio(lista, count);
-    }
-    if (status == 500) {
-      navigator.notification.alert(
-        'No tiene acceso a la plataforma', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-    if (status == 404) {
-      navigator.notification.alert(
-        'No hay categorias', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-  }
+
   //funcion de repuesta para cargar las categorias de la subasta
   function success_subasta_categoria(response) {
     lista = response.lista;
@@ -3350,7 +3040,7 @@
   //carga la ventana para buscar las subastas
   function buscar() {
     modal.show();
-    $('#body_modal').text("Cargando");
+    $('#bodyModal').text("Cargando");
     pushPage('#appNavigator', 'buscar.html', 'Buscar subasta');
     var item_auth = get_data_local();
     setTimeout(function () {
@@ -3779,7 +3469,7 @@
   function buscar_anuncio() {
     comienza_buscar_anuncio = 0;
     modal.show();
-    $('#body_modal').text("Cargando ...");
+    $('#bodyModal').text("Cargando ...");
     pushPage('#appNavigator', 'buscar_anuncio.html', 'Buscar subasta');
     var item_auth = get_data_local();
     setTimeout(function () {
@@ -3901,7 +3591,7 @@
   function cargar_perfil() {
     pushPage('#appNavigator', 'perfil_cliente.html', '');
     modal.show();
-    $('#body_modal').text("Cargando");
+    $('#bodyModal').text("Cargando");
     setTimeout(function () {
       modal.hide();
     }, 1000);
@@ -3911,7 +3601,7 @@
     fn.toggleMenu();
     pushPage('#appNavigator', 'contrasena.html', '');
     modal.show();
-    $('#body_modal').text("Cargando");
+    $('#bodyModal').text("Cargando");
     setTimeout(function () {
       modal.hide();
     }, 1000);
@@ -4205,7 +3895,7 @@
     var compara = $("#autocomplete").val().trim();
     var tipo_seleccionada = $('#select_tipo_subasta').val();
     modal.show();
-    $('#body_modal').text("Buscando subastas...");
+    $('#bodyModal').text("Buscando subastas...");
     setTimeout(function () {
       var url = base_url + 'rest_subasta/buscar_subastas';
       var user_id = item_auth.user_id;
@@ -4305,7 +3995,7 @@
   function buscar_subastas(id) {
     pushPage('#appNavigator', 'categoria_subasta_filtro.html', '');
     modal.show();
-    $('#body_modal').text("Cargando subastas");
+    $('#bodyModal').text("Cargando subastas");
     setTimeout(function () {
       var url = base_url + 'rest_subasta/cargar_subastas2';
       var user_id = item_auth.user_id;
@@ -4325,7 +4015,7 @@
   function buscar_anuncios(id) {
     pushPage('#appNavigator', 'categoria_anuncio_filtro.html', '');
     modal.show();
-    $('#body_modal').text("Cargando anuncios...");
+    $('#bodyModal').text("Cargando anuncios...");
     setTimeout(function () {
       var url = base_url + 'rest_anuncio/cargar_anuncio2';
       var user_id = item_auth.user_id;
@@ -4400,7 +4090,7 @@
     }
     pushPage('#appNavigator', 'detalle_subasta.html', '');
     modal.show();
-    $('#body_modal').text("Cargando detalle de la subasta...");
+    $('#bodyModal').text("Cargando detalle de la subasta...");
     setTimeout(function () {
       var url = base_url + 'rest_subasta/detalle_subasta';
       var user_id = item_auth.user_id;
@@ -4696,7 +4386,7 @@
   //pagar entrada de la subasta
   function pagar_entrada() {
     modal.show();
-    $('#body_modal').text("Realizando pago")
+    $('#bodyModal').text("Realizando pago")
     setTimeout(function () {
       var url = base_url + 'rest_subasta/entrar_subasta';
       var user_id = item_auth.user_id;
@@ -4768,7 +4458,7 @@
             }
           }
           modal.show();
-          $('#body_modal').text("Cambiando contraseña");
+          $('#bodyModal').text("Cambiando contraseña");
           setTimeout(function () {
             var url = base_url + 'rest_user/change_password';
             var puser_id = item_auth.user_id;
@@ -4858,7 +4548,7 @@
             }
             //mandar a cambiar los datos de usuarios
             modal.show();
-            $('#body_modal').text("Actualizando perfil del usuario.")
+            $('#bodyModal').text("Actualizando perfil del usuario.")
             setTimeout(function () {
               var url = base_url + 'rest_user/update_datos_perfil';
               var puser_id = item_auth.user_id;
@@ -5034,7 +4724,7 @@
   function cargar_categorias_anuncios() {
     pushPage('#appNavigator', 'categoria_anuncios.html', '');
     modal.show();
-    $('#body_modal').text("Cargando categorias...")
+    $('#bodyModal').text("Cargando categorias...")
     setTimeout(function () {
       var url = base_url + 'rest_anuncio/anuncio_categoria';
       var user_id = item_auth.user_id;
@@ -5067,7 +4757,7 @@
         cadena = cadena +
           "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas2_" +
           lista[i].anuncio_id +
-          "' onclick=''><div class='row'><div class='col-12'><h4 id='titulo_anuncio_" +
+          "' onclick=''><div class='row'><div class='col-12'><h4 id='tituloAnuncio" +
           lista[i].anuncio_id +
           "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
           lista[i].titulo +
@@ -5083,7 +4773,7 @@
       }
       $('#area_anuncios').append(cadena);
       for (let k = 0; k < lista.length; k++) {
-        $('#ver_mas2_' + lista[k].anuncio_id).attr('onclick', 'detalle_anuncio("' + lista[k].anuncio_id + '")');
+        $('#ver_mas2_' + lista[k].anuncio_id).attr('onclick', 'detalleAnuncio("' + lista[k].anuncio_id + '")');
       }
     }
   }
@@ -5122,7 +4812,7 @@
       }
       $('#area_anuncio_categoria').append(cadena);
       for (let k = 0; k < lista.length; k++) {
-        $('#ver_mas3_' + lista[k].anuncio_id).attr('onclick', 'detalle_anuncio("' + lista[k].anuncio_id + '")');
+        $('#ver_mas3_' + lista[k].anuncio_id).attr('onclick', 'detalleAnuncio("' + lista[k].anuncio_id + '")');
         var myP = $('#titulo_anuncio3_' + lista[k].anuncio_id);
         if (myP.text().length > 27) {
           myP.text(myP.text().substring(0, 24));
@@ -5151,7 +4841,7 @@
         cadena = cadena +
           "<ons-col width='50%'><ons-card style='height:220px !important' id='ver_mas3_" +
           lista[i].anuncio_id +
-          "' onclick=''><div class='row'><div class='col-12'><h4 id='titulo_anuncio_" +
+          "' onclick=''><div class='row'><div class='col-12'><h4 id='tituloAnuncio" +
           lista[i].anuncio_id +
           "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
           lista[i].titulo +
@@ -5169,99 +4859,13 @@
       $('#area_autocomplete_anuncio').show();
       modal.hide();
       for (let k = 0; k < lista.length; k++) {
-        $('#ver_mas3_' + lista[k].anuncio_id).attr('onclick', 'detalle_anuncio("' + lista[k].anuncio_id + '")');
+        $('#ver_mas3_' + lista[k].anuncio_id).attr('onclick', 'detalleAnuncio("' + lista[k].anuncio_id + '")');
       }
     }
 
   }
-  //funcion que se ejecuta para ver el detalle del anuncio
-  function detalle_anuncio(id) {
-    $('#body_detalle_anuncio').hide();
-    app.hideFromTemplate();
-    pushPage('#appNavigator', 'detalle_anuncio.html', '');
-    modal.show();
-    $('#body_modal').text("Cargando detalle del anuncio...");
-    setTimeout(function () {
-      var url = base_url + 'rest_anuncio/detalle_anuncio';
-      var user_id = item_auth.user_id;
-      var security_token = item_auth.security_token;
-      data_to_server = {
-        user_id: user_id,
-        security_token: security_token,
-        id: id
-      };
-      send_data_server(url, data_to_server, success_detalle_anuncio,
-        error);
-    }, 1000);
-  }
-  //funcion que muestra el detalle del anuncio
-  function success_detalle_anuncio(response) {
-    modal.hide();
-    // response = JSON.parse(response.data);
-    var status = response.status;
-    if (status == 200) {
-      // $('#area_detalle_subasta').show();
-      $('#titulo_detalle_anuncio').text(response.detalle.titulo);
-      $('#categoria_detalle_anuncio').html("<span><i class='fa fa-tag' aria-hidden='true'></i> " + response.detalle
-        .categoria +
-        "|" + response.detalle.subcategoria +
-        "</span>&nbsp;<br><span><i class='fa fa-map-marker' aria-hidden='true'></i> " + response.detalle
-        .ciudad +
-        "</span> ");
-      $('#descripcion_detalle_anuncio').html(response.detalle.descripcion);
-      $('#precio_anuncio').text("Precio: $" + parseFloat(response.detalle.precio).toFixed(2));
-      $('#number_whatsaap').attr("href", "https://api.whatsapp.com/send?phone=593" + response.detalle.whatsapp);
-      $('#whatsapp').html("<i class='fa fa-whatsapp' aria-hidden='true'></i> " + response.detalle.whatsapp + "");
-      /* $('#inicial_detalle').text(" $" + parseFloat(response.detalle.valor_inicial).*/
-      if (response.detalle.anuncio_photo.indexOf("upload") >= 0) {
-        imagen1 = base_url + response.detalle.anuncio_photo;
-      } else {
-        imagen1 = response.detalle.anuncio_photo;
-      }
-      //slider
-      var slider =
-        "<ons-carousel-item><img style='width:100%' src='" +
-        imagen1 + "'></ons-carousel-item>";
-      if (response.foto_object.length > 0) {
-        for (let i = 0; i < response.foto_object.length; i++) {
-          if (response.detalle.anuncio_photo.indexOf("upload") >= 0) {
-            imagen2 = base_url + response.foto_object[i].photo_anuncio;
-          } else {
-            imagen2 = response.foto_object[i].photo_anuncio;
-          }
-          slider = slider +
-            "<ons-carousel-item><img style='width:100%' src='" +
-            imagen2 + "'></ons-carousel-item>";
-        }
-      }
-      //$('.carousel-indicators').html(peq);
-      $('#carousel_anuncio').append(slider);
-      lat = response.detalle.lat;
-      lng = response.detalle.lng;
-      mapa =
-        " <iframe width='280' height='170'frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.com/maps?q=" +
-        lat + "," + lng + "&hl=es&z=14&amp;output=embed'></iframe>";
-      $('#map').html(mapa);
-      getReverseGeocodingData(lat, lng);
-      $('#body_detalle_anuncio').show();
-    }
-    if (status == 500) {
-      navigator.notification.alert(
-        'No tiene acceso a la plataforma', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-    if (status == 404) {
-      navigator.notification.alert(
-        'No hay detalle del anuncio', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-  }
+
+
   //funcion que dadas la kongitud y latitud devuelve la direccion
   function getReverseGeocodingData(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
@@ -5281,34 +4885,13 @@
     });
   }
 
-  function editar_anuncio(obj) {
-    obj = atob(obj);
-    obj = JSON.parse(obj);
-    ads_objet = obj;
-    app.hideFromTemplate();
-    document.querySelector('ons-navigator').bringPageTop('formulario_editar.html');
-    //  pushPage('#appNavigator', 'formulario_editar.html', '');
-    modal.show();
-    $('#body_modal').text("Cargando anuncio...")
-    setTimeout(function () {
-      var url = base_url + 'rest_anuncio/subcategorias';
-      var user_id = item_auth.user_id;
-      var security_token = item_auth.security_token;
-      data_to_server = {
-        user_id: user_id,
-        security_token: security_token,
-        id: ads_objet.cate_anuncio_id
-      };
-      send_data_server(url, data_to_server, success_anuncio_subcategoria2,
-        error);
-    }, 1000);
-  }
+
   //funcion que busca las categorias de los anuncios
   function publicar_anuncio(id) {
     app.hideFromTemplate();
     pushPage('#appNavigator', 'categoria_anuncios_publicar.html', '');
     modal.show();
-    $('#body_modal').text("Cargando categorias...")
+    $('#bodyModal').text("Cargando categorias...")
     setTimeout(function () {
       var url = base_url + 'rest_anuncio/anuncio_categoria';
       var user_id = item_auth.user_id;
@@ -5335,7 +4918,7 @@
     array_fotos = [];
     pushPage('#appNavigator', 'subcategorias.html', '');
     modal.show();
-    $('#body_modal').text("Cargando subcategorias...");
+    $('#bodyModal').text("Cargando subcategorias...");
     setTimeout(function () {
       var url = base_url + 'rest_anuncio/subcategorias';
       var user_id = item_auth.user_id;
@@ -5349,30 +4932,7 @@
         error);
     }, 1000);
   }
-  //funcion que carga el formulario del anuncio
-  function cargarFormEditar(lista) {
-    $('#label_titulo_edit').addClass('active');
-    $('#label_descripcion_edit').addClass('active');
-    $('#label_phone_edit').addClass('active');
-    $('#label_precio_edit').addClass('active');
-    $('#titulo_publicar_edit').val("");
-    $('#descripcion_publicar_edit').val("");
-    $('#phone_publicar_edit').val("");
-    $('#precio_publicar_edit').val("");
-    $('#titulo_publicar_edit').val(ads_objet.titulo_completo);
-    $('#descripcion_publicar_edit').val(ads_objet.descripcion);
-    $('#phone_publicar_edit').val(ads_objet.whatsapp);
-    $('#precio_publicar_edit').val(ads_objet.precio);
-    var cadena_sub = '<ons-select style="margin-left:10%" id="select_subcategoria">';
-    if (lista.length > 0) {
-      lista.forEach(element => {
-        cadena_sub += '<option value="' + element.subcate_id + '">' + element.nombre + '</option>'
-      });
-    }
-    cadena_sub += '</ons-select>'
-    $('#body_select_sub').html(cadena_sub);
-    $('#select_subcategoria').val(ads_objet.subcate_id);
-  }
+
 
   function cargar_formulario(id) {
     subcategoria = id;
@@ -5382,18 +4942,18 @@
     $('#phone_publicar').val("");
     $('#precio_publicar').val("");
     modal.show();
-    $('#body_modal').text("Cargando...");
+    $('#bodyModal').text("Cargando...");
     setTimeout(function () {
       modal.hide();
     }, 1000);
   }
 
   function siguiente_edit() {
-    titulo_publicar = $('#titulo_publicar_edit').val();
-    descripcion_publicar = $('#descripcion_publicar_edit').val();
-    phone_publicar = $('#phone_publicar_edit').val();
-    precio_publicar = $('#precio_publicar_edit').val();
-    subcategoria_update = $('#select_subcategoria').val();
+    titulo_publicar = $('#tituloPublicarEdit').val();
+    descripcion_publicar = $('#descripcionPublicarEdit').val();
+    phone_publicar = $('#phonePublicarEdit').val();
+    precio_publicar = $('#precioPublicarEdit').val();
+    subcategoria_update = $('#selectSubcategoria').val();
     if (titulo_publicar.trim().length == 0) {
       navigator.notification.alert(
         'El titulo del anuncio es requerido', // message
@@ -5426,13 +4986,13 @@
       // document.querySelector('ons-navigator').bringPageTop('galeria.html');
       pushPage('#appNavigator', 'galeria.html', '');
       modal.show();
-      $('#body_modal').text("Cargando...");
+      $('#bodyModal').text("Cargando...");
       $('#galeria_imagen').empty();
       setTimeout(function () {
         array_fotos=[];
-        if (ads_objet) {
+        if (adsObject) {
           if (array_fotos.length == 0) {
-            var img_data = base_url + ads_objet.anuncio_photo;
+            var img_data = base_url + adsObject.anuncio_photo;
             var img =
               "<div id='" + contador_fotos_id +
               "' class='col-4' style='margin-bottom:2px !important;'><img src='" +
@@ -5443,17 +5003,17 @@
                 var contador_fotos_cargadas = 2;
             array_fotos.push({
               "id": contador_fotos_id,
-              "imagen": ads_objet.anuncio_photo,
-              'foto_anuncio_id': ads_objet.anuncio_id,
+              "imagen": adsObject.anuncio_photo,
+              'foto_anuncio_id': adsObject.anuncio_id,
               'name':'image_1'
             });
             contador_fotos_id++;
-            if (ads_objet.fotos) {
-              if (ads_objet.fotos.length > 0) {
-                contador = ads_objet.fotos.length;
+            if (adsObject.fotos) {
+              if (adsObject.fotos.length > 0) {
+                contador = adsObject.fotos.length;
                 var contador_fotos_cargadas = 2;
-                for (let i = 0; i < ads_objet.fotos.length; i++) {
-                  var img_data = base_url + ads_objet.fotos[i].photo_anuncio;
+                for (let i = 0; i < adsObject.fotos.length; i++) {
+                  var img_data = base_url + adsObject.fotos[i].photo_anuncio;
                   var id_cargado = contador_fotos_cargadas;
                      var cadena_name_cargada = "image_" + id_cargado;
                   var img =
@@ -5466,8 +5026,8 @@
                   contador_fotos_cargadas++;
                   array_fotos.push({
                     "id": contador_fotos_id,
-                    "imagen": ads_objet.fotos[i].photo_anuncio,
-                    'foto_anuncio_id': ads_objet.fotos[i].photo_anuncio_id,
+                    "imagen": adsObject.fotos[i].photo_anuncio,
+                    'foto_anuncio_id': adsObject.fotos[i].photo_anuncio_id,
                     'name':cadena_name_cargada
                   });
                   contador_fotos_id++;
@@ -5524,7 +5084,7 @@
       pushPage('#appNavigator', 'galeria.html', '');
       modal.show();
       $('#galeria_imagen').empty();
-      $('#body_modal').text("Cargando...");
+      $('#bodyModal').text("Cargando...");
       setTimeout(function () {
         if (array_fotos.length > 0) {
           $('#btn_siguiente2').show();
@@ -5662,12 +5222,12 @@
   //ejecuta la ventana del mapa
   function siguiente2() {
     pushPage('#appNavigator', 'mapa.html', '');
-    $('#body_modal').text("Cargando...");
+    $('#bodyModal').text("Cargando...");
     console.log(array_fotos);
     modal.show();
-    if (ads_objet) {
+    if (adsObject) {
       setTimeout(function () {
-        cargar_mapa(ads_objet.lat, ads_objet.lng);
+        cargar_mapa(adsObject.lat, adsObject.lng);
         modal.hide();
       }, 2500);
     } else {
@@ -5680,7 +5240,7 @@
   //funcion para carga la unbicacion
   function ubicacion_actual() {
     modal.show();
-    $('#body_modal').text("Cargando ...");
+    $('#bodyModal').text("Cargando ...");
     setTimeout(function () {
       $('#mapa').empty();
       mapa = null;
@@ -6278,7 +5838,7 @@
   function culminar_anuncio() {
     modal.show();
     $('#page_galeria').hide();
-    $('#body_modal').text("Creando el anuncio...")
+    $('#bodyModal').text("Creando el anuncio...")
     setTimeout(function () {
       var url = base_url + 'rest_anuncio/add';
       var user_id = item_auth.user_id;
@@ -6309,15 +5869,15 @@
 
     var status = response.status;
     if (status == 200) {
-      valida_mis_anuncios = true;
-      ads_objet = null;
+      validaMisAnuncios = true;
+      adsObject = null;
       array_fotos = [];
       contador_fotos_id = 1
       $('#btn_culminar_anuncio').hide();
       $('#btn_actualizar_anuncio').hide();
       navigator.notification.alert(
         'Anuncio creado correctamente', // message
-        mis_anuncios, // callback
+        misAnuncios, // callback
         'Notificación', // title
         'Aceptar' // buttonName
       );
@@ -6343,7 +5903,7 @@
   function actualizar_anuncio() {
     modal.show();
     $('#page_galeria').hide();
-    $('#body_modal').text("Actualizando el anuncio...")
+    $('#bodyModal').text("Actualizando el anuncio...")
     setTimeout(function () {
       var url = base_url + 'rest_anuncio/update';
       var user_id = item_auth.user_id;
@@ -6364,7 +5924,7 @@
         lng: longitud,
         city_main: city,
         direccion: direccion,
-        anuncio_id: ads_objet.anuncio_id,
+        anuncio_id: adsObject.anuncio_id,
         'array': JSON.stringify(array_fotos)
       };
       send_data_server(url, data_to_server, success_update, error);
@@ -6374,7 +5934,7 @@
   function success_update(response) {
     var status = response.status;
     if (status == 200) {
-      ads_objet = null;
+      adsObject = null;
       array_fotos = [];
       contador_fotos_id = 1
       $('#btn_culminar_anuncio').hide();
@@ -6386,11 +5946,11 @@
         document.querySelector('ons-navigator').removePage(i);
       }
     } */
-      valida_mis_anuncios = true;
+      validaMisAnuncios = true;
       //  document.querySelector('ons-navigator').popPage({animation: "slide"});
       navigator.notification.alert(
         'Anuncio actualizado correctamente', // message
-        mis_anuncios, // callback
+        misAnuncios, // callback
         'Notificación', // title
         'Aceptar' // buttonName
       );
@@ -6422,150 +5982,25 @@
     document.querySelector('ons-navigator').resetToPage('tabbar.html');
     // window.location.href = 'dash.html';
   }
-  //funcion de carga los anuncios del cliente
-
-  function mis_anuncios() {
-
-    modal.show();
-    // alert(document.querySelector('ons-navigator').pages.length);
-    /*     if (!valida_mis_anuncios) {
-          pushPage('#appNavigator', 'mis_anuncios.html', '');
-        } else {
-          modal_notificacion.hide();
-          document.querySelector('ons-navigator').bringPageTop('mis_anuncios.html');
-        } */
-    document.querySelector('ons-navigator').bringPageTop('mis_anuncios.html');
-    $('#body_modal').text("Cargando mis anuncios...");
-    $('#area_mis_anuncios').empty();
-    var item_auth = get_data_local();
-    //   console.log("entro en mis anuncios");
-
-    setTimeout(function () {
-      var url = base_url + 'rest_anuncio/cargar_mis_anuncios';
-      var user_id = item_auth.user_id;
-      var security_token = item_auth.security_token;
-      comienza_mis_anuncios = 0;
-      limite_mis_anuncios = 11;
-      data_to_server = {
-        user_id: user_id,
-        security_token: security_token,
-        comienza: comienza_mis_anuncios,
-        limite: limite_mis_anuncios
-      };
-      send_data_server(url, data_to_server, success_mis_anuncios,
-        error);
-    }, 1000);
 
 
-  }
-  //funcion de respuesta al cargar los anuncios del cliente
-  function success_mis_anuncios(response) {
-    // Reset the whole stack instead of popping 1 page
-    // document.querySelector('ons-navigator').resetToPage('dash.html');
-    //  console.log(response);
-    var status = response.status;
-    //  response = JSON.parse(response.lista);
-    // var status = response.status;
-    if (status == 200) {
-      // $('#area_subastas').show();
-      lista = response.lista;
-      cargar_mis_anuncios(lista);
-      // $('#area_mis_anuncios').show();
-    }
-    if (status == 500) {
-      modal.hide();
-      navigator.notification.alert(
-        'No tiene acceso a la plataforma', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-    if (status == 404 && !response.infinito) {
-      modal.hide();
-      $('#area_mis_anuncios').empty();
-      $('#area_mis_anuncios').html("<ons-col><h3 style='text-align: center;'>No tiene anuncios creados</h3></ons-col>");
-      navigator.notification.alert(
-        'No hay anuncios disponible', // message
-        cerrar_push, // callback
-        'Notificación', // title
-        'Aceptar' // buttonName
-      );
-    }
-  }
-  //funcion que lista los anuncios
-  function cargar_mis_anuncios(lista) {
 
-    var cadena = "";
-    if (lista.length > 0) {
-      for (var i = 0; i < lista.length; i++) {
-        if (lista[i].anuncio_photo.indexOf("upload") >= 0) {
-          img = base_url + lista[i].anuncio_photo;
-        } else {
-          img = lista[i].anuncio_photo;
-        }
-        var ads_destacado = ""
-        if (lista[i].destacado == 1) {
-          ads_destacado =
-            "<span style='background: #00bb2d !important;font-size:10px !important ;position:absolute; top:2%;z-index:100; color:#fff !important; class='badge badge-danger'><strong> Destacado</strong></span>";
-        } else {
-          ads_destacado = "";
-        }
-        var visble_ads = ""
-        if (lista[i].is_active == 1) {
-          visble_ads = "<ons-icon  style='color:#2a3681'  size='16px, material:16px' icon='fa-eye'></ons-icon>"
-
-        } else {
-          visble_ads = "<ons-icon  style='color:#2a3681'  size='16px, material:16px' icon='fa-eye-slash'></ons-icon>";
-        }
-        cadena = cadena +
-          "<ons-col width='50%'><ons-card onclick=acciones_anuncios('" + btoa(JSON.stringify(lista[i])) +
-          "') style='height:220px !important' id='ver_mi_anuncio_" +
-          lista[i].anuncio_id +
-          "' onclick=''><div class='row'><div class='col-12'><h4 id='titulo_anuncio_" +
-          lista[i].anuncio_id +
-          "' style='font-size:12px !important; color:#80232b !important; line-height:1.5px !important; margin-top:2px !important;' class='card-title'><strong>" +
-          lista[i].titulo +
-          " </strong>" + visble_ads + " </h4></div><div class='col-12'>" +
-          ads_destacado +
-          "<div style='width:129.5px; height:129.5px'><img style='max-width:129.5px; position:relative; max-height:129.5px' class='rounded' src='" +
-          img +
-          "' alt='Card image cap'></div> <p class='text-center'><span style='margin-left:10% !important;margin-top:0px !important; background: #80232b !important' class='badge badge-danger'>$" +
-          parseFloat(lista[i]
-            .precio).toFixed(2) +
-          "</span><br><span><i class='fa fa-map-marker' aria-hidden='true'></i> " +
-          lista[i].ciudad +
-          "</span></p></div></div></ons-card></ons-col>";
-
-      }
-      $('#area_mis_anuncios').append(cadena);
-      $('#area_mis_anuncios').show();
-      if (valida_mis_anuncios) {
-        $('#btn_atras_ads').show();
-        $('#btn_back_ads').hide();
-      } else {
-        $('#btn_atras_ads').hide();
-        $('#btn_back_ads').show();
-      }
-      modal.hide();
-    }
-  }
   //infinito para los anuncios
   function infinito_mis_anuncio() {
-    if (limite_mis_anuncios >= 11) {
-      comienza_mis_anuncios = limite_mis_anuncios;
-      limite_mis_anuncios = comienza_mis_anuncios + 11;
+    if (limiteMisAnuncios >= 11) {
+      comienzaMisAnuncios = limiteMisAnuncios;
+      limiteMisAnuncios = comienzaMisAnuncios + 11;
       setTimeout(function () {
-        var url = base_url + 'rest_anuncio/cargar_mis_anuncios';
+        var url = base_url + 'rest_anuncio/cargar_misAnuncios';
         var user_id = item_auth.user_id;
         var security_token = item_auth.security_token;
         data_to_server = {
           user_id: user_id,
           security_token: security_token,
-          comienza: comienza_mis_anuncios,
-          limite: limite_mis_anuncios
+          comienza: comienzaMisAnuncios,
+          limite: limiteMisAnuncios
         };
-        send_data_server(url, data_to_server, success_mis_anuncios,
+        send_data_server(url, data_to_server, success_misAnuncios,
           error);
       }, 1000);
 
@@ -6609,7 +6044,7 @@
 
   function subasta_directa_pujar() {
     modal.show();
-    $('#body_modal').text("Cargando...");
+    $('#bodyModal').text("Cargando...");
     setTimeout(function () {
       var url = base_url + 'rest_subasta/puja_alta';
       var user_id = item_auth.user_id;
@@ -6690,7 +6125,7 @@
   function confirmar_puja() {
 
     modal.show();
-    $('#body_modal').text("Cargando...");
+    $('#bodyModal').text("Cargando...");
     var valor_puja_directa = $('#valor_puja_directa').val().trim();
     valor_puja_directa = parseFloat(parseFloat(valor_puja_directa).toFixed(2));
     puja_mayor = parseFloat(parseFloat(puja_mayor).toFixed(2));
@@ -6728,7 +6163,7 @@
   document.addEventListener("backbutton", onBackKeyDown, false);
 
   function onBackKeyDown() {
-    if (valida_mis_anuncios) {
+    if (validaMisAnuncios) {
       llamar_anuncios();
     }
     if (valido_mis_subastas) {
@@ -6749,7 +6184,7 @@
     }
 
     modal.show();
-    $('#body_modal').text("Cargando mis subastas...");
+    $('#bodyModal').text("Cargando mis subastas...");
     $('#area_mis_subastas').empty();
     var item_auth = get_data_local();
     setTimeout(function () {
@@ -7180,8 +6615,43 @@
     }
   }, 6000);
 </script>
-<style>
-  #input_id::placeholder {
+ <style>
+    .timer {
+      margin: 0 0 4px;
+      font-family: Lato;
+      color: #fff;
+      display: inline-block;
+      font-weight: 100;
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .timer .conte {
+      padding: 1px;
+      border-radius: 3px;
+      background: #8c1822;
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      width: auto;
+      opacity: 0.9;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    .timer .smalltext {
+      border-radius: 3px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      display: block;
+      padding: 1px;
+      background: #2a3681;
+      width: auto;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+     #input_id::placeholder {
     color: white;
   }
 
@@ -7270,4 +6740,4 @@
     -o-transform: rotate(-10deg);
     transform: rotate(-10deg);
   }
-</style>
+  </style>
